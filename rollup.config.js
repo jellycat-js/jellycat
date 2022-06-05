@@ -29,7 +29,7 @@ export default {
     plugins: [
         commonjs(),
         noderesolve(),
-        babel({ babelHelpers: 'bundled' }),
-        terser()
+        babel({ babelHelpers: 'bundled' })/*,
+        terser()*/
     ]
 };
