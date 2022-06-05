@@ -26,6 +26,10 @@ export default {
         	name: 'JellycatComponent'
     	}
 	],
+	// watch: {
+ //      include: './src/**',
+ //      clearScreen: false
+ //    },
     plugins: [
         commonjs(),
         noderesolve(),
