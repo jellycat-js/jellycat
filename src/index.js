@@ -151,12 +151,9 @@ mixins.rendering = function(superclass)
 
 		drawFaIcon(name)
 		{
-			// const fontAwesomeLoadedFromModule = document.querySelector('body').className.includes('fontawesome')
-			// const fontAwesomeLoadedFromLink = Array.from(document.styleSheets).filter(s => s.href.includes('font-awesome') || s.href.includes('fontawesome')).length > 0
-
-			// if (!fontAwesomeLoadedFromModule && !fontAwesomeLoadedFromLink) {
-			// 	throw new Error('FontAwesome is not available on this page, you cannot use drawFaIcon()')
-			// }
+			if (!window.FontAwesome) {
+				console.error('FontAwesome is not available on this page, you cannot use drawFaIcon()')
+			}
 
 			const icon = document.createElement('i')
 			icon.classList.add('fa-solid', name)
