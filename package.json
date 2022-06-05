@@ -1,0 +1,23 @@
+{
+  "name": "jellycat-component",
+  "type": "module",
+  "version": "0.0.1",
+  "description": "",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
+  "exports": {
+    "import": "./dist/index/esm.js",
+    "require": "./dist/index/cjs.js"
+  },
+  "scripts": {
+    "prebuild": "rimraf dist",
+    "build": "rollup -c"
+  },
+  "author": "Louis-Antoine Lumet",
+  "license": "MIC",
+  "node": " >=14.13.1 || >=16.0.0",
+  "devDependencies": {
+    "rimraf": "^3.0.2",
+    "rollup": "^2.75.5"
+  }
+}
