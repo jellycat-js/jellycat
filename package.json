@@ -1,5 +1,5 @@
 {
-  "name": "jellycat-component",
+  "name": "@cxxi/jellycat-component",
   "type": "module",
   "version": "0.0.1",
   "description": "",
@@ -14,7 +14,7 @@
     "build": "rollup -c"
   },
   "author": "Louis-Antoine Lumet",
-  "license": "MIC",
+  "license": "GNU",
   "node": " >=14.13.1 || >=16.0.0",
   "devDependencies": {
     "rimraf": "^3.0.2",
