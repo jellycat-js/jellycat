@@ -2,16 +2,16 @@ export default {
 	input: `src/index.js`,
 	output: [
 		{
-			file: 'dist/bundle.cjs.js',
+			file: 'dist/index.cjs.js',
 			format: 'cjs'
 		},
 		{
-			file: 'dist/bundle.esm.js',
+			file: 'dist/index.esm.js',
 			format: 'esm'
 		},
 		{
 			name: 'JellycatBundle',
-			file: 'dist/bundle.umd.js',
+			file: 'dist/index.umd.js',
 			format: 'umd'
 		},
 	]
