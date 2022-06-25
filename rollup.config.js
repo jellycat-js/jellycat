@@ -8,21 +8,21 @@ export default {
 	input: `src/index.js`,
 	output: [
 		{
-			file: 'dist/index.cjs.js',
+			file: 'dist/bundle.cjs.js',
 			format: 'cjs'
 		},
 		{
-			file: 'dist/index.esm.js',
+			file: 'dist/bundle.esm.js',
 			format: 'esm'
 		},
 		{
 			name: 'JellycatBundle',
-			file: 'dist/index.umd.js',
+			file: 'dist/bundle.umd.js',
 			format: 'umd'
 		},
 		{
         	format: 'iife',
-        	file: 'dist/index.iife.js',
+        	file: 'dist/bundle.iife.js',
         	name: 'JellycatComponent'
     	}
 	],

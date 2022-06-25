@@ -1,13 +1,13 @@
 {
   "name": "@cxxi/jellycat-component",
   "type": "module",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "",
   "main": "dist/bundle.cjs.js",
   "module": "dist/bundle.esm.js",
   "exports": {
-    "import": "./dist/bundle/esm.js",
-    "require": "./dist/bundle/cjs.js"
+    "import": "./dist/bundle.esm.js",
+    "require": "./dist/bundle.cjs.js"
   },
   "files": [
       "src",
