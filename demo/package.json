@@ -1,0 +1,22 @@
+{
+  "name": "demo-jellycat-component",
+  "version": "1.0.0",
+  "description": "",
+  "source": [
+    "./src/Dropdown/Dropdown.html",
+    "./src/Tabs/Tabs.html",
+    "./src/index.html"
+  ],
+  "scripts": {
+    "start": "parcel",
+    "build": "parcel build"
+  },
+  "author": "Louis-Antoine Lumet",
+  "license": "GNU",
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^6.1.1"
+  },
+  "devDependencies": {
+    "parcel": "^2.6.2"
+  }
+}

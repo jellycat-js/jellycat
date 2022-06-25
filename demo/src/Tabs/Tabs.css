@@ -1,0 +1,75 @@
+jc-tabs {
+	background-color: inherit;
+}
+jc-tabs .tabs__header {
+	background-color: inherit;
+}
+
+jc-tabs .tabs__tabs {
+	background-color: inherit;
+	display: flex;
+	flex-direction: row-reverse;
+	justify-content: flex-end;
+}
+jc-tabs .tabs__tabs > li {
+	padding: .5rem 1rem;
+	border: 2px solid #000;
+	background-color: inherit;
+	border-top-right-radius: 8px;
+	margin-left: -.5rem;
+	cursor: pointer;
+}
+jc-tabs .tabs__tabs > li:first-of-type {
+	border-left: none;
+}
+
+jc-tabs .tabs__tabs > li:last-of-type {
+	margin-left: 0;
+	border-top-left-radius: 8px;
+}
+jc-tabs .tabs__tabs > li:not(:first-of-type) {
+	border-top-right-radius: 0;
+}
+jc-tabs .tabs__tabs > li[active] {
+	border-top-right-radius: 8px;
+	border-top-left-radius: 8px;
+	border: 2px solid #000;
+	border-bottom: none;
+	z-index: 1;
+}
+jc-tabs .tabs__content {
+	border: 2px solid #000;
+	border-radius: 0 8px 8px;
+	margin-top: -2px;
+	padding: 1rem;
+}
+jc-tabs .tabs__content [tab] {
+	display: none;
+}
+jc-tabs .tabs__content [tab][active] {
+	display: block;
+}
+
+
+jc-tabs[vertical] {
+	display: flex;
+}
+jc-tabs[vertical] .tabs__tabs {
+	flex-direction: column-reverse;
+}
+/*jc-tabs[vertical] .tabs__tabs > li:not(:first-of-type) {
+	border-top: none;
+}*/
+jc-tabs[vertical] .tabs__tabs > li[active] {
+	border: 2px solid #000;
+	border-right: none;
+}
+
+jc-tabs[vertical] jc-tabs .tabs__tabs > li {
+	margin: 0;
+	margin-top: -.5rem;
+}
+jc-tabs[vertical] jc-tabs .tabs__content {
+	margin: 0;
+	margin-left: -2px;
+}

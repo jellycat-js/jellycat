@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Demo | Jellycat Component</title>
+	<script type="module" src="./demo.js"></script>
+</head>
+<body>
+	
+	<section>
+
+	    <jc-dropdown template="wrapper" title="Click to show more content" icon="fa-minus|fa-plus">
+	        <h2>Lorem ipsum dolor sit amet</h2>
+	        <p>
+	            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+	            tempor <strong>incididunt ut labore et dolore magna aliqua</strong>. Ut enim ad minim veniam,
+	            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+	            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+	            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+	            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+	        </p>
+	        <br>
+	        <jc-dropdown template="field" items="&#x5B;&#x7B;&quot;label&quot;&#x3A;&quot;France&quot;,&quot;value&quot;&#x3A;&quot;france&quot;,&quot;selected&quot;&#x3A;true&#x7D;,&#x7B;&quot;label&quot;&#x3A;&quot;Allemagne&quot;,&quot;value&quot;&#x3A;&quot;allemagne&quot;,&quot;selected&quot;&#x3A;false&#x7D;,&#x7B;&quot;label&quot;&#x3A;&quot;Russie&quot;,&quot;value&quot;&#x3A;&quot;russie&quot;,&quot;selected&quot;&#x3A;false&#x7D;,&#x7B;&quot;label&quot;&#x3A;&quot;Italie&quot;,&quot;value&quot;&#x3A;&quot;italie&quot;,&quot;selected&quot;&#x3A;false&#x7D;&#x5D;" icon="fa-angle-down"></jc-dropdown>
+	        <br>
+	        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt</p>
+	    </jc-dropdown>
+
+	    <div class="row">
+	        <jc-dropdown template="field" items="&#x5B;&#x7B;&quot;label&quot;&#x3A;&quot;France&quot;,&quot;value&quot;&#x3A;&quot;france&quot;,&quot;selected&quot;&#x3A;true&#x7D;,&#x7B;&quot;label&quot;&#x3A;&quot;Allemagne&quot;,&quot;value&quot;&#x3A;&quot;allemagne&quot;,&quot;selected&quot;&#x3A;false&#x7D;,&#x7B;&quot;label&quot;&#x3A;&quot;Russie&quot;,&quot;value&quot;&#x3A;&quot;russie&quot;,&quot;selected&quot;&#x3A;false&#x7D;,&#x7B;&quot;label&quot;&#x3A;&quot;Italie&quot;,&quot;value&quot;&#x3A;&quot;italie&quot;,&quot;selected&quot;&#x3A;false&#x7D;&#x5D;" icon="fa-angle-down"></jc-dropdown>
+	        <jc-dropdown template="menu" items="&#x5B;&#x7B;&quot;label&quot;&#x3A;&quot;home&quot;,&quot;link&quot;&#x3A;&quot;&#x23;home&quot;&#x7D;,&#x7B;&quot;label&quot;&#x3A;&quot;about&quot;,&quot;link&quot;&#x3A;&quot;&#x23;about&quot;&#x7D;,&#x7B;&quot;label&quot;&#x3A;&quot;contact&quot;,&quot;link&quot;&#x3A;&quot;&#x23;contact&quot;&#x7D;&#x5D;" icon="fa-bars"></jc-dropdown>
+	    </div>
+
+	    <p>Attributes : template, icon, title, selected, items, fetch </p>
+
+	    <h2>Dropdown Examples</h2>
+
+	</section>
+
+	<section>
+
+	    <jc-tabs active="0">
+	        <div tab="2" title="Info 3">
+	            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+	            tempor <strong>incididunt ut labore et dolore magna aliqua</strong>. 
+	            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut 
+	            aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in 
+	            voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint 
+	            occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit 
+	            anim id est laborum.
+	        </div>
+	        <div tab="1" title="Info 2">
+	            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+	            tempor. Ut enim ad minim veniam,
+	            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+	            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+	            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+	            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+	        </div>
+	        <div tab="0" title="Info 1">
+	            Sed do eiusmod tempor <strong>incididunt ut labore et dolore magna aliqua</strong>. 
+	            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip 
+	            ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit 
+	            esse cillum dolore eu fugiat nulla pariatur. 
+	        </div>
+	    </jc-tabs>
+
+	    <p>Attributes : active, vertical, child.tab, child.title</p>
+
+	    <h2>Tabs Examples</h2>
+
+	</section>
+
+</body>
+</html>
