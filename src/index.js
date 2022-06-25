@@ -4,7 +4,7 @@ const mixins = {}
 
 function _(superclass)
 {
-	return { with(...mixins){
+	return { with(...mixins) {
 		return mixins.reduce((c, mixin) => mixin(c), superclass || class {})
 	}}
 }
@@ -13,17 +13,35 @@ mixins.abstract = function(superclass)
 {
 	return class extends superclass
 	{
-		static define(template, prefix)
+		options = {}
+
+		get methods() {
+			const reflect = Reflect.getPrototypeOf(this)
+			return Reflect.ownKeys(reflect).filter(m => m !== 'constructor')
+		}
+
+		static async define(templateUrl, options = {})
 		{
-			window.Jellycat.components[this.name] = { template: template, cache: {} }
+			await Jellycat._cacheSet(this.name, templateUrl, options)
+
+			const prefix = Jellycat._cache[this.name].options.prefix !== undefined 
+				? Jellycat._cache[this.name].options.prefix 
+				: Jellycat._options.prefix
+
 			if (customElements.get(`${prefix}-${this.name.toLowerCase()}`) === undefined) {
 				customElements.define(`${prefix}-${this.name.toLowerCase()}`, this, this._tag ? { extends: this._tag }  : {})
 			}
 		}
 
-		get methods() {
-			const reflect = Reflect.getPrototypeOf(this)
-			return Reflect.ownKeys(reflect).filter(m => m !== 'constructor')
+		async connectedCallback()
+		{
+			this._runLifeCycle()
+		}
+
+		async disconnectedCallback()
+		{ 
+			const instances = window.Jellycat._instances[this.constructor.name]
+			window.Jellycat._instances[this.constructor.name] = instances.filter(component => component !== this)
 		}
 	}
 }
@@ -32,7 +50,9 @@ mixins.lifeCycling = function(superclass)
 {
 	return class extends superclass
 	{
-		get keyLifeCycle() { return ['down', 'init', 'render', 'behavior', 'up'] }
+		get keyLifeCycle() { 
+			return ['down', 'init', 'render', 'behavior', 'up']
+		}
 
 		get currentLifeCycleIndex() {
 			return this.keyLifeCycle.indexOf(this.currentLifeCycle)
@@ -79,22 +99,29 @@ mixins.lifeCycling = function(superclass)
 
 		async _init()
 		{
-			return [ Jellycat.options ]
+			if (this.constructor.name in Jellycat._instances) {
+				Jellycat._instances[this.constructor.name].push(this)
+			}
+
+			const options = this.getAttribute('options') ? JSON.parse(this.getAttribute('options')) : {}
+			this.options = Object.assign(Jellycat._options, Jellycat._cache[this.constructor.name].options, options)
+
+			return []
 		}
 
 		async _render()
 		{
-			if (this.constructor.name in Jellycat.components) {
+			if (this.constructor.name in Jellycat._cache) {
 				if (this.children.length > 0) this.innerHTML = ""
-				this.appendChild(await this.draw())
+				this.appendChild(this.draw())
 			}
 
-			return [ Jellycat.components[this.constructor.name].cache ]
+			return []
 		}
 
 		async _behavior()
 		{
-			return [ Jellycat.globalScope ]
+			return [ Jellycat._scope ]
 		}
 	}
 }
@@ -112,28 +139,14 @@ mixins.rendering = function(superclass)
 			return true
 		}
 
-		async draw(id = 'root')
+		draw(template = false)
 		{
 			if (this.currentLifeCycleIndex < this.keyLifeCycle.indexOf('render'))  {
 				throw new Error(`You cannot use draw method before render step (current state: ${this.currentLifeCycle}) of lifeCycle of ${this.constructor.name}`)
 			}
 
-			if (Object.keys(Jellycat.components[this.constructor.name].cache).length === 0) {
-				let response = await fetch(Jellycat.components[this.constructor.name].template)
-				if (response.status != 200) {
-					throw new Error(`Template ${response.statusText} (${response.url})`)
-				}
-
-				const text = await response.text()
-				const html = new DOMParser().parseFromString(text, 'text/html')
-				const templates = Array.from(html.querySelectorAll('template')).reduce((template, element) => {
-					return { ...template, [element.id]: element }
-				}, {})
-
-				Jellycat.components[this.constructor.name].cache = templates
-			}
-			
-			return Jellycat.components[this.constructor.name].cache[this.template != null ? this.template : id].content
+			const name = !template ? (this.template == null ? 'root' : this.template) : template
+			return Jellycat._cache[this.constructor.name].templates[name].content.cloneNode(true)
 		}
 
 		drawElement(tagname, attrs = {}, children = [])
@@ -149,14 +162,14 @@ mixins.rendering = function(superclass)
 			return element
 		}
 
-		drawFaIcon(name)
+		drawFaIcon(name, rootClass = 'fa-solid')
 		{
 			if (!window.FontAwesome) {
 				console.error('FontAwesome is not available on this page, you cannot use drawFaIcon()')
 			}
 
 			const icon = document.createElement('i')
-			icon.classList.add('fa-solid', name)
+			icon.classList.add(rootClass, name)
 			return icon
 		}
 	}
@@ -179,7 +192,6 @@ mixins.providing = function(superclass)
 		{
 			try
 			{
-				// TO DO / COMPLETE
 				if (this.currentLifeCycleIndex < this.keyLifeCycle.indexOf('init')) {
 					throw new Error(`You cannot use fetchData method before init step (current state: ${this.currentLifeCycle}) of lifeCycle of ${this.name}`)
 				}
@@ -193,7 +205,6 @@ mixins.providing = function(superclass)
 				})
 
 				if (response.status >= 300) throw new Error(`Fetch error : ${args[0]}`)
-
 				return await response.json()
 
 			} catch(error) { console.log(error) }
@@ -205,32 +216,71 @@ window.Jellycat ??= new class Jellycat
 {
 	constructor()
 	{
-		this.components = {}
-		this.globalScope = {}
-		this.options = { debug: false }
-		this.factory = {
+		this._options = { 
+			prefix: 'jc',
+			debug: false,
+			autoRender: 'root'
+		}
+
+		this._instances = {}
+		this._scope = {}
+		this._cache = {}
+
+		this._factory = {
 
 			JcComponent: class JcComponent extends _(HTMLElement).with(...Object.values(mixins)) { 
-				constructor() { super() ; this._tag = false } async connectedCallback() { this._runLifeCycle() }
+				constructor() { super() } _tag = false
 			},
 			JcDivComponent: class JcDivComponent extends _(HTMLDivElement).with(...Object.values(mixins)) { 
-				constructor() { super() ; this._tag = 'div' } async connectedCallback() { this._runLifeCycle() }
+				constructor() { super() } _tag = 'div'
 			},
 			JcSpanComponent: class JcSpanComponent extends _(HTMLSpanElement).with(...Object.values(mixins)) { 
-				constructor() { super() ; this._tag = 'span' } async connectedCallback() { this._runLifeCycle() }
+				constructor() { super() } _tag = 'span'
 			},
 			JcUlComponent: class JcUlComponent extends _(HTMLUListElement).with(...Object.values(mixins)) { 
-				constructor() { super() ; this._tag = 'ul' } async connectedCallback() { this._runLifeCycle() }
+				constructor() { super() } _tag = 'ul'
 			},
 			JcLiComponent: class JcLiComponent extends _(HTMLLIElement).with(...Object.values(mixins)) { 
-				constructor() { super() ; this._tag = 'li' } async connectedCallback() { this._runLifeCycle() }
+				constructor() { super() } _tag = 'li'
 			},
 			JcPComponent: class JcPComponent extends _(HTMLParagraphElement).with(...Object.values(mixins)) {
-				constructor() { super() ; this._tag = 'p' } async connectedCallback() { this._runLifeCycle() }
+				constructor() { super() } _tag = 'p'
 			},
 			JcLabelComponent: class JcLabelComponent extends _(HTMLLabelElement).with(...Object.values(mixins)) { 
-				constructor() { super() ; this._tag = 'label' } async connectedCallback() { this._runLifeCycle() }
+				constructor() { super() } _tag = 'label'
 			}
+		}
+	}
+
+	options(options = {})
+	{
+		if (typeof options !== 'object') throw new Error('Options must take object as parameter type')
+		this._options = Object.assign(this._options, options)
+	}
+
+	async _cacheSet(name, templateUrl = false, options = {})
+	{
+		let templates = []
+		if (templateUrl) {
+
+			let response = await fetch(templateUrl)
+			if (response.status != 200) {
+				throw new Error(`Template ${response.statusText} (${response.url})`)
+			}
+
+			const text = await response.text()
+			const html = new DOMParser().parseFromString(text, 'text/html')
+			templates = Array.from(html.querySelectorAll('template')).reduce((template, element) => {
+				return { ...template, [element.id]: element }
+			}, {})
+		}
+
+		if (!(name in this._instances)) this._instances[name] = []
+
+		this._cache[name] = { 
+			source: templateUrl,
+			templates: templates,
+			options: options
 		}
 	}
 }
@@ -245,4 +295,4 @@ export const {
 	JcPComponent,
 	JcLabelComponent
 
-} = window.Jellycat.factory
+} = Jellycat._factory
