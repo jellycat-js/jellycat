@@ -165,9 +165,9 @@ export default class Sample extends JcComponent
 Jellycat Options can be used on 3 level of effect, if you defined option on instance of component, it was scoped to component, if you define on component is scope tout all instance of this component and if you define on Jellycat global var it will be apply to all of component.
 
 available options are :
-- debug
-- prefix
-- autoRender
+- **debug** *boolean* (default: **false**)
+- **prefix** *string* (default: **jc**)
+- **autoRender** *string* (default: **root**)
 
 > index.html
 ```html
