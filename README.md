@@ -40,9 +40,8 @@ export default class Sample extends JcComponent
 <jc-sample></jc-sample>
 
 <script type='text/javascript'>
-	import Sample from './Sample.js'
-	// ...
-	Sample.define()
+  import Sample from './Sample.js'
+  Sample.define()
 </script>
 ```
 
@@ -74,9 +73,8 @@ export default class Sample extends JcDivComponent { ... }
 <div is="jc-sample"></div>
 
 <script type='text/javascript'>
-	import Sample from './Sample.js'
-	// ...
-	Sample.define()
+  import Sample from './Sample.js'
+  Sample.define()
 </script>
 ````
 
