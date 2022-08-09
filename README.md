@@ -39,7 +39,7 @@ export default class Sample extends JcComponent
 ```html
 <jc-sample></jc-sample>
 
-<script type='text/javascript'>
+<script type="text/javascript">
   import Sample from './Sample.js'
   Sample.define()
 </script>
@@ -72,7 +72,7 @@ export default class Sample extends JcDivComponent { ... }
 ```html
 <div is="jc-sample"></div>
 
-<script type='text/javascript'>
+<script type="text/javascript">
   import Sample from './Sample.js'
   Sample.define()
 </script>
@@ -121,7 +121,7 @@ You can attach this file to your component like that :
 ```html
 <jc-sample></js-sample>
 
-<script type='text/javascript'>
+<script type="text/javascript">
   import Sample from './Sample.js'
   Sample.define('templates/Sample.html')
 </script>
@@ -179,7 +179,7 @@ available options :
 ```html
 <jc-sample></js-sample>
 
-<script type='text/javascript'>
+<script type="text/javascript">
   import Sample from './Sample.js'
   Jellycat.options({ debug: true })
   Sample.define('templates/Sample.html')
@@ -190,7 +190,7 @@ available options :
 ```html
 <jc-sample></js-sample>
 
-<script type='text/javascript'>
+<script type="text/javascript">
   import Sample from './Sample.js'
   Sample.define('templates/Sample.html', { debug: true })
 </script>
