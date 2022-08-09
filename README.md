@@ -166,11 +166,11 @@ Jellycat Options can be used on 3 level of effect, if you defined option on inst
 
 available options :
 
-| option         | type      | default |
-|:--------------:|:---------:|:-------:|
-| **debug**      | *boolean* | false   |
-| **prefix**     | *string*  | 'jc'    |
-| **autoRender** | *string*  | 'root'  |
+| option         | type      | default | description                                       |
+|:--------------:|:---------:|:-------:|:--------------------------------------------------|
+| **debug**      | *boolean* | false   | use to get debug info in browser console          |
+| **prefix**     | *string*  | 'jc'    | determine the first part of tag of your component |
+| **autoRender** | *string*  | 'root'  | determine the default root template name          |
 
 > index.html
 ```html
