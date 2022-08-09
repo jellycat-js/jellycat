@@ -167,7 +167,7 @@ Jellycat Options can be used on 3 level of effect, if you defined option on inst
 available options :
 
 | option         | type      | default |
-|----------------|:---------:|:-------:|
+|:--------------:|:---------:|:-------:|
 | **debug**      | *boolean* | false   |
 | **prefix**     | *string*  | 'jc'    |
 | **autoRender** | *string*  | 'root'  |
