@@ -60,7 +60,7 @@ to use this feature yo have to extend your component from one of this class in p
 - JcInputComponent
 - JcTextareaComponent
 
-Example to use div tagname :
+### Example
 
 Sample.js
 ```js
