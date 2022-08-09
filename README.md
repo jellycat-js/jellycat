@@ -78,6 +78,36 @@ export default class Sample extends JcDivComponent { ... }
 </script>
 ````
 
+## Templating
+
+Jellycat Component come with template engine that you can use to manage html of your component
+make and html file with some template inside :
+
+> Sample.html
+```html
+<template id="root">
+	<!-- code here.. -->
+</template>
+
+<template id="element">
+	<!-- code here.. -->
+</template>
+````
+
+this file need to be expose on web and accesable from a static url like assets, see more information in API - Reference - Integration.
+you can attach this file to your component like that :
+
+> index.html
+```html
+<div is="jc-sample"></div>
+
+<script type='text/javascript'>
+  import Sample from './Sample.js'
+  Sample.define('templates/Sample.html')
+</script>
+````
+
+
 ## Lifecycle
 
 Jellycat components have lifecycle, start to `down` and go to `up`, each state perform different actions. You have to use this three lifecycle to develop your component : `init`, `render`, `behavior`. refere to API References - lifecycle to have more informations about each lifecycle.
