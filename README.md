@@ -1,6 +1,6 @@
 
 ```console
-foo@bar:~$ npm i -S jellycat-component
+user@121: ~$ npm i -S jellycat-component
 ```
 
 ```js
