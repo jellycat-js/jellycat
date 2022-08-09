@@ -131,7 +131,7 @@ by default the template with id "**root**" will be use as root html for your com
 <jc-sample template="custom"></js-sample>
 ````
 
-all templates element in file will be passed to define method will be accesable with drawTemplate method during the render lyfecycle of the component.
+all templates element in file will be passed to define method will be accesable with drawTemplate method since the render lyfecycle of the component.
 
 ```js
 export default class Sample extends JcComponent
@@ -155,12 +155,7 @@ export default class Sample extends JcComponent
   ...
   init()
   {
-    // code here..
-  }
-
-  behavior()
-  {
-    // code here..
+    let data = this.fetchData('GET', url)
   }
 }
 ````
@@ -198,11 +193,6 @@ available options are :
 > index.html
 ```html
 <jc-sample options="<!-- optionsJson -->"></js-sample>
-
-<script type='text/javascript'>
-  import Sample from './Sample.js'
-  Sample.define('templates/Sample.html')
-</script>
 ````
 
 ````

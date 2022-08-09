@@ -231,9 +231,7 @@ mixins.providing = function(superclass)
 		{
 			try
 			{
-				if (this.currentLifeCycleIndex < this.keyLifeCycle.indexOf('init')) {
-					throw new Error(`You cannot use fetchData method before init step (current state: ${this.currentLifeCycle}) of lifeCycle of ${this.name}`)
-				}
+				this._checkLifeCycle('init', 'fetchData')
 
 				const response = await fetch(url, { 
 					method: method, 
