@@ -35,16 +35,15 @@ export default class Sample extends JcComponent
 }
 ```
 
-> index.js
-```js
-import Sample from './Sample.js'
-// ...
-Sample.define()
-```
-
 > index.html
 ```html
 <jc-sample></jc-sample>
+
+<script type='text/javascript'>
+	import Sample from './Sample.js'
+	// ...
+	Sample.define()
+</script>
 ```
 
 ## Extends from HTML ancestors
@@ -70,16 +69,15 @@ import { JcDivComponent } from 'jellycat-component'
 export default class Sample extends JcDivComponent { ... }
 ````
 
-> index.js
-```js
-import Sample from './Sample.js'
-// ...
-Sample.define()
-````
-
 > index.html
 ```html
 <div is="jc-sample"></div>
+
+<script type='text/javascript'>
+	import Sample from './Sample.js'
+	// ...
+	Sample.define()
+</script>
 ````
 
 ## Lifecycle
