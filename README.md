@@ -47,7 +47,7 @@ index.html
 
 ## lifecycle
 
-Jellycat components have lifecycle, start to down and go to up, each state perform different actions. You have to use this three lifecycle to develop your component : init, render, behavior. refere to API References - lifecycle to have more informations about each lifecycle.
+Jellycat components have lifecycle, start to `down` and go to `up`, each state perform different actions. You have to use this three lifecycle to develop your component : `init`, `render`, `behavior`. refere to API References - lifecycle to have more informations about each lifecycle.
 
 ```mermaid
 graph LR
