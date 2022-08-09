@@ -197,7 +197,7 @@ available options are :
 
 > index.html
 ```html
-<jc-sample options='{ "debug": true }'></js-sample>
+<jc-sample options="<!-- optionsJson -->"></js-sample>
 
 <script type='text/javascript'>
   import Sample from './Sample.js'
