@@ -7,8 +7,8 @@ user@121: ~$ npm i -S jellycat-component
 
 ## Getting started
 
+Sample.js
 ```js
-// Sample.js
 import { JcComponent } from 'jellycat-component'
 
 export default class Sample extends JcComponent
@@ -33,44 +33,45 @@ export default class Sample extends JcComponent
 }
 ````
 
+index.js
 ```js
-// index.js
 import Sample from './Sample.js'
 // ...
 Dropdown.define()
-
 ````
 
-component :
-JcComponent
-JcDivComponent
-JcSpanComponent
-JcUlComponent
-JcLiComponent
-JcPComponent
-JcLabelComponent
-JcInputComponent
-JcTextareaComponent
-Static method define()
+## API References
 
-lifecycle:
-Method init()
-Method render()
-Method behavior()
-Method currentLifeCycleIndex()
+### component
+-JcComponent
+-JcDivComponent
+-JcSpanComponent
+-JcUlComponent
+-JcLiComponent
+-JcPComponent
+-JcLabelComponent
+-JcInputComponent
+-JcTextareaComponent
+-Static method define()
 
-templating:
-template
-draw
-drawElement
+### lifecycle
+-Method init()
+-Method render()
+-Method behavior()
+-Method currentLifeCycleIndex()
 
-providing:
-loading
-fetchData
+### templating:
+-template
+-draw
+-drawElement
 
-options:
-options
+### providing:
+-loading
+-fetchData
 
-Mycelaneous:
-methods
-drawFaIcon
+### options:
+-options
+
+### Mycelaneous:
+-methods
+-drawFaIcon
