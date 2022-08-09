@@ -78,6 +78,23 @@ export default class Sample extends JcDivComponent { ... }
 </script>
 ````
 
+## Lifecycle
+
+Jellycat components have lifecycle, start to `down` and go to `up`, each state perform different actions. You have to use this three lifecycle to develop your component : `init`, `render`, `behavior`. refere to API References - lifecycle to have more informations about each lifecycle.
+
+```mermaid
+graph LR
+down0(["DOWN"])
+init1["INIT"]
+render2["RENDER"]
+behavior3["BEHAVIOR"]
+up4(["UP"])
+down0-->init1
+init1-->render2
+render2-->behavior3
+behavior3-->up4
+```
+
 ## Templating
 
 Jellycat Component come with template engine that you can use to manage html of your component
@@ -144,31 +161,13 @@ export default class Sample extends JcComponent
   {
     // code here..
   }
-  
+
   behavior()
   {
     // code here..
   }
 }
 ````
-
-## Lifecycle
-
-Jellycat components have lifecycle, start to `down` and go to `up`, each state perform different actions. You have to use this three lifecycle to develop your component : `init`, `render`, `behavior`. refere to API References - lifecycle to have more informations about each lifecycle.
-
-```mermaid
-graph LR
-down0(["DOWN"])
-init1["INIT"]
-render2["RENDER"]
-behavior3["BEHAVIOR"]
-up4(["UP"])
-down0-->init1
-init1-->render2
-render2-->behavior3
-behavior3-->up4
-```
-
 
 ## API References
 
