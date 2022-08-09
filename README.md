@@ -13,22 +13,22 @@ import { JcComponent } from 'jellycat-component'
 
 export default class Sample extends JcComponent
 {
-	constructor() { super() }
+  constructor() { super() }
 
-	init()
-	{
-		// code here..
-	}
+  init()
+  {
+    // code here..
+  }
 
-	render()
-	{
-		// code here..
-	}
+  render()
+  {
+    // code here..
+  }
 
-	behavior()
-	{
-		// code here..
-	}
+  behavior()
+  {
+    // code here..
+  }
 
 }
 ````
