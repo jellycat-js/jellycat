@@ -19,7 +19,13 @@ body {
     font-size: 1rem;
 }
 
-section {
+.section-example {
+    width: 100vw;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.section-example__component > div {
     position: relative;
     display: flex;
     flex-direction: column-reverse;
@@ -31,6 +37,7 @@ section {
 }
 
 button, ul, li, a, p {
+    background-color: transparent;
     text-decoration: none;
     list-style-type: none;
     border: none;

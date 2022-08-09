@@ -105,7 +105,7 @@ var JellycatComponent = (function (exports) {
 	    }
 
 	    async _render() {
-	      if (this.constructor.name in Jellycat._cache) {
+	      if (this.constructor.name in Jellycat._cache && this.options.autoRender === 'root') {
 	        if (this.children.length > 0) this.innerHTML = "";
 	        this.appendChild(this.draw());
 	      }
@@ -162,7 +162,29 @@ var JellycatComponent = (function (exports) {
 	    }
 
 	  };
-	};
+	}; // mixins.scoping = function(superclass)
+	// {
+	// 	return class extends superclass
+	// 	{
+	// 		scope(ref = false)
+	// 		{
+	// 			return !ref ? Jellycat._scope : (Jellycat._scope[ref] || undefined)
+	// 		}
+	// 		expose(ref, prop)
+	// 		{
+	// 			if (prop.constructor === String && prop in this) {
+	// 				Jellycat._scope[ref] = new Proxy(this[prop], {
+	// 					set: (obj, key, value) => {
+	// 						if (key in obj) return false
+	// 						obj[key] = _ => this[key]
+	// 					    return true;
+	// 					}
+	// 				})
+	// 			} else { Jellycat._scope[ref] = prop }
+	// 		}
+	// 	}
+	// }
+
 
 	mixins.providing = function (superclass) {
 	  return class extends superclass {
@@ -205,8 +227,8 @@ var JellycatComponent = (function (exports) {
 	      debug: false,
 	      autoRender: 'root'
 	    };
-	    this._instances = {};
 	    this._scope = {};
+	    this._instances = {};
 	    this._cache = {};
 	    this._factory = {
 	      JcComponent: class JcComponent extends _(HTMLElement).with(...Object.values(mixins)) {
@@ -257,6 +279,20 @@ var JellycatComponent = (function (exports) {
 	        }
 
 	        _tag = 'label';
+	      },
+	      JcInputComponent: class JcInputComponent extends _(HTMLInputElement).with(...Object.values(mixins)) {
+	        constructor() {
+	          super();
+	        }
+
+	        _tag = 'input';
+	      },
+	      JcTextareaComponent: class JcTextareaComponent extends _(HTMLTextAreaElement).with(...Object.values(mixins)) {
+	        constructor() {
+	          super();
+	        }
+
+	        _tag = 'textarea';
 	      }
 	    };
 	  }
@@ -301,15 +337,19 @@ var JellycatComponent = (function (exports) {
 	  JcUlComponent,
 	  JcLiComponent,
 	  JcPComponent,
-	  JcLabelComponent
+	  JcLabelComponent,
+	  JcInputComponent,
+	  JcTextareaComponent
 	} = Jellycat._factory;
 
 	exports.JcComponent = JcComponent;
 	exports.JcDivComponent = JcDivComponent;
+	exports.JcInputComponent = JcInputComponent;
 	exports.JcLabelComponent = JcLabelComponent;
 	exports.JcLiComponent = JcLiComponent;
 	exports.JcPComponent = JcPComponent;
 	exports.JcSpanComponent = JcSpanComponent;
+	exports.JcTextareaComponent = JcTextareaComponent;
 	exports.JcUlComponent = JcUlComponent;
 
 	Object.defineProperty(exports, '__esModule', { value: true });

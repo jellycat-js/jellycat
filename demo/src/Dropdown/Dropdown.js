@@ -17,7 +17,7 @@ export default class Dropdown extends JcComponent
 	}
 
 	get items() {
-		const items = JSON.parse(this.getAttribute('items'))
+		const items = JSON.parse(decodeURI(this.getAttribute('items')))
 		this.removeAttribute('items')
 		return items
 	}
@@ -47,11 +47,7 @@ export default class Dropdown extends JcComponent
 	async init()
 	{
 		this.baseHTML = this.innerHTML
-		this.icons = { active: null, inactive: null }	
-
-		// let data = await this.fetchData('https://jsonplaceholder.typicode.com/posts')
-		// console.log(data)
-
+		this.icons = { active: null, inactive: null }
 		return true
 	}
 

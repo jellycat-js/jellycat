@@ -14,7 +14,8 @@
   "author": "Louis-Antoine Lumet",
   "license": "GNU",
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^6.1.1"
+    "@fortawesome/fontawesome-free": "^6.1.1",
+    "highlight.js": "^11.5.1"
   },
   "devDependencies": {
     "parcel": "^2.6.2"

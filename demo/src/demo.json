@@ -1,0 +1,38 @@
+{
+	"items_field" : [
+        { 
+            "label" : "France",    
+            "value" : "france",
+            "selected" : true
+        },
+        { 
+            "label" : "Allemagne", 
+            "value" : "allemagne",
+            "selected" : false
+        },
+        {
+            "label" : "Russie",    
+            "value" : "russie",
+            "selected" : false
+        },
+        { 
+            "label" : "Italie",    
+            "value" : "italie",
+            "selected" : false
+        }
+    ],
+    "items_menu" : [
+        {
+            "label" : "home",    
+            "link" : "#home"
+        },
+        {
+            "label" : "about",   
+            "link" : "#about"
+        },
+        {
+            "label" : "contact", 
+            "link" : "#contact"
+        }
+    ]
+}
