@@ -103,11 +103,13 @@ make and html file with some template inside :
 > Sample.html
 ```html
 <template id="root">
-	<!-- code here.. -->
+	<div class="container">
+		...
+	</div>
 </template>
 
 <template id="custom">
-	<!-- code here.. -->
+	<p>Hello World !</p>
 </template>
 ````
 
@@ -145,7 +147,7 @@ export default class Sample extends JcComponent
   render()
   {
     let template = this.drawTemplate('custom')
-    this.appendChild(template)
+    this.querySelector('.container').appendChild(template)
   }
 }
 ````
