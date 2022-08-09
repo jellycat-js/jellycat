@@ -137,7 +137,6 @@ all templates element in file will be passed to define method will be accesable 
 ```js
 export default class Sample extends JcComponent
 {
-  ...
   render()
   {
     let template = this.drawTemplate('custom')
@@ -154,7 +153,6 @@ Jellycat Component can perform HTTP request to load data or use some api or back
 ```js
 export default class Sample extends JcComponent
 {
-  ...
   init()
   {
     let data = this.fetchData('GET', url)
