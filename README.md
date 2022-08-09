@@ -62,11 +62,20 @@ to use this feature yo have to extend your component from one of this class in p
 
 Example to use div tagname :
 
+Sample.js
 ```js
-// This is an 
 import { JcDivComponent } from 'jellycat-component'
-export default class Sample extends JcComponent { ... }
+export default class Sample extends JcDivComponent { ... }
 ````
+
+index.js
+```js
+import Sample from './Sample.js'
+// ...
+Sample.define()
+````
+
+index.html
 ```html
 <div is="jc-sample"></div>
 ````
