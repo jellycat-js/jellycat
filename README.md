@@ -1,7 +1,11 @@
+# Jellycat Component
 
+## Installation
 ```console
 user@121: ~$ npm i -S jellycat-component
 ```
+
+## Getting started
 
 ```js
 // Sample.js
@@ -10,6 +14,22 @@ import { JcComponent } from 'jellycat-component'
 export default class Sample extends JcComponent
 {
 	constructor() { super() }
+
+	init()
+	{
+		// code here..
+	}
+
+	render()
+	{
+		// code here..
+	}
+
+	behavior()
+	{
+		// code here..
+	}
+
 }
 ````
 
