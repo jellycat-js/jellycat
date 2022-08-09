@@ -2,7 +2,7 @@
 
 ## Installation
 ```console
-user@121: ~$ npm i -S jellycat-component
+$ npm i -S jellycat-component
 ```
 
 ## Getting started
@@ -45,7 +45,7 @@ index.html
 <jc-sample></jc-sample>
 ````
 
-## lifecycle
+## Lifecycle
 
 Jellycat components have lifecycle, start to `down` and go to `up`, each state perform different actions. You have to use this three lifecycle to develop your component : `init`, `render`, `behavior`. refere to API References - lifecycle to have more informations about each lifecycle.
 
