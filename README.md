@@ -7,7 +7,7 @@ $ npm i -S jellycat-component
 
 ## Getting started
 
-Sample.js
+> Sample.js
 ```js
 import { JcComponent } from 'jellycat-component'
 
@@ -33,14 +33,14 @@ export default class Sample extends JcComponent
 }
 ````
 
-index.js
+> index.js
 ```js
 import Sample from './Sample.js'
 // ...
 Sample.define()
 ````
 
-index.html
+> index.html
 ```html
 <jc-sample></jc-sample>
 ````
@@ -62,20 +62,20 @@ to use this feature yo have to extend your component from one of this class in p
 
 ### Example
 
-Sample.js
+> Sample.js
 ```js
 import { JcDivComponent } from 'jellycat-component'
 export default class Sample extends JcDivComponent { ... }
 ````
 
-index.js
+> index.js
 ```js
 import Sample from './Sample.js'
 // ...
 Sample.define()
 ````
 
-index.html
+> index.html
 ```html
 <div is="jc-sample"></div>
 ````
