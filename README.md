@@ -61,23 +61,37 @@ index.html
 - Static method define()
 
 ### lifecycle
-- Method init()
-- Method render()
-- Method behavior()
+
+```mermaid
+graph LR
+down0(("DOWN"))
+init1(["INIT"])
+render2(["RENDER"])
+behavior3(["BEHAVIOR"])
+up4(("UP"))
+down0-->|"next"|init1
+init1-->|"next"|render2
+render2-->|"next"|behavior3
+behavior3-->|"next"|up4
+```
+
+- Async method init()
+- Async method render()
+- Async method behavior()
 - Method currentLifeCycleIndex()
 
 ### templating:
-- template
-- draw
-- drawElement
+- Property template
+- Method draw
+- Method drawElement
 
 ### providing:
-- loading
-- fetchData
+- Property loading
+- Async method fetchData
 
 ### options:
-- options
+- Property options
 
 ### Mycelaneous:
-- methods
-- drawFaIcon
+- Method methods
+- Method drawFaIcon
