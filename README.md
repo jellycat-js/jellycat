@@ -174,6 +174,39 @@ available options are :
 - prefix
 - autoRender
 
+> index.html
+```html
+<jc-sample></js-sample>
+
+<script type='text/javascript'>
+  import Sample from './Sample.js'
+  Jellycat.options({ debug: true })
+  Sample.define('templates/Sample.html')
+</script>
+````
+
+> index.html
+```html
+<jc-sample></js-sample>
+
+<script type='text/javascript'>
+  import Sample from './Sample.js'
+  Sample.define('templates/Sample.html', { debug: true })
+</script>
+````
+
+> index.html
+```html
+<jc-sample options='{ "debug": true }'></js-sample>
+
+<script type='text/javascript'>
+  import Sample from './Sample.js'
+  Sample.define('templates/Sample.html')
+</script>
+````
+
+````
+
 ## API References
 
 ### component
