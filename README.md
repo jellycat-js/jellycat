@@ -45,6 +45,32 @@ index.html
 <jc-sample></jc-sample>
 ````
 
+## Extends from HTML ancestors
+
+If you prefere keep html default tagname, Jellycat Component let you use the "##is##" attribute.
+HTML tagnames supported are : div, span, ul, li, p, label, input, textarea.
+to use this feature yo have to extend your component from one of this class in place of JcComponent :
+
+- JcDivComponent
+- JcSpanComponent
+- JcUlComponent
+- JcLiComponent
+- JcPComponent
+- JcLabelComponent
+- JcInputComponent
+- JcTextareaComponent
+
+Example to use div tagname :
+
+```js
+// This is an 
+import { JcDivComponent } from 'jellycat-component'
+export default class Sample extends JcComponent { ... }
+````
+```html
+<div is="jc-sample"></div>
+````
+
 ## Lifecycle
 
 Jellycat components have lifecycle, start to `down` and go to `up`, each state perform different actions. You have to use this three lifecycle to develop your component : `init`, `render`, `behavior`. refere to API References - lifecycle to have more informations about each lifecycle.
