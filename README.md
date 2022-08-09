@@ -47,8 +47,8 @@ index.html
 
 ## Extends from HTML ancestors
 
-If you prefere keep html default tagname, Jellycat Component let you use the "##is##" attribute.
-HTML tagnames supported are : div, span, ul, li, p, label, input, textarea.
+If you prefere keep html default tagname, Jellycat Component let you use the "**is**" attribute.
+HTML tagnames supported are : `div`, `span`, `ul`, `li`, `p`, `label`, `input`, `textarea`.
 to use this feature yo have to extend your component from one of this class in place of JcComponent :
 
 - JcDivComponent
