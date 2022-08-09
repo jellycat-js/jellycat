@@ -136,7 +136,7 @@ by default the template with id "**root**" will be use as root html for your com
 </script>
 ````
 
-all templates element in file will be passed to define method will be accesable with draw method during the render lyfecycle of the component.
+all templates element in file will be passed to define method will be accesable with drawTemplate method during the render lyfecycle of the component.
 
 ```js
 export default class Sample extends JcComponent
@@ -144,7 +144,8 @@ export default class Sample extends JcComponent
   ...
   render()
   {
-    // code here..
+    let template = this.drawTemplate('custom')
+    this.appendChild(template)
   }
 }
 ````

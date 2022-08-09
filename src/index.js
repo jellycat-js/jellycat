@@ -123,6 +123,13 @@ mixins.lifeCycling = function(superclass)
 		{
 			return [ Jellycat._scope ]
 		}
+
+		_checkLifeCycle(minLifeCycle, methodName)
+		{
+			if (this.currentLifeCycleIndex < this.keyLifeCycle.indexOf(minLifeCycle))  {
+				throw new Error(`You cannot use ${methodName} method before render ${minLifeCycle} (current state: ${this.currentLifeCycle}) of lifeCycle of ${this.constructor.name}`)
+			}
+		}
 	}
 }
 
@@ -141,9 +148,7 @@ mixins.rendering = function(superclass)
 
 		draw(template = false)
 		{
-			if (this.currentLifeCycleIndex < this.keyLifeCycle.indexOf('render'))  {
-				throw new Error(`You cannot use draw method before render step (current state: ${this.currentLifeCycle}) of lifeCycle of ${this.constructor.name}`)
-			}
+			this._checkLifeCycle('render', 'draw')
 
 			const name = !template ? (this.template == null ? 'root' : this.template) : template
 			return Jellycat._cache[this.constructor.name].templates[name].content.cloneNode(true)
@@ -151,6 +156,8 @@ mixins.rendering = function(superclass)
 
 		drawElement(tagname, attrs = {}, children = [])
 		{
+			this._checkLifeCycle('render', 'drawElement')
+
 			const element = document.createElement(tagname)
 			for (const [key, value] of Object.entries(attrs)) { element.setAttribute(key, value) }
 
@@ -160,6 +167,12 @@ mixins.rendering = function(superclass)
 			)
 
 			return element
+		}
+
+		drawTemplate(name)
+		{
+			this._checkLifeCycle('render', 'drawTemplate')
+			return Jellycat._cache[this.constructor.name].templates[name].content.cloneNode(true)
 		}
 
 		drawFaIcon(name, rootClass = 'fa-solid')
