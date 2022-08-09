@@ -89,7 +89,7 @@ make and html file with some template inside :
 	<!-- code here.. -->
 </template>
 
-<template id="element">
+<template id="custom">
 	<!-- code here.. -->
 </template>
 ````
@@ -99,7 +99,7 @@ you can attach this file to your component like that :
 
 > index.html
 ```html
-<div is="jc-sample"></div>
+<jc-sample></js-sample>
 
 <script type='text/javascript'>
   import Sample from './Sample.js'
@@ -107,6 +107,50 @@ you can attach this file to your component like that :
 </script>
 ````
 
+by default the template with id "**root**" will be use as root html for your component but if your prefere set custom id you can use "*template*" attribute on component to specify id manualely.
+
+> index.html
+```html
+<jc-sample template="custom"></js-sample>
+
+<script type='text/javascript'>
+  import Sample from './Sample.js'
+  Sample.define('templates/Sample.html')
+</script>
+````
+
+all templates element in file will be passed to define method will be accesable with draw method during the render lyfecycle of the component.
+
+```js
+export default class Sample extends JcComponent
+{
+  ...
+  render()
+  {
+    // code here..
+  }
+}
+````
+
+## Providing data
+
+Jellycat Component can perform HTTP request to load data or use some api or backend
+
+```js
+export default class Sample extends JcComponent
+{
+  ...
+  init()
+  {
+    // code here..
+  }
+  
+  behavior()
+  {
+    // code here..
+  }
+}
+````
 
 ## Lifecycle
 
