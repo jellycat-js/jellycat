@@ -129,11 +129,6 @@ by default the template with id "**root**" will be use as root html for your com
 > index.html
 ```html
 <jc-sample template="custom"></js-sample>
-
-<script type='text/javascript'>
-  import Sample from './Sample.js'
-  Sample.define('templates/Sample.html')
-</script>
 ````
 
 all templates element in file will be passed to define method will be accesable with drawTemplate method during the render lyfecycle of the component.
