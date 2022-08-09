@@ -103,9 +103,7 @@ make and html file with some template inside :
 > Sample.html
 ```html
 <template id="root">
-  <div class="container">
-    ...
-  </div>
+  <div class="container"></div>
 </template>
 
 <template id="custom">
