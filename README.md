@@ -37,41 +37,47 @@ index.js
 ```js
 import Sample from './Sample.js'
 // ...
-Dropdown.define()
+Sample.define()
 ````
+
+index.html
+```html
+<jc-sample></jc-sample>
+````
+
 
 ## API References
 
 ### component
--JcComponent
--JcDivComponent
--JcSpanComponent
--JcUlComponent
--JcLiComponent
--JcPComponent
--JcLabelComponent
--JcInputComponent
--JcTextareaComponent
--Static method define()
+- JcComponent
+- JcDivComponent
+- JcSpanComponent
+- JcUlComponent
+- JcLiComponent
+- JcPComponent
+- JcLabelComponent
+- JcInputComponent
+- JcTextareaComponent
+- Static method define()
 
 ### lifecycle
--Method init()
--Method render()
--Method behavior()
--Method currentLifeCycleIndex()
+- Method init()
+- Method render()
+- Method behavior()
+- Method currentLifeCycleIndex()
 
 ### templating:
--template
--draw
--drawElement
+- template
+- draw
+- drawElement
 
 ### providing:
--loading
--fetchData
+- loading
+- fetchData
 
 ### options:
--options
+- options
 
 ### Mycelaneous:
--methods
--drawFaIcon
+- methods
+- drawFaIcon
