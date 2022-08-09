@@ -133,6 +133,7 @@ by default the template with id "**root**" will be use as root html for your com
 
 all templates element in file will be passed to define method will be accesable with drawTemplate method since the render lyfecycle of the component.
 
+> Sample.js
 ```js
 export default class Sample extends JcComponent
 {
@@ -149,6 +150,7 @@ export default class Sample extends JcComponent
 
 Jellycat Component can perform HTTP request to load data or use some api or backend
 
+> Sample.js
 ```js
 export default class Sample extends JcComponent
 {
@@ -193,8 +195,6 @@ available options are :
 > index.html
 ```html
 <jc-sample options="<!-- optionsJson -->"></js-sample>
-````
-
 ````
 
 ## API References
