@@ -7,6 +7,8 @@ $ npm i -S jellycat-component
 
 ## Getting started
 
+Minimal naked component look like this :
+
 > Sample.js
 ```js
 import { JcComponent } from 'jellycat-component'
@@ -31,19 +33,19 @@ export default class Sample extends JcComponent
   }
 
 }
-````
+```
 
 > index.js
 ```js
 import Sample from './Sample.js'
 // ...
 Sample.define()
-````
+```
 
 > index.html
 ```html
 <jc-sample></jc-sample>
-````
+```
 
 ## Extends from HTML ancestors
 
