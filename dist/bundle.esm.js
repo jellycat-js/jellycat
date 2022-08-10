@@ -114,6 +114,12 @@ mixins.lifeCycling = function (superclass) {
       return [Jellycat._scope];
     }
 
+    _checkLifeCycle(minLifeCycle, methodName) {
+      if (this.currentLifeCycleIndex < this.keyLifeCycle.indexOf(minLifeCycle)) {
+        throw new Error(`You cannot use ${methodName} method before render ${minLifeCycle} (current state: ${this.currentLifeCycle}) of lifeCycle of ${this.constructor.name}`);
+      }
+    }
+
   };
 };
 
@@ -129,15 +135,15 @@ mixins.rendering = function (superclass) {
     }
 
     draw(template = false) {
-      if (this.currentLifeCycleIndex < this.keyLifeCycle.indexOf('render')) {
-        throw new Error(`You cannot use draw method before render step (current state: ${this.currentLifeCycle}) of lifeCycle of ${this.constructor.name}`);
-      }
+      this._checkLifeCycle('render', 'draw');
 
       const name = !template ? this.template == null ? 'root' : this.template : template;
       return Jellycat._cache[this.constructor.name].templates[name].content.cloneNode(true);
     }
 
     drawElement(tagname, attrs = {}, children = []) {
+      this._checkLifeCycle('render', 'drawElement');
+
       const element = document.createElement(tagname);
 
       for (const [key, value] of Object.entries(attrs)) {
@@ -146,6 +152,12 @@ mixins.rendering = function (superclass) {
 
       children.forEach(child => typeof child === 'string' ? element.textContent = child : element.appendChild(child));
       return element;
+    }
+
+    drawTemplate(name) {
+      this._checkLifeCycle('render', 'drawTemplate');
+
+      return Jellycat._cache[this.constructor.name].templates[name].content.cloneNode(true);
     }
 
     drawFaIcon(name, rootClass = 'fa-solid') {
@@ -196,9 +208,7 @@ mixins.providing = function (superclass) {
 
     async fetchData(url, method = 'GET', data = false) {
       try {
-        if (this.currentLifeCycleIndex < this.keyLifeCycle.indexOf('init')) {
-          throw new Error(`You cannot use fetchData method before init step (current state: ${this.currentLifeCycle}) of lifeCycle of ${this.name}`);
-        }
+        this._checkLifeCycle('init', 'fetchData');
 
         const response = await fetch(url, {
           method: method,
