@@ -144,7 +144,7 @@
 	      this._checkLifeCycle('render', 'draw');
 
 	      const name = !template ? this.template == null ? 'root' : this.template : template;
-	      return Jellycat._cache[this.constructor.name].templates[name].content.cloneNode(true);
+	      return name in Jellycat._cache[this.constructor.name].templates ? Jellycat._cache[this.constructor.name].templates[name].content.cloneNode(true) : '';
 	    }
 
 	    drawElement(tagname, attrs = {}, children = []) {
