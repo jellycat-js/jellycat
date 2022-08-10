@@ -22,7 +22,7 @@ mixins.abstract = function(superclass)
 
 		static async define(templateUrl = false, options = {})
 		{
-			if (templateUrl) await Jellycat._cacheSet(this.name, templateUrl, options)
+			await Jellycat._cacheSet(this.name, templateUrl, options)
 
 			const prefix = Jellycat._cache[this.name].options.prefix !== undefined 
 				? Jellycat._cache[this.name].options.prefix 
