@@ -22,14 +22,11 @@ mixins.abstract = function(superclass)
 
 		static async define(templateUrl = false, options = {})
 		{
-			if (templateUrl) {
+			if (templateUrl) await Jellycat._cacheSet(this.name, templateUrl, options)
 
-				await Jellycat._cacheSet(this.name, templateUrl, options)
-
-				const prefix = Jellycat._cache[this.name].options.prefix !== undefined 
-					? Jellycat._cache[this.name].options.prefix 
-					: Jellycat._options.prefix
-			}
+			const prefix = Jellycat._cache[this.name].options.prefix !== undefined 
+				? Jellycat._cache[this.name].options.prefix 
+				: Jellycat._options.prefix
 
 			if (customElements.get(`${prefix}-${this.name.toLowerCase()}`) === undefined) {
 				customElements.define(`${prefix}-${this.name.toLowerCase()}`, this, this._tag ? { extends: this._tag }  : {})
