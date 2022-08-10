@@ -104,7 +104,8 @@ mixins.lifeCycling = function (superclass) {
     async _render() {
       if (this.constructor.name in Jellycat._cache && this.options.autoRender === 'root') {
         if (this.children.length > 0) this.innerHTML = "";
-        this.appendChild(this.draw());
+        let template = this.draw();
+        if (template) this.appendChild(template);
       }
 
       return [];
@@ -138,7 +139,7 @@ mixins.rendering = function (superclass) {
       this._checkLifeCycle('render', 'draw');
 
       const name = !template ? this.template == null ? 'root' : this.template : template;
-      return name in Jellycat._cache[this.constructor.name].templates ? Jellycat._cache[this.constructor.name].templates[name].content.cloneNode(true) : '';
+      return name in Jellycat._cache[this.constructor.name].templates ? Jellycat._cache[this.constructor.name].templates[name].content.cloneNode(true) : false;
     }
 
     drawElement(tagname, attrs = {}, children = []) {
