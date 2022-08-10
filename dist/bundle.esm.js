@@ -18,9 +18,11 @@ mixins.abstract = function (superclass) {
       return Reflect.ownKeys(reflect).filter(m => m !== 'constructor');
     }
 
-    static async define(templateUrl, options = {}) {
-      await Jellycat._cacheSet(this.name, templateUrl, options);
-      const prefix = Jellycat._cache[this.name].options.prefix !== undefined ? Jellycat._cache[this.name].options.prefix : Jellycat._options.prefix;
+    static async define(templateUrl = false, options = {}) {
+      if (templateUrl) {
+        await Jellycat._cacheSet(this.name, templateUrl, options);
+        Jellycat._cache[this.name].options.prefix !== undefined ? Jellycat._cache[this.name].options.prefix : Jellycat._options.prefix;
+      }
 
       if (customElements.get(`${prefix}-${this.name.toLowerCase()}`) === undefined) {
         customElements.define(`${prefix}-${this.name.toLowerCase()}`, this, this._tag ? {

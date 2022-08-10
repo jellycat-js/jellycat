@@ -2,7 +2,7 @@
 
 ## Installation
 ```console
-$ npm i -S jellycat-component
+$ npm i -S @cxxi/jellycat-component
 ```
 
 ## Getting started
@@ -11,25 +11,31 @@ Minimal naked component look like this :
 
 > Sample.js
 ```js
-import { JcComponent } from 'jellycat-component'
+import { JcComponent } from '@cxxi/jellycat-component'
 
 export default class Sample extends JcComponent
 {
   constructor() { super() }
 
-  init()
+  async init()
   {
     // code here..
+
+    return true
   }
 
-  render()
+  async render()
   {
     // code here..
+
+    return true
   }
 
-  behavior()
+  async behavior()
   {
     // code here..
+
+    return true
   }
 
 }
