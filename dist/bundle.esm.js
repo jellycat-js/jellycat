@@ -211,12 +211,15 @@ mixins.providing = function (superclass) {
       try {
         this._checkLifeCycle('init', 'fetchData');
 
+        let headers = {
+          "X-Requested-With": "XMLHttpRequest",
+          "accept": "application/json"
+        }; // TO DO
+
+        if (Jellycat._token) headers[Jellycat._token.key] = Jellycat._token.value;
         const response = await fetch(url, {
           method: method,
-          headers: new Headers({
-            "X-Requested-With": "XMLHttpRequest",
-            "accept": "application/json"
-          })
+          headers: new Headers(headers)
         });
         if (response.status >= 300) throw new Error(`Fetch error : ${args[0]}`);
         return await response.json();
