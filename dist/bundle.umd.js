@@ -213,23 +213,6 @@
 	      return true;
 	    }
 
-	    async authenticate(url, credentials, authScheme = null, key = 'Authorization') {
-	      // https://www.iana.org/assignments/http-authschemes/http-authschemes.xhtml
-	      //https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication
-	      if (authScheme != null) {
-	        const authSchemes = ['Basic', 'Bearer', 'Digest', 'HOBA', 'Mutual', 'Negotiate', 'OAuth', 'SCRAM-SHA-1', 'SCRAM-SHA-256', 'vapid'];
-	        if (!authSchemes.includes(authScheme)) throw new Error(`Authenticate error : http-authschemes not supported.`);
-	      }
-
-	      const response = await this.fetchData(url, 'POST', credentials);
-	      const value = authScheme != null ? `${authScheme} ${response.token}` : response.token;
-	      Jellycat._token = {
-	        key: key,
-	        value: value
-	      };
-	      return true;
-	    }
-
 	    async fetchData(url, method = 'GET', data = false) {
 	      try {
 	        this._checkLifeCycle('init', 'fetchData');
@@ -261,12 +244,12 @@
 	        headers: this._buildHeaders()
 	      };
 
-	      if (typeof Jellycat._options.fetchMode == 'string') {
-	        requestObj.mode = Jellycat._options.fetchMode;
+	      if (Jellycat._options.fetch.mode != undefined) {
+	        requestObj.mode = Jellycat._options.fetch.mode;
 	      }
 
-	      if (typeof Jellycat._options.fetchCache == 'string') {
-	        requestObj.cache = Jellycat._options.fetchCache;
+	      if (Jellycat._options.fetch.cache != undefined) {
+	        requestObj.cache = Jellycat._options.fetch.cache;
 	      }
 
 	      if (data !== false) requestObj.body = data;
@@ -281,7 +264,9 @@
 	    this._options = {
 	      prefix: 'jc',
 	      debug: false,
-	      autoRender: 'root'
+	      autoRender: 'root',
+	      auth: {},
+	      fetch: {}
 	    };
 	    this._scope = {};
 	    this._instances = {};
@@ -356,6 +341,19 @@
 	  options(options = {}) {
 	    if (typeof options !== 'object') throw new Error('Options must take object as parameter type');
 	    this._options = Object.assign(this._options, options);
+	    return this;
+	  }
+
+	  async authenticate(credentials = {}) {
+	    if (this._options.auth.url === undefined) {
+	      throw new Error('You must define options auth.url first to use authenticate method');
+	    }
+
+	    const response = await this.fetchData(this._options.auth.url, 'POST', JSON.stringify(credentials));
+	    this._token = {
+	      key: this._options.auth.header != undefined ? this._options.auth.header : 'Authorization',
+	      value: this._options.auth.type != undefined ? `${this._options.auth.type} ${response.token}` : response.token
+	    };
 	  }
 
 	  async _cacheSet(name, templateUrl = false, options = {}) {
