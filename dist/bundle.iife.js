@@ -337,6 +337,12 @@ var JellycatComponent = (function (exports) {
 	      headers.append(this._token.key, this._token.value);
 	    }
 
+	    if (this._options.fetch.headers && this._options.fetch.headers.length > 0) {
+	      this._options.fetch.headers.forEach(header => {
+	        headers.has(header.key) ? headers.set(header.key, header.value) : headers.append(header.key, header.value);
+	      });
+	    }
+
 	    return headers;
 	  }
 
