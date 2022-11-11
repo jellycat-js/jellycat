@@ -231,29 +231,66 @@ mixins.providing = function(superclass)
 			return true
 		}
 
+		async authenticate(url, credentials, authScheme = null, key = 'Authorization')
+		{
+			// https://www.iana.org/assignments/http-authschemes/http-authschemes.xhtml
+			//https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication
+
+			if (authScheme != null) {
+				const authSchemes = ['Basic', 'Bearer', 'Digest', 'HOBA', 'Mutual', 'Negotiate', 'OAuth', 'SCRAM-SHA-1', 'SCRAM-SHA-256', 'vapid']
+				if (!authSchemes.includes(authScheme)) throw new Error(`Authenticate error : http-authschemes not supported.`)
+			}
+
+			const response = await this.fetchData(url, 'POST', JSON.stringify(credentials))
+			const value = authScheme != null ? `${authScheme} ${response.token}` : response.token
+
+			Jellycat._token = { key: key, value: value }
+			return true
+		}
+
 		async fetchData(url, method = 'GET', data = false)
 		{
 			try
 			{
 				this._checkLifeCycle('init', 'fetchData')
 
-				let headers = {
-					"X-Requested-With": "XMLHttpRequest",
-		        	"accept": "application/json"
-				}
+				const response = await fetch(url, this._buildRequest(method, data))
+				if (response.status >= 300) throw new Error(`Fetch error : ${JSON.stringify(response)}`)
 
-				// TO DO
-				if (Jellycat._token) headers[Jellycat._token.key] = Jellycat._token.value
-
-				const response = await fetch(url, { 
-					method: method, 
-					headers: new Headers(headers)
-				})
-
-				if (response.status >= 300) throw new Error(`Fetch error : ${args[0]}`)
 				return await response.json()
 
 			} catch(error) { console.log(error) }
+		}
+
+		_buildHeaders()
+		{
+			let headers = new Headers()
+
+			headers.append("X-Requested-With", "XmlHttpRequest")
+			headers.append("Accept", "application/json")
+
+			if (Jellycat._token) {
+				headers.append(Jellycat._token.key, Jellycat._token.value)
+			}
+
+			return headers
+		}
+
+		_buildRequest(method, data = false)
+		{
+			const request = { method: method, headers: this._buildHeaders() }
+
+			if (typeof Jellycat._options.fetchMode == 'string') {
+				request.mode = Jellycat._options.fetchMode
+			}
+
+			if (typeof Jellycat._options.fetchCache == 'string') {
+				request.cache = Jellycat._options.fetchCache
+			}
+
+			if (data !== false) request.body = data
+
+			return $request
 		}
 	}
 }
