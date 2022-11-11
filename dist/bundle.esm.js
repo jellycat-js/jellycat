@@ -215,7 +215,7 @@ mixins.providing = function (superclass) {
         if (!authSchemes.includes(authScheme)) throw new Error(`Authenticate error : http-authschemes not supported.`);
       }
 
-      const response = await this.fetchData(url, 'POST', JSON.stringify(credentials));
+      const response = await this.fetchData(url, 'POST', credentials);
       const value = authScheme != null ? `${authScheme} ${response.token}` : response.token;
       Jellycat._token = {
         key: key,
@@ -249,19 +249,21 @@ mixins.providing = function (superclass) {
     }
 
     _buildRequest(method, data = false) {
-      ({
+      let requestObj = {
         method: method,
         headers: this._buildHeaders()
-      });
+      };
 
       if (typeof Jellycat._options.fetchMode == 'string') {
-        Jellycat._options.fetchMode;
+        requestObj.mode = Jellycat._options.fetchMode;
       }
 
       if (typeof Jellycat._options.fetchCache == 'string') {
-        Jellycat._options.fetchCache;
+        requestObj.cache = Jellycat._options.fetchCache;
       }
-      return $request;
+
+      if (data !== false) requestObj.body = data;
+      return requestObj;
     }
 
   };
