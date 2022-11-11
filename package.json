@@ -1,7 +1,7 @@
 {
   "name": "@cxxi/jellycat-component",
   "type": "module",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "",
   "main": "dist/bundle.cjs.js",
   "module": "dist/bundle.esm.js",

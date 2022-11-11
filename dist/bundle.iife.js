@@ -310,7 +310,7 @@ var JellycatComponent = (function (exports) {
 	      throw new Error('You must define options auth.url first to use authenticate method');
 	    }
 
-	    const response = await this.fetchData(this._options.auth.url, 'POST', JSON.stringify(credentials));
+	    const response = await this._fetchData(this._options.auth.url, 'POST', JSON.stringify(credentials));
 	    this._token = {
 	      key: this._options.auth.header != undefined ? this._options.auth.header : 'Authorization',
 	      value: this._options.auth.type != undefined ? `${this._options.auth.type} ${response.token}` : response.token
