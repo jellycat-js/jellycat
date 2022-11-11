@@ -239,6 +239,7 @@ mixins.providing = function (superclass) {
     _buildHeaders() {
       let headers = new Headers();
       headers.append("X-Requested-With", "XmlHttpRequest");
+      headers.append("Content-Type", "application/json");
       headers.append("Accept", "application/json");
 
       if (Jellycat._token) {
