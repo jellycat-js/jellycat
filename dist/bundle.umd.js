@@ -214,46 +214,10 @@
 	    }
 
 	    async fetchData(url, method = 'GET', data = false) {
-	      try {
-	        this._checkLifeCycle('init', 'fetchData');
-
-	        const response = await fetch(url, this._buildRequest(method, data));
-	        if (response.status >= 300) throw new Error(`Fetch error : ${JSON.stringify(response)}`);
-	        return await response.json();
-	      } catch (error) {
-	        console.log(error);
-	      }
-	    }
-
-	    _buildHeaders() {
-	      let headers = new Headers();
-	      headers.append("X-Requested-With", "XmlHttpRequest");
-	      headers.append("Content-Type", "application/json");
-	      headers.append("Accept", "application/json");
-
-	      if (Jellycat._token) {
-	        headers.append(Jellycat._token.key, Jellycat._token.value);
-	      }
-
-	      return headers;
-	    }
-
-	    _buildRequest(method, data = false) {
-	      let requestObj = {
-	        method: method,
-	        headers: this._buildHeaders()
-	      };
-
-	      if (Jellycat._options.fetch.mode != undefined) {
-	        requestObj.mode = Jellycat._options.fetch.mode;
-	      }
-
-	      if (Jellycat._options.fetch.cache != undefined) {
-	        requestObj.cache = Jellycat._options.fetch.cache;
-	      }
-
-	      if (data !== false) requestObj.body = data;
-	      return requestObj;
+	      this.loading = true;
+	      const result = await Jellycat._fetchData(url, method, data);
+	      this.loading = false;
+	      return result;
 	    }
 
 	  };
@@ -354,6 +318,47 @@
 	      key: this._options.auth.header != undefined ? this._options.auth.header : 'Authorization',
 	      value: this._options.auth.type != undefined ? `${this._options.auth.type} ${response.token}` : response.token
 	    };
+	  }
+
+	  async _fetchData(url, method = 'GET', data = false) {
+	    try {
+	      const response = await fetch(url, this._buildRequest(method, data));
+	      if (response.status >= 300) throw new Error(`Fetch error : ${JSON.stringify(response)}`);
+	      return await response.json();
+	    } catch (error) {
+	      console.log(error);
+	    }
+	  }
+
+	  _buildHeaders() {
+	    let headers = new Headers();
+	    headers.append("X-Requested-With", "XmlHttpRequest");
+	    headers.append("Content-Type", "application/json");
+	    headers.append("Accept", "application/json");
+
+	    if (this._token) {
+	      headers.append(this._token.key, this._token.value);
+	    }
+
+	    return headers;
+	  }
+
+	  _buildRequest(method, data = false) {
+	    let requestObj = {
+	      method: method,
+	      headers: this._buildHeaders()
+	    };
+
+	    if (this._options.fetch.mode != undefined) {
+	      requestObj.mode = this._options.fetch.mode;
+	    }
+
+	    if (this._options.fetch.cache != undefined) {
+	      requestObj.cache = this._options.fetch.cache;
+	    }
+
+	    if (data !== false) requestObj.body = data;
+	    return requestObj;
 	  }
 
 	  async _cacheSet(name, templateUrl = false, options = {}) {
