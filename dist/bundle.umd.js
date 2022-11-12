@@ -22,7 +22,8 @@
 	    get methods() {
 	      const reflect = Reflect.getPrototypeOf(this);
 	      return Reflect.ownKeys(reflect).filter(m => m !== 'constructor');
-	    }
+	    } // TODO : Feature components depends from an other.
+
 
 	    static async define(templateUrl = false, options = {}) {
 	      await Jellycat._cacheSet(this.name, templateUrl, options);
@@ -315,8 +316,8 @@
 
 	    const response = await this._fetchData(this._options.auth.url, 'POST', JSON.stringify(credentials));
 	    this._token = {
-	      key: this._options.auth.header != undefined ? this._options.auth.header : 'Authorization',
-	      value: this._options.auth.type != undefined ? `${this._options.auth.type} ${response.token}` : response.token
+	      value: response.token,
+	      key: this._options.auth.header != undefined ? this._options.auth.header : 'Authorization'
 	    };
 	  }
 
@@ -337,10 +338,10 @@
 	    headers.append("Accept", "application/json");
 
 	    if (this._token) {
-	      headers.append(this._token.key, this._token.value);
+	      headers.append(this._token.key, `${this._options.auth.type} ${this._token.value}`);
 	    }
 
-	    if (this._options.fetch.headers && this._options.fetch.headers.length > 0) {
+	    if (this._options.fetch?.headers?.length > 0) {
 	      this._options.fetch.headers.forEach(header => {
 	        headers.has(header.key) ? headers.set(header.key, header.value) : headers.append(header.key, header.value);
 	      });
