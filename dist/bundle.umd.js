@@ -142,6 +142,10 @@
 	      return true;
 	    }
 
+	    get templatesCached() {
+	      return Object.keys(Jellycat._cache[this.constructor.name].templates);
+	    }
+
 	    draw(template = false) {
 	      this._checkLifeCycle('render', 'draw');
 
