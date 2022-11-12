@@ -331,7 +331,10 @@ window.Jellycat ??= new class Jellycat {
         value: response.token,
         key: this._options.auth.header != undefined ? this._options.auth.header : 'Authorization'
       };
+      return true;
     }
+
+    return false;
   }
 
   async _fetchData(url, method = 'GET', data = false) {
