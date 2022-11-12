@@ -314,15 +314,29 @@
 	  }
 
 	  async authenticate(credentials = {}) {
-	    if (this._options.auth.url === undefined) {
-	      throw new Error('You must define options auth.url first to use authenticate method');
+	    if (this._options.auth.login === undefined) {
+	      throw new Error('You must define options auth.login first to use authenticate method');
 	    }
 
-	    const response = await this._fetchData(this._options.auth.url, 'POST', JSON.stringify(credentials));
+	    const response = await this._fetchData(this._options.auth.login, 'POST', JSON.stringify(credentials));
 	    this._token = {
 	      value: response.token,
 	      key: this._options.auth.header != undefined ? this._options.auth.header : 'Authorization'
 	    };
+	  }
+
+	  async refresh() {
+	    if (this._options.auth.refresh === undefined) {
+	      throw new Error('You must define options auth.refresh first to use refresh method');
+	    }
+
+	    const response = await this._fetchData(this._options.auth.refresh, 'POST');
+	    console.log(response); // this._token = {
+	    // 	value: response.token,
+	    // 	key: this._options.auth.header != undefined 
+	    // 		? this._options.auth.header 
+	    // 		: 'Authorization'
+	    // }
 	  }
 
 	  async _fetchData(url, method = 'GET', data = false) {
