@@ -120,7 +120,7 @@ mixins.lifeCycling = function (superclass) {
     async _render() {
       if (this.constructor.name in Jellycat._cache && this.options.autoRender === 'root') {
         if (this.children.length > 0) this.innerHTML = "";
-        let template = this.draw();
+        let template = this.drawTemplate();
         if (template) this.appendChild(template);
       }
 
@@ -155,18 +155,24 @@ mixins.rendering = function (superclass) {
       return Object.keys(Jellycat._cache[this.constructor.name].templates);
     }
 
-    draw(template = false, target = false) {
+    draw(template = null, target = false) {
       this._checkLifeCycle('render', 'draw');
 
-      const name = !template ? this.template == null ? 'root' : this.template : template;
-      const node = name in Jellycat._cache[this.constructor.name].templates ? Jellycat._cache[this.constructor.name].templates[name].content.cloneNode(true) : false;
-      if (!target) return node;
+      const element = this.drawTemplate(template);
+      target = !target ? this : target;
 
       if (target.children.length > 0) {
         [...target.children].forEach(child => child.remove());
       }
 
-      target.appendChild(node);
+      target.appendChild(element);
+    }
+
+    drawTemplate(template) {
+      this._checkLifeCycle('render', 'drawTemplate');
+
+      const name = !template ? this.template == null ? 'root' : this.template : template;
+      return name in Jellycat._cache[this.constructor.name].templates ? Jellycat._cache[this.constructor.name].templates[name].content.cloneNode(true) : false;
     }
 
     drawElement(tagname, attrs = {}, children = []) {
@@ -180,12 +186,6 @@ mixins.rendering = function (superclass) {
 
       children.forEach(child => typeof child === 'string' ? element.textContent = child : element.appendChild(child));
       return element;
-    }
-
-    drawTemplate(name) {
-      this._checkLifeCycle('render', 'drawTemplate');
-
-      return Jellycat._cache[this.constructor.name].templates[name].content.cloneNode(true);
     }
 
     drawFaIcon(name, rootClass = 'fa-solid') {
