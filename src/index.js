@@ -168,6 +168,15 @@ mixins.rendering = function(superclass)
 			return Object.keys(Jellycat._cache[this.constructor.name].templates)
 		}
 
+		drawing(template = false)
+		{
+			const node = this.draw(template)
+			if (this.children.length > 0) {
+				this.children.forEach(child => child.remove())
+			}
+			this.appendChild(node)
+		}
+
 		draw(template = false)
 		{
 			this._checkLifeCycle('render', 'draw')
@@ -307,7 +316,7 @@ window.Jellycat ??= new class Jellycat
 			JcTextareaComponent: class JcTextareaComponent extends _(HTMLTextAreaElement).with(...Object.values(mixins)) { 
 				constructor() { super() } _tag = 'textarea'
 			},
-			
+
 			JcMixin: _
 		}
 	}
