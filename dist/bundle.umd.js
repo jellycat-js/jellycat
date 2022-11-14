@@ -4,16 +4,31 @@
 	(global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.JellycatBundle = {}));
 })(this, (function (exports) { 'use strict';
 
+	/* TODO
+	- mettre a jour la doc
+	- multiple templates loading pour un component
+	- récupérer App ou autre component, s'il existe depuis jellycat
+	- reflechir au scope ? une piste pourrait etre l'heritage
+	- permettre les mixins custom
+	- verifier si aucun composant ne porte deja ce nom
+	- rajouter un draw "replace" template (with clean before)
+	- permettre de reculer le lifecycle sans break son execution
+	- coder la partie Auth plus proprement
+	- voir pourquoi le "is=" extend from HTMLElement ne fonctionne plus
+	- Permettre l'injection dans les templates avec {{ }}
+	- Pourquoi pas proposer twig ejs et pug
+	*/
+
 	const mixins = {};
 
-	function _(superclass) {
+	const _ = superclass => {
 	  return {
 	    with(...mixins) {
 	      return mixins.reduce((c, mixin) => mixin(c), superclass || class {});
 	    }
 
 	  };
-	}
+	};
 
 	mixins.abstract = function (superclass) {
 	  return class extends superclass {
@@ -303,7 +318,8 @@
 	        }
 
 	        _tag = 'textarea';
-	      }
+	      },
+	      JcMixin: _
 	    };
 	  }
 
@@ -427,7 +443,8 @@
 	  JcPComponent,
 	  JcLabelComponent,
 	  JcInputComponent,
-	  JcTextareaComponent
+	  JcTextareaComponent,
+	  JcMixin
 	} = Jellycat._factory;
 
 	exports.JcComponent = JcComponent;
@@ -435,6 +452,7 @@
 	exports.JcInputComponent = JcInputComponent;
 	exports.JcLabelComponent = JcLabelComponent;
 	exports.JcLiComponent = JcLiComponent;
+	exports.JcMixin = JcMixin;
 	exports.JcPComponent = JcPComponent;
 	exports.JcSpanComponent = JcSpanComponent;
 	exports.JcTextareaComponent = JcTextareaComponent;
