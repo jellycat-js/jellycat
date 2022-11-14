@@ -372,11 +372,13 @@ window.Jellycat ??= new class Jellycat
 		try
 		{
 			const response = await fetch(url, this._buildRequest(method, data))
-			if (response.status >= 300) throw new Error(`Fetch error : ${JSON.stringify(response)}`)
+			if (response.status >= 300) {
+				throw new Error(`Fetch error : ${JSON.stringify(response)}`)
+			}
 
 			return await response.json()
 
-		} catch(error) { console.log(error) }
+		} catch(error) { return { error: error.message } }
 	}
 
 	_buildHeaders()
