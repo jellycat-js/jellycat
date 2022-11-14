@@ -172,8 +172,9 @@ mixins.rendering = function(superclass)
 		{
 			const node = this.draw(template)
 			if (this.children.length > 0) {
-				this.children.forEach(child => child.remove())
+				[...this.children].forEach(child => child.remove())
 			}
+			
 			this.appendChild(node)
 		}
 
