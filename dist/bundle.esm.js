@@ -155,21 +155,18 @@ mixins.rendering = function (superclass) {
       return Object.keys(Jellycat._cache[this.constructor.name].templates);
     }
 
-    drawing(template = false) {
-      const node = this.draw(template);
-
-      if (this.children.length > 0) {
-        [...this.children].forEach(child => child.remove());
-      }
-
-      this.appendChild(node);
-    }
-
-    draw(template = false) {
+    draw(template = false, target = false) {
       this._checkLifeCycle('render', 'draw');
 
       const name = !template ? this.template == null ? 'root' : this.template : template;
-      return name in Jellycat._cache[this.constructor.name].templates ? Jellycat._cache[this.constructor.name].templates[name].content.cloneNode(true) : false;
+      const node = name in Jellycat._cache[this.constructor.name].templates ? Jellycat._cache[this.constructor.name].templates[name].content.cloneNode(true) : false;
+      if (!target) return node;
+
+      if (target.children.length > 0) {
+        [...target.children].forEach(child => child.remove());
+      }
+
+      target.appendChild(node);
     }
 
     drawElement(tagname, attrs = {}, children = []) {
