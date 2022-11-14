@@ -174,7 +174,7 @@ mixins.rendering = function(superclass)
 			if (this.children.length > 0) {
 				[...this.children].forEach(child => child.remove())
 			}
-			
+
 			this.appendChild(node)
 		}
 
@@ -352,7 +352,7 @@ window.Jellycat ??= new class Jellycat
 		}
 
 		const response = await this._fetchData(this._options.auth.refresh, 'POST')
-		if (response.token) {
+		if ('token' in response) {
 
 			this._token = {
 				value: response.token,

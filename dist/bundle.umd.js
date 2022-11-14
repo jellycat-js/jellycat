@@ -358,7 +358,7 @@
 
 	    const response = await this._fetchData(this._options.auth.refresh, 'POST');
 
-	    if (response.token) {
+	    if ('token' in response) {
 	      this._token = {
 	        value: response.token,
 	        key: this._options.auth.header != undefined ? this._options.auth.header : 'Authorization'
