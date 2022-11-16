@@ -48,6 +48,20 @@ var JellycatComponent = (function (exports) {
 	      }
 	    }
 
+	    getParentDomComponent() {
+	      const currentElement = this;
+
+	      while (currentElement.tagName !== 'BODY') {
+	        let currentElement = currentElement.parent;
+
+	        if (currentElement.tagName.startsWith(`${Jellycat._options.prefix}-`)) {
+	          return currentElement;
+	        }
+	      }
+
+	      return null;
+	    }
+
 	    async connectedCallback() {
 	      this._runLifeCycle();
 	    }
@@ -169,6 +183,7 @@ var JellycatComponent = (function (exports) {
 	      }
 
 	      target.appendChild(element);
+	      return true;
 	    }
 
 	    drawTemplate(template) {
@@ -368,6 +383,7 @@ var JellycatComponent = (function (exports) {
 	      const response = await fetch(url, this._buildRequest(method, data));
 
 	      if (response.status >= 300) {
+	        console.log(response);
 	        throw new Error(`Fetch error : ${JSON.stringify(response)}`);
 	      }
 

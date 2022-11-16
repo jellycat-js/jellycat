@@ -49,6 +49,20 @@ mixins.abstract = function (superclass) {
       }
     }
 
+    getParentDomComponent() {
+      const currentElement = this;
+
+      while (currentElement.tagName !== 'BODY') {
+        let currentElement = currentElement.parent;
+
+        if (currentElement.tagName.startsWith(`${Jellycat._options.prefix}-`)) {
+          return currentElement;
+        }
+      }
+
+      return null;
+    }
+
     async connectedCallback() {
       this._runLifeCycle();
     }
@@ -170,6 +184,7 @@ mixins.rendering = function (superclass) {
       }
 
       target.appendChild(element);
+      return true;
     }
 
     drawTemplate(template) {
@@ -369,6 +384,7 @@ window.Jellycat ??= new class Jellycat {
       const response = await fetch(url, this._buildRequest(method, data));
 
       if (response.status >= 300) {
+        console.log(response);
         throw new Error(`Fetch error : ${JSON.stringify(response)}`);
       }
 
