@@ -52,10 +52,10 @@
 	    }
 
 	    getParentDomComponent() {
-	      const currentElement = this;
+	      let currentElement = this;
 
 	      while (currentElement.tagName !== 'BODY') {
-	        let currentElement = currentElement.parent;
+	        currentElement = currentElement.parent;
 
 	        if (currentElement.tagName.startsWith(`${Jellycat._options.prefix}-`)) {
 	          return currentElement;
