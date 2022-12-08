@@ -45,6 +45,20 @@ mixins.abstract = function (superclass) {
       }
     }
 
+    getDomParentComponent(element = null) {
+      let currentElement = element ?? this;
+
+      while (currentElement.tagName !== 'BODY' || currentElement === this) {
+        currentElement = currentElement.parentElement;
+
+        if (currentElement.tagName.startsWith(`${Jellycat._options.prefix.toUpperCase()}-`)) {
+          return currentElement;
+        }
+      }
+
+      return null;
+    }
+
     async connectedCallback() {
       this._runLifeCycle();
     }
@@ -200,42 +214,29 @@ mixins.rendering = function (superclass) {
     }
 
   };
-};
+}; // mixins.scoping = function(superclass)
+// {
+// 	return class extends superclass
+// 	{
+// 		scope(ref = false)
+// 		{
+// 			return !ref ? Jellycat._scope : (Jellycat._scope[ref] || undefined)
+// 		}
+// 		expose(ref, prop)
+// 		{
+// 			if (prop.constructor === String && prop in this) {
+// 				Jellycat._scope[ref] = new Proxy(this[prop], {
+// 					set: (obj, key, value) => {
+// 						if (key in obj) return false
+// 						obj[key] = _ => this[key]
+// 					    return true;
+// 					}
+// 				})
+// 			} else { Jellycat._scope[ref] = prop }
+// 		}
+// 	}
+// }
 
-mixins.scoping = function (superclass) {
-  return class extends superclass {
-    // scope(ref = false)
-    // {
-    // 	return !ref ? Jellycat._scope : (Jellycat._scope[ref] || undefined)
-    // }
-    // expose(ref, prop)
-    // {
-    // 	if (prop.constructor === String && prop in this) {
-    // 		Jellycat._scope[ref] = new Proxy(this[prop], {
-    // 			set: (obj, key, value) => {
-    // 				if (key in obj) return false
-    // 				obj[key] = _ => this[key]
-    // 			    return true;
-    // 			}
-    // 		})
-    // 	} else { Jellycat._scope[ref] = prop }
-    // }
-    getDomParentComponent(element = null) {
-      let currentElement = element ?? this;
-
-      while (currentElement.tagName !== 'BODY' || currentElement === this) {
-        currentElement = currentElement.parentElement;
-
-        if (currentElement.tagName.startsWith(`${Jellycat._options.prefix.toUpperCase()}-`)) {
-          return currentElement;
-        }
-      }
-
-      return null;
-    }
-
-  };
-};
 
 mixins.providing = function (superclass) {
   return class extends superclass {
@@ -379,7 +380,7 @@ window.Jellycat ??= new class Jellycat {
       const response = await fetch(url, this._buildRequest(method, data));
 
       if (response.status >= 300) {
-        console.log(response);
+        console.log(response, await response.json());
         throw new Error(`Fetch error : ${JSON.stringify(response)}`);
       }
 
