@@ -377,11 +377,10 @@ window.Jellycat ??= new class Jellycat {
 
   async _fetchData(url, method = 'GET', data = false) {
     try {
-      const response = await fetch(url, this._buildRequest(method, data));
+      let response = await fetch(url, this._buildRequest(method, data));
 
-      if (response.status >= 300) {
-        console.log(response, await response.json());
-        throw new Error(`Fetch error : ${JSON.stringify(response)}`);
+      if (response.status >= 500) {
+        throw new Error(`Fetch error : ${response.statusText}`);
       }
 
       return await response.json();
