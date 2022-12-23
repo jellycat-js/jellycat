@@ -359,7 +359,7 @@ window.Jellycat ??= new class Jellycat {
       value: response.token,
       key: this._options.auth.header != undefined ? this._options.auth.header : 'Authorization'
     };
-    console.log(response); // return true or false
+    return response.code === 200;
   }
 
   async refresh() {
