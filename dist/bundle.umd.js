@@ -407,7 +407,7 @@
 	    headers.append("Content-Type", "application/json");
 	    headers.append("Accept", "application/json");
 
-	    if (this._token) {
+	    if (this._token?.value) {
 	      headers.append(this._token.key, `${this._options.auth.type} ${this._token.value}`);
 	    }
 
