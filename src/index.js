@@ -357,7 +357,9 @@ window.Jellycat ??= new class Jellycat
 				: 'Authorization'
 		}
 
-		return { success: response.code === 200, message: response.message }
+		return 'token' in response
+			? { success: true }
+			: { success: false, message: response.message }
 	}
 
 	async refresh()

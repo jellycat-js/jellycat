@@ -361,8 +361,10 @@
 	      value: response.token,
 	      key: this._options.auth.header != undefined ? this._options.auth.header : 'Authorization'
 	    };
-	    return {
-	      success: response.code === 200,
+	    return 'token' in response ? {
+	      success: true
+	    } : {
+	      success: false,
 	      message: response.message
 	    };
 	  }
