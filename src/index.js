@@ -357,7 +357,7 @@ window.Jellycat ??= new class Jellycat
 				: 'Authorization'
 		}
 
-		return response.code === 200
+		return { success: response.code === 200, message: response.message }
 	}
 
 	async refresh()

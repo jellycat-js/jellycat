@@ -361,7 +361,10 @@
 	      value: response.token,
 	      key: this._options.auth.header != undefined ? this._options.auth.header : 'Authorization'
 	    };
-	    return response.code === 200;
+	    return {
+	      success: response.code === 200,
+	      message: response.message
+	    };
 	  }
 
 	  async refresh() {
