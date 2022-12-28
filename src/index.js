@@ -389,6 +389,7 @@ window.Jellycat ??= new class Jellycat
 		try
 		{
 			let response = await fetch(url, this._buildRequest(method, data))
+			console.log('debug', response)
 			
 			if (response.status >= 500) {
 				throw new Error(`Fetch error : ${response.statusText}`)
