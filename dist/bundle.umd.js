@@ -356,7 +356,7 @@
 	      throw new Error('You must define options auth.login first to use authenticate method');
 	    }
 
-	    const response = await this._fetchData(this._options.auth.login, 'POST', JSON.stringify(credentials));
+	    const response = await this._fetchData(this._options.auth.login, 'POST', JSON.stringify(credentials), false);
 	    this._token = {
 	      value: response.token,
 	      key: this._options.auth.header != undefined ? this._options.auth.header : 'Authorization'
