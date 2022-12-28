@@ -371,7 +371,7 @@ var JellycatComponent = (function (exports) {
 	      throw new Error('You must define options auth.refresh first to use refresh method');
 	    }
 
-	    const response = await this._fetchData(this._options.auth.refresh, 'POST');
+	    const response = await this._fetchData(this._options.auth.refresh, 'POST', false, false);
 
 	    if ('token' in response) {
 	      this._token = {
