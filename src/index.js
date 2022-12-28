@@ -348,7 +348,7 @@ window.Jellycat ??= new class Jellycat
 			throw new Error('You must define options auth.login first to use authenticate method')
 		}
 
-		const response = await this._fetchData(this._options.auth.login, 'POST', JSON.stringify(credentials), false)
+		const response = await this._fetchData(this._options.auth.login, 'POST', JSON.stringify(credentials))
 
 		this._token = {
 			value: response.token,
@@ -368,7 +368,7 @@ window.Jellycat ??= new class Jellycat
 			throw new Error('You must define options auth.refresh first to use refresh method')
 		}
 
-		const response = await this._fetchData(this._options.auth.refresh, 'POST', false, false)
+		const response = await this._fetchData(this._options.auth.refresh, 'POST', false)
 		if ('token' in response) {
 
 			this._token = {
@@ -384,18 +384,21 @@ window.Jellycat ??= new class Jellycat
 		return false
 	}
 
-	async _fetchData(url, method = 'GET', data = false, canRetry = true)
+	async _fetchData(url, method = 'GET', data = false)
 	{
 		try
 		{
-			let response = await fetch(url, this._buildRequest(method, data))
-			
-			if (response.status === 401 && this._options.auth.refresh !== undefined && this.refresh() && canRetry) {
-				return this._fetchData(url, method, data, false)
+			let preventRetry = [this._options.auth.refresh, this._options.auth.login].includes(url)
 
-			} else if (response.status >= 400) {
-				throw new Error(`Fetch error - ${response.statusText}`)
-			}
+			let response = await fetch(url, this._buildRequest(method, data))
+
+		    if (response.status === 401 && this._options.auth.refresh !== undefined && !preventRetry) {
+		    	if (await this.refresh()) return await this._fetchData(url, method, data);
+		    }
+
+		    if (response.status >= 400) {
+		    	throw new Error(`Fetch error - ${response.statusText}`);
+		    }
 
 			return await response.json()
 
