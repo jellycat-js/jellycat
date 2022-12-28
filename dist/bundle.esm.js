@@ -381,18 +381,17 @@ window.Jellycat ??= new class Jellycat {
     return false;
   }
 
-  async _fetchData(url, method = 'GET', data = false) {
+  async _fetchData(url, method = 'GET', data = false, canRetry = true) {
     try {
       let response = await fetch(url, this._buildRequest(method, data));
-      console.log('debug_1', response);
 
-      if (response.status >= 500) {
-        throw new Error(`Fetch error : ${response.statusText}`);
+      if (response.status === 401 && this._options.auth.refresh !== undefined && this.refresh() && canRetry) {
+        return this._fetchData(url, method, data, false);
+      } else if (response.status >= 400) {
+        throw new Error(`Fetch error - ${response.statusText}`);
       }
 
-      let tmp = await response.json();
-      console.log('debug_2', tmp);
-      return tmp;
+      return await response.json();
     } catch (error) {
       return {
         error: error.message
