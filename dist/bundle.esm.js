@@ -7,7 +7,7 @@
 - verifier si aucun composant ne porte deja ce nom
 - rajouter un draw "replace" template (with clean before)
 - permettre de reculer le lifecycle sans break son execution
-- coder la partie Auth plus proprement
+- coder la partie Auth plus proprement (last time of code is on this)
 - voir pourquoi le "is=" extend from HTMLElement ne fonctionne plus
 - Permettre l'injection dans les templates avec {{ }}
 - Pourquoi pas proposer twig ejs et pug

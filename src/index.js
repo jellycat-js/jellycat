@@ -9,8 +9,7 @@
 - verifier si aucun composant ne porte deja ce nom
 - rajouter un draw "replace" template (with clean before)
 - permettre de reculer le lifecycle sans break son execution
-- coder la partie Auth plus proprement
-- voir pourquoi le "is=" extend from HTMLElement ne fonctionne plus
+- coder la partie Auth plus proprement (last time of code is on this)
 - Permettre l'injection dans les templates avec {{ }}
 - Pourquoi pas proposer twig ejs et pug
 */
@@ -44,8 +43,10 @@ mixins.abstract = function(superclass)
 				? Jellycat._cache[this.name].options.prefix 
 				: Jellycat._options.prefix
 
-			if (customElements.get(`${prefix}-${this.name.toLowerCase()}`) === undefined) {
-				customElements.define(`${prefix}-${this.name.toLowerCase()}`, this, this._tag ? { extends: this._tag }  : {})
+			let dashedName = this.name[0].toLowerCase() + this.name.slice(1).replace(/[A-Z]/g, m => "-" + m.toLowerCase())
+
+			if (customElements.get(`${prefix}-${dashedName}`) === undefined) {
+				customElements.define(`${prefix}-${dashedName}`, this, Jellycat._factory.resolve(super.name))
 			}
 		}
 
@@ -304,31 +305,46 @@ window.Jellycat ??= new class Jellycat
 		this._factory = {
 
 			JcComponent: class JcComponent extends _(HTMLElement).with(...Object.values(mixins)) { 
-				constructor() { super() } _tag = false
+				constructor() { super() }
 			},
 			JcDivComponent: class JcDivComponent extends _(HTMLDivElement).with(...Object.values(mixins)) { 
-				constructor() { super() } _tag = 'div'
+				constructor() { super() }
 			},
 			JcSpanComponent: class JcSpanComponent extends _(HTMLSpanElement).with(...Object.values(mixins)) { 
-				constructor() { super() } _tag = 'span'
+				constructor() { super() }
 			},
 			JcUlComponent: class JcUlComponent extends _(HTMLUListElement).with(...Object.values(mixins)) { 
-				constructor() { super() } _tag = 'ul'
+				constructor() { super() }
 			},
 			JcLiComponent: class JcLiComponent extends _(HTMLLIElement).with(...Object.values(mixins)) { 
-				constructor() { super() } _tag = 'li'
+				constructor() { super() }
 			},
 			JcPComponent: class JcPComponent extends _(HTMLParagraphElement).with(...Object.values(mixins)) {
-				constructor() { super() } _tag = 'p'
+				constructor() { super() }
 			},
 			JcLabelComponent: class JcLabelComponent extends _(HTMLLabelElement).with(...Object.values(mixins)) { 
-				constructor() { super() } _tag = 'label'
+				constructor() { super() }
 			},
 			JcInputComponent: class JcInputComponent extends _(HTMLInputElement).with(...Object.values(mixins)) { 
-				constructor() { super() } _tag = 'input'
+				constructor() { super() }
 			},
 			JcTextareaComponent: class JcTextareaComponent extends _(HTMLTextAreaElement).with(...Object.values(mixins)) { 
-				constructor() { super() } _tag = 'textarea'
+				constructor() { super() }
+			},
+
+			resolve: HtmlElement => {
+				switch(HtmlElement)
+				{
+					case 'HTMLElement'          : return {}
+					case 'HTMLDivElement'       : return { extends: 'div' }
+					case 'HTMLSpanElement'      : return { extends: 'span' }
+					case 'HTMLUListElement'     : return { extends: 'ul' }
+					case 'HTMLLIElement'        : return { extends: 'li' }
+					case 'HTMLParagraphElement' : return { extends: 'p' }
+					case 'HTMLLabelElement'     : return { extends: 'label' }
+					case 'HTMLInputElement'     : return { extends: 'input' }
+					case 'HTMLTextAreaElement'  : return { extends: 'textarea' }
+				}
 			},
 
 			JcMixin: _
@@ -428,7 +444,7 @@ window.Jellycat ??= new class Jellycat
 		return headers
 	}
 
-	_buildRequest(method, data = false)
+	_buildRequest(method = 'GET', data = false)
 	{
 		let requestObj = { method: method, headers: this._buildHeaders() }
 
