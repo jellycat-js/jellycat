@@ -1,3 +1,11 @@
+.github
+website
+examples
+
 node_modules
-package-lock.json
-demo
+
+tests
+jest.*.js
+
+rollup.config.js
+.babelrc

@@ -5,7 +5,7 @@
 - multiple templates loading pour un component
 - récupérer App ou autre component, s'il existe depuis jellycat
 - reflechir au scope ? une piste pourrait etre l'heritage
-- permettre les mixins custom
+- permettre les mixins custom (plugin ? (move fontawesome))
 - verifier si aucun composant ne porte deja ce nom
 - rajouter un draw "replace" template (with clean before)
 - permettre de reculer le lifecycle sans break son execution
@@ -37,32 +37,21 @@ mixins.abstract = function(superclass)
 
 		static async define(templateUrl = false, options = {})
 		{
-			await Jellycat._cacheSet(this.name, templateUrl, options)
+			!Array.isArray(templateUrl)
+				? await Jellycat._cacheSet(this.name, templateUrl, options)
+				: await Promises.all(templateUrl.map(async url => {
+					return await Jellycat._cacheSet(this.name, url, options)
+				}))
 
 			const prefix = Jellycat._cache[this.name].options.prefix !== undefined 
 				? Jellycat._cache[this.name].options.prefix 
 				: Jellycat._options.prefix
 
-			let dashedName = this.name[0].toLowerCase() + this.name.slice(1).replace(/[A-Z]/g, m => "-" + m.toLowerCase())
+			const dashedName = this.name[0].toLowerCase() + this.name.slice(1).replace(/[A-Z]/g, m => "-" + m.toLowerCase())
 
 			if (customElements.get(`${prefix}-${dashedName}`) === undefined) {
 				customElements.define(`${prefix}-${dashedName}`, this, Jellycat._factory.resolve(super.name))
 			}
-		}
-
-		getDomParentComponent(element = null)
-		{
-			let currentElement = element ?? this
-
-			while(currentElement.tagName !== 'BODY' || currentElement === this)
-			{
-				currentElement = currentElement.parentElement
-				if (currentElement.tagName.startsWith(`${Jellycat._options.prefix.toUpperCase()}-`)) {
-					return currentElement
-				}
-			}
-
-			return null
 		}
 
 		async connectedCallback()
@@ -237,31 +226,44 @@ mixins.rendering = function(superclass)
 	}
 }
 
-// mixins.scoping = function(superclass)
-// {
-// 	return class extends superclass
-// 	{
-// 		scope(ref = false)
-// 		{
-// 			return !ref ? Jellycat._scope : (Jellycat._scope[ref] || undefined)
-// 		}
+mixins.scoping = function(superclass)
+{
+	return class extends superclass
+	{
+		getDomParentComponent(element = null)
+		{
+			let currentElement = element ?? this
 
-// 		expose(ref, prop)
-// 		{
-// 			if (prop.constructor === String && prop in this) {
+			while(currentElement.tagName !== 'BODY' || currentElement === this)
+			{
+				currentElement = currentElement.parentElement
+				if (currentElement.tagName.startsWith(`${Jellycat._options.prefix.toUpperCase()}-`)) {
+					return currentElement
+				}
+			}
 
-// 				Jellycat._scope[ref] = new Proxy(this[prop], {
-// 					set: (obj, key, value) => {
-// 						if (key in obj) return false
-// 						obj[key] = _ => this[key]
-// 					    return true;
-// 					}
-// 				})
+			return null
+		}
 
-// 			} else { Jellycat._scope[ref] = prop }
-// 		}
-// 	}
-// }
+		//  scope(ref = false)
+		//  {
+		//  	return !ref ? Jellycat._scope : (Jellycat._scope[ref] || undefined)
+		//  }
+
+		//  expose(ref, prop)
+		//  {
+		//  	if (prop.constructor === String && prop in this) {		
+		//  		Jellycat._scope[ref] = new Proxy(this[prop], {
+		//  			set: (obj, key, value) => {
+		//  				if (key in obj) return false
+		//  				obj[key] = _ => this[key]
+		//  			    return true;
+		//  			}
+		//  		})		
+		//  	} else { Jellycat._scope[ref] = prop }
+		//   }
+	}
+}
 
 mixins.providing = function(superclass)
 {

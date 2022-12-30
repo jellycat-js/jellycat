@@ -1,8 +1,13 @@
 'use strict'
 
-import * as components from '../src/index.js'
+import { 
 
-describe('Jellycat Options', _ => {
+	fakeOption 
+
+} from '../jest.setup.js'
+
+
+describe('Configure - Jellycat Options', _ => {
 
 	it('should be not undefined and type be object', function() {
 		expect(Jellycat._options).toBeDefined()
@@ -21,16 +26,8 @@ describe('Jellycat Options', _ => {
 			prefix: 'test',
 	        debug: true,
 	        autoRender: 'base',
-	        auth: {
-                login: '/api/login_check',
-                refresh: '/api/token/refresh',
-                type: 'Bearer'
-            },
-            fetch: {
-                headers: [
-                    { key: 'X-View-Request', value: 'TestViewRequest' }
-                ]
-            }
+	        auth: fakeOption('auth'),
+            fetch: fakeOption('fetch')
 		})
 
 		expect(defaultOptions.prefix).not.toBe(Jellycat._options.prefix)
