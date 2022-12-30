@@ -1,7 +1,7 @@
 {
-  "name": "jellycat",
+  "name": "@jellycat-js/jellycat",
   "type": "module",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "main": "dist/bundle.cjs.js",
   "module": "dist/bundle.esm.js",
@@ -20,7 +20,10 @@
   },
   "author": "Louis-Antoine Lumet",
   "repository": {
-    "url": "git://github.com/jellycatjs/jellycat.git"
+    "url": "git://github.com/jellycat-js/jellycat.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   },
   "license": "GNU",
   "node": ">=16.0.0",
