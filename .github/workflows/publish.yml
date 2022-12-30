@@ -10,17 +10,22 @@ jobs:
     name: 🚀 publish
     runs-on: ubuntu-latest
     steps:
+      
       - name: 📚 checkout
         uses: actions/checkout@v3
+
       - name: 🟢 node
         uses: actions/setup-node@v3
         with:
           node-version: 16
           registry-url: https://npm.pkg.github.com
+
       - name: 🦾 build
         run: npm run build
+
       - name: 🎮 test
         run: npm run test
+
       - name: 🚀 publish
         run: npm publish --access public
         env:
