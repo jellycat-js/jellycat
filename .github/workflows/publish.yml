@@ -15,8 +15,12 @@ jobs:
       - name: 🟢 node
         uses: actions/setup-node@v3
         with:
-          node-version: 12
-          registry-url: https://registry.npmjs.org
+          node-version: 16
+          registry-url: https://npm.pkg.github.com
+      - name: 🦾 build
+        run: npm run build
+      - name: 🎮 test
+        run: npm run test
       - name: 🚀 publish
         run: npm publish --access public
         env:
