@@ -27,7 +27,6 @@ jobs:
         run: npm i -D rimraf
 
       - name: 🦾 build
-        run: npm i -D rimraf
         run: npm run build
 
       - name: 🎮 test
