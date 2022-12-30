@@ -1,4 +1,4 @@
-name: 🚀 publish
+name: 🚀 build, test and publish
 
 on:
   push:
@@ -7,10 +7,13 @@ on:
 
 jobs:
   release:
-    name: 🚀 publish
     runs-on: ubuntu-latest
+    permissions: 
+      contents: read
+      packages: write 
+
     steps:
-      
+
       - name: 📚 checkout
         uses: actions/checkout@v3
 
@@ -21,6 +24,7 @@ jobs:
           registry-url: https://npm.pkg.github.com
 
       - name: 🦾 build
+        run: npm i -D rimraf
         run: npm run build
 
       - name: 🎮 test
