@@ -4,57 +4,60 @@ on:
   push:
     branches: 
       - master
+    # paths:
+    #   - "**src/index.js**"
 
 jobs:
-  release:
+
+  build:
     runs-on: ubuntu-latest
-    permissions: 
-      contents: read
-      packages: write 
-
     steps:
+      - uses: actions/checkout@v3
+      - name: npm install and build rollup
+        run: |
+          npm ci
+          npm run build
+      - uses: actions/upload-artifact@v3
+        with:
+          name: rollup artifacts
+          path: dist/
 
-      - name: 📚 checkout
-        uses: actions/checkout@v3
-
-      - name: 🟢 Setup node 16.x
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-2016]
+        node-version: [16.x]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
-          node-version: 16
-          registry-url: https://npm.pkg.github.com
-
-      - name: 📦 install dependencies
-        # run: npm i -D rimraf
-        run: npm ci
-
-      - name: 🎮 test
-        run: npm run test -- --verbose
-
-      - name: 🦾 Rebuild the dist/ directory
-        run: npm run build
-
-      # - name: Compare the expected and actual dist/ directories
-      #   run: |
-      #     if [ "$(git diff --ignore-space-at-eol dist/ | wc -l)" -gt "0" ]; then
-      #       echo "Detected uncommitted changes after build.  See status below:"
-      #       git diff
-      #       exit 1
-      #     fi
-      #   id: diff
-
-      # - uses: actions/upload-artifact@v3
-      #   if: ${{ failure() && steps.diff.conclusion == 'failure' }}
-      #   with:
-      #     name: dist
-      #     path: dist/
-
-      - name: Archive production artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: dist
+          name: rollup artifacts
           path: dist
+      - name: npm install, and test
+        run: |
+          npm ci
+          npm test -- --verbose
+        env:
+          CI: true
 
-      - name: 🚀 publish
+  publish:
+    runs-on: ubuntu-latest
+    needs: test
+    # permissions: 
+    #   contents: read
+    #   packages: write 
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Download build artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: rollup artifacts
+          path: dist
+      - name: Publish Github package
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
