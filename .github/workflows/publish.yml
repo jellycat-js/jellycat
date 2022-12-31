@@ -9,19 +9,6 @@ on:
 
 jobs:
 
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: npm install and build rollup
-        run: |
-          npm ci
-          npm run build rollup.config.js --if-present
-      - uses: actions/upload-artifact@v3
-        with:
-          name: rollup artifacts
-          path: dist/
-
   test:
     runs-on: ubuntu-latest
     needs: build
@@ -31,42 +18,120 @@ jobs:
         node-version: [16.x]
     steps:
       - uses: actions/checkout@v3
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-      - uses: actions/download-artifact@v3
-        with:
-          name: rollup artifacts
-          path: dist
+
+      # - name: Use Node.js ${{ matrix.node-version }}
+      #   uses: actions/setup-node@v3
+      #   with:
+      #     node-version: ${{ matrix.node-version }}
+
+      # - uses: actions/download-artifact@v3
+      #   with:
+      #     name: rollup artifacts
+      #     path: dist
+
       - name: npm install, and test
         run: |
           npm ci
           npm test -- --verbose
-        env:
-          CI: true
+      #  env:
+      #    CI: true
 
-  publish:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Check version changes
+        uses: EndBug/version-check@v1
+        id: check
+
+      - name: Version update detected
+        if: steps.check.outputs.changed == 'true'
+        run: 'echo "Version change found! New version: ${{ steps.check.outputs.version }} (${{ steps.check.outputs.type }})"'
+
+      - name: npm install and build rollup
+        if: steps.check.outputs.changed == 'true'
+        run: |
+          npm ci
+          npm run build rollup.config.js --if-present
+
+      - uses: actions/upload-artifact@v3
+        if: steps.check.outputs.changed == 'true'
+        with:
+          name: rollup artifacts
+          path: dist/
+
+  publish-npm:
     runs-on: ubuntu-latest
     needs: test
     permissions: 
       contents: read
       packages: write
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
+
+      - name: Check version changes
+        uses: EndBug/version-check@v1
+        id: check
+
+      - name: Version update detected
+        if: steps.check.outputs.changed == 'true'
+        run: 'echo "Version change found! New version: ${{ steps.check.outputs.version }} (${{ steps.check.outputs.type }})"'
+
       - name: Use Node.js 16
+        if: steps.check.outputs.changed == 'true'
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Download build artifact
+        if: steps.check.outputs.changed == 'true'
+        uses: actions/download-artifact@v3
+        with:
+          name: rollup artifacts
+          path: dist
+
+      - name: Publish package to NPM
+        if: steps.check.outputs.changed == 'true'
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  publish-gpr:
+    runs-on: ubuntu-latest
+    needs: test
+    # permissions: 
+    #   contents: read
+    #   packages: write
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Check version changes
+        uses: EndBug/version-check@v1
+        id: check
+
+      - name: Version update detected
+        if: steps.check.outputs.changed == 'true'
+        run: 'echo "Version change found! New version: ${{ steps.check.outputs.version }} (${{ steps.check.outputs.type }})"'
+
+      - name: Use Node.js 16
+        if: steps.check.outputs.changed == 'true'
         uses: actions/setup-node@v3
         with:
           node-version: 16
           registry-url: https://npm.pkg.github.com
           scope: '@jellycat-js'
+
       - name: Download build artifact
+        if: steps.check.outputs.changed == 'true'
         uses: actions/download-artifact@v3
         with:
           name: rollup artifacts
           path: dist
-      - name: Publish Github package
+
+      - name: Publish package to Github Package Registry
+        if: steps.check.outputs.changed == 'true'
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
