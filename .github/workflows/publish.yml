@@ -4,8 +4,8 @@ on:
   push:
     branches: 
       - master
-    # paths:
-    #   - "**src/index.js**"
+    paths:
+      - "**src/index.js**"
 
 jobs:
 
@@ -67,9 +67,6 @@ jobs:
           name: rollup artifacts
           path: dist
       - name: Publish Github package
-        run: |
-          ls
-          ls dist
-          npm publish --access public
+        run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
