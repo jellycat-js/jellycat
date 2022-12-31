@@ -35,6 +35,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
+          registry-url: https://npm.pkg.github.com
       - uses: actions/download-artifact@v3
         with:
           name: rollup artifacts
