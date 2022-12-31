@@ -16,7 +16,7 @@ jobs:
       - name: npm install and build rollup
         run: |
           npm ci
-          npm run build
+          npm run build rollup.config.js --if-present
       - uses: actions/upload-artifact@v3
         with:
           name: rollup artifacts
@@ -66,6 +66,7 @@ jobs:
         with:
           name: rollup artifacts
           path: dist
+      - name: Publish Github package
         run: |
           ls
           ls dist
