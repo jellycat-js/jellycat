@@ -1,7 +1,7 @@
 {
   "name": "@jellycat-js/jellycat",
   "type": "module",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "",
   "main": "dist/bundle.cjs.js",
   "module": "dist/bundle.esm.js",
@@ -16,7 +16,8 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "rollup -c",
-    "test": "jest"
+    "test": "jest",
+    "prepublish": "npm run build"
   },
   "author": "Louis-Antoine Lumet",
   "repository": {

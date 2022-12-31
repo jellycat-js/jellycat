@@ -33,20 +33,20 @@ jobs:
       - name: 🦾 Rebuild the dist/ directory
         run: npm run build
 
-      - name: Compare the expected and actual dist/ directories
-        run: |
-          if [ "$(git diff --ignore-space-at-eol dist/ | wc -l)" -gt "0" ]; then
-            echo "Detected uncommitted changes after build.  See status below:"
-            git diff
-            exit 1
-          fi
-        id: diff
+      # - name: Compare the expected and actual dist/ directories
+      #   run: |
+      #     if [ "$(git diff --ignore-space-at-eol dist/ | wc -l)" -gt "0" ]; then
+      #       echo "Detected uncommitted changes after build.  See status below:"
+      #       git diff
+      #       exit 1
+      #     fi
+      #   id: diff
 
-      - uses: actions/upload-artifact@v3
-        if: ${{ failure() && steps.diff.conclusion == 'failure' }}
-        with:
-          name: dist
-          path: dist/
+      # - uses: actions/upload-artifact@v3
+      #   if: ${{ failure() && steps.diff.conclusion == 'failure' }}
+      #   with:
+      #     name: dist
+      #     path: dist/
 
       - name: 🚀 publish
         run: npm publish --access public
