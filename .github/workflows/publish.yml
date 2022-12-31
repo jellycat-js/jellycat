@@ -67,6 +67,8 @@ jobs:
           name: rollup artifacts
           path: dist
       - name: Publish Github package
-        run: npm publish --access public
+        run: |
+          ls
+          npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
