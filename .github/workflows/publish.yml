@@ -27,11 +27,11 @@ jobs:
         # run: npm i -D rimraf
         run: npm ci
 
-      - name: 🦾 Rebuild the dist/ directory
-        run: npm run build
-
       - name: 🎮 test
         run: npm run test
+
+      - name: 🦾 Rebuild the dist/ directory
+        run: npm run build
 
       - name: Compare the expected and actual dist/ directories
         run: |
