@@ -16,8 +16,7 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "rollup -c",
-    "test": "jest",
-    "prepublish": "npm run build"
+    "test": "jest"
   },
   "author": "Louis-Antoine Lumet",
   "repository": {

@@ -28,7 +28,7 @@ jobs:
         run: npm ci
 
       - name: 🎮 test
-        run: npm run test
+        run: npm run test -- --verbose
 
       - name: 🦾 Rebuild the dist/ directory
         run: npm run build

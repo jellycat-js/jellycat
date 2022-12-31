@@ -12,6 +12,7 @@
 - coder la partie Auth plus proprement (last time of code is on this)
 - Permettre l'injection dans les templates avec {{ }}
 - Pourquoi pas proposer twig ejs et pug
+
 */
 
 const mixins = {}
