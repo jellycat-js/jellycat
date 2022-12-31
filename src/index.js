@@ -1,6 +1,6 @@
 'use strict'
 
-/* TODO ok lol
+/* TODO ok lolilol
 - mettre a jour la doc
 - multiple templates loading pour un component
 - récupérer App ou autre component, s'il existe depuis jellycat
