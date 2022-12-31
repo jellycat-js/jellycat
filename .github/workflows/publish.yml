@@ -48,6 +48,12 @@ jobs:
       #     name: dist
       #     path: dist/
 
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: dist
+
       - name: 🚀 publish
         run: npm publish --access public
         env:
