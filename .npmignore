@@ -1,9 +1,10 @@
-.github
-examples
+/.github
+/examples
+/docs
 
-node_modules
+/node_modules
 
-tests
+/tests
 jest.*.js
 
 rollup.config.js

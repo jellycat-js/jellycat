@@ -1,4 +1,4 @@
-name: 🚀 build, test and publish
+name: 🚀 test, build and publish
 
 on:
   push:
@@ -47,7 +47,7 @@ jobs:
           name: rollup artifacts
           path: dist/
 
-  publish-gpr:
+  publish:
     runs-on: ubuntu-latest
     needs: build
     permissions: 
