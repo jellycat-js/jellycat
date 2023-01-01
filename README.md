@@ -1,3 +1,5 @@
+[![🚀 build, test and publish](https://github.com/jellycat-js/jellycat/actions/workflows/publish.yml/badge.svg?branch=master)](https://github.com/jellycat-js/jellycat/actions/workflows/publish.yml)
+
 # Jellycat Component
 
 ## Installation
