@@ -1,18 +1,15 @@
 {
   "name": "@jellycat-js/jellycat",
   "type": "module",
-  "version": "0.0.9",
-  "description": "",
+  "version": "0.1.0",
+  "description": "Jellycat is a lightweight js framework for creating web components",
   "main": "dist/bundle.cjs.js",
   "module": "dist/bundle.esm.js",
   "exports": {
     "import": "./dist/bundle.esm.js",
     "require": "./dist/bundle.cjs.js"
   },
-  "files": [
-    "src",
-    "dist"
-  ],
+  "files": [ "src", "dist" ],
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "rollup -c",
