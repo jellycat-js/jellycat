@@ -1,20 +1,5 @@
 'use strict'
 
-/* TODO 2
-- mettre a jour la doc
-- multiple templates loading pour un component
-- récupérer App ou autre component, s'il existe depuis jellycat
-- reflechir au scope ? une piste pourrait etre l'heritage
-- permettre les mixins custom (plugin ? (move fontawesome))
-- verifier si aucun composant ne porte deja ce nom
-- rajouter un draw "replace" template (with clean before)
-- permettre de reculer le lifecycle sans break son execution
-- coder la partie Auth plus proprement (last time of code is on this)
-- Permettre l'injection dans les templates avec {{ }}
-- Pourquoi pas proposer twig ejs et pug
-
-*/
-
 const mixins = {}
 
 const _ = superclass => {
