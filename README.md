@@ -5,7 +5,7 @@
 
 ## Installation
 ```console
-$ npm i -S @jellycat-js/jellycat
+$ npm i -S jellycat-js/jellycat
 ```
 
 ## Getting started
