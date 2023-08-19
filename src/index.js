@@ -80,11 +80,11 @@ mixins.lifeCycling = function(superclass)
 				
 				function* _lifeCycle(component)
 				{
-					yield //-------------------------------------(keyLifeCycle[0])------------- down
-					yield component._checkStep(1) ? component._runStep(keyLifeCycle[1]) : null //--- init
-					yield component._checkStep(2) ? component._runStep(keyLifeCycle[2]) : null //--- render
-					yield component._checkStep(3) ? component._runStep(keyLifeCycle[3]) : null //--- behavior
-					// ------------------------------------------(keyLifeCycle[4])------------- up
+					yield //----------------(keyLifeCycle[0])------ down
+					yield component._runStep(keyLifeCycle[1]) //--- init
+					yield component._runStep(keyLifeCycle[2]) //--- render
+					yield component._runStep(keyLifeCycle[3]) //--- behavior
+					// ---------------------(keyLifeCycle[4])------ up
 				}
 
 				let lifeCycle = componentlifeCycle.next()
@@ -103,6 +103,8 @@ mixins.lifeCycling = function(superclass)
 
 		async _runStep(lifeCycle)
 		{
+			if (!this._checkStep(1)) return;
+
 			return new Promise(async (resolve, reject) => {
 				const args = await this[`_${lifeCycle}`]()
 				resolve(this.methods.includes(lifeCycle) ? await this[lifeCycle](...args) : true)
