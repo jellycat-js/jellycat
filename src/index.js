@@ -65,17 +65,12 @@ mixins.lifeCycling = function(superclass)
 			return this.keyLifeCycle.indexOf(this.currentLifeCycle)
 		}
 
-		_checkStep(index)
-		{
-			return index === keyLifeCycle.indexOf(this.currentLifeCycle)
-		}
-
 		async _runLifeCycle(since = 'down')
 		{
 			try
 			{
 				const keyLifeCycle = this.keyLifeCycle
-				this.currentLifeCycle ??= keyLifeCycle[keyLifeCycle.indexOf(since)]
+				this.currentLifeCycle ??= since
 				const componentlifeCycle = _lifeCycle(this)
 				
 				function* _lifeCycle(component)
@@ -103,8 +98,6 @@ mixins.lifeCycling = function(superclass)
 
 		async _runStep(lifeCycle)
 		{
-			if (!this._checkStep(1)) return;
-
 			return new Promise(async (resolve, reject) => {
 				const args = await this[`_${lifeCycle}`]()
 				resolve(this.methods.includes(lifeCycle) ? await this[lifeCycle](...args) : true)
