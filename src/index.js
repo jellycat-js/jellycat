@@ -65,6 +65,11 @@ mixins.lifeCycling = function(superclass)
 			return this.keyLifeCycle.indexOf(this.currentLifeCycle)
 		}
 
+		_checkStep(index)
+		{
+			return index === keyLifeCycle.indexOf(this.currentLifeCycle)
+		}
+
 		async _runLifeCycle(since = 'down')
 		{
 			try
@@ -75,11 +80,11 @@ mixins.lifeCycling = function(superclass)
 				
 				function* _lifeCycle(component)
 				{
-					yield //----------------(keyLifeCycle[0])------ down
-					yield component._runStep(keyLifeCycle[1]) //--- init
-					yield component._runStep(keyLifeCycle[2]) //--- render
-					yield component._runStep(keyLifeCycle[3]) //--- behavior
-					// ---------------------(keyLifeCycle[4])------ up
+					yield //-------------------------------------(keyLifeCycle[0])------------- down
+					yield this._checkStep(1) ? component._runStep(keyLifeCycle[1]) : null //--- init
+					yield this._checkStep(2) ? component._runStep(keyLifeCycle[2]) : null //--- render
+					yield this._checkStep(3) ? component._runStep(keyLifeCycle[3]) : null //--- behavior
+					// ------------------------------------------(keyLifeCycle[4])------------- up
 				}
 
 				let lifeCycle = componentlifeCycle.next()
