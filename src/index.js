@@ -119,8 +119,8 @@ mixins.lifeCycling = function(superclass)
 		async _render()
 		{
 			if (this.constructor.name in Jellycat._cache && this.options.autoRender === 'root') {
-				if (this.children.length > 0) this.innerHTML = ""
 				let template = this.drawTemplate()
+				if (template && this.children.length > 0) this.innerHTML = ""
 				if (template) this.appendChild(template)
 			}
 

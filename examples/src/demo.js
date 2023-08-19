@@ -33,7 +33,7 @@ export default ( _ => {
 		Dropdown.define('Dropdown/Dropdown.html')
 		Tabs.define('Tabs/Tabs.html')
 
-		// hljs.highlightAll();
+		hljs.highlightAll();
 
 		console.log(Jellycat)
 		// console.log(Jellycat.methods)

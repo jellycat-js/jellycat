@@ -39,7 +39,7 @@ export default class Tabs extends JcComponent
 
 	async render(templates)
 	{
-		this.tabs.reverse().forEach((tab, i) => {
+		this.tabs/*.reverse()*/.forEach((tab, i) => {
 
 			if (this.active === i) tab.html.setAttribute('active', '')
 			this.querySelector('.tabs__content').appendChild(tab.html)
