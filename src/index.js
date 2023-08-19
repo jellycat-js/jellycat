@@ -81,9 +81,9 @@ mixins.lifeCycling = function(superclass)
 				function* _lifeCycle(component)
 				{
 					yield //-------------------------------------(keyLifeCycle[0])------------- down
-					yield this._checkStep(1) ? component._runStep(keyLifeCycle[1]) : null //--- init
-					yield this._checkStep(2) ? component._runStep(keyLifeCycle[2]) : null //--- render
-					yield this._checkStep(3) ? component._runStep(keyLifeCycle[3]) : null //--- behavior
+					yield component._checkStep(1) ? component._runStep(keyLifeCycle[1]) : null //--- init
+					yield component._checkStep(2) ? component._runStep(keyLifeCycle[2]) : null //--- render
+					yield component._checkStep(3) ? component._runStep(keyLifeCycle[3]) : null //--- behavior
 					// ------------------------------------------(keyLifeCycle[4])------------- up
 				}
 
