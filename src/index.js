@@ -70,7 +70,7 @@ mixins.lifeCycling = function(superclass)
 			try
 			{
 				const keyLifeCycle = this.keyLifeCycle
-				this.currentLifeCycle ??= keyLifeCycle[0]
+				this.currentLifeCycle ??= keyLifeCycle[keyLifeCycle.indexOf(since)]
 				const componentlifeCycle = _lifeCycle(this)
 				
 				function* _lifeCycle(component)
@@ -137,6 +137,11 @@ mixins.lifeCycling = function(superclass)
 			if (this.currentLifeCycleIndex < this.keyLifeCycle.indexOf(minLifeCycle))  {
 				throw new Error(`You cannot use ${methodName} method before render ${minLifeCycle} (current state: ${this.currentLifeCycle}) of lifeCycle of ${this.constructor.name}`)
 			}
+		}
+
+		async rollBackToLifeCycle(lifeCycle)
+		{
+			await this._runLifeCycle(lifeCycle)
 		}
 	}
 }
