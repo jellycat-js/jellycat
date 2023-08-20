@@ -69,7 +69,7 @@ mixins.lifeCycling = function(superclass)
 		{
 			try
 			{
-				since 
+				since !== false
 					? this.currentLifeCycle = since
 					: this.currentLifeCycle ??= this.keyLifeCycle[0]
 
@@ -87,11 +87,11 @@ mixins.lifeCycling = function(superclass)
 
 		async _runStep(lifeCycle)
 		{
+			if (['down', 'up'].includes(lifeCycle)) return true
+
 			return new Promise(async (resolve, reject) => {
-				if (this.methods.includes(`_${lifeCycle}`) && this.methods.includes(lifeCycle)) {
-					const args = await this[`_${lifeCycle}`]()
-					resolve(await this[lifeCycle](...args))
-				} else { resolve(true) }
+				const args = await this[`_${lifeCycle}`]()
+				resolve(this.methods.includes(lifeCycle) ? await this[lifeCycle](...args) : true)
 			})
 		}
 
