@@ -76,13 +76,13 @@ mixins.lifeCycling = function(superclass)
 			{
 				this.currentLifeCycle ??= since
 
-				while(this.currentLifeCycleIndex < keyLifeCycle.length)
+				while(this.currentLifeCycleIndex < this.keyLifeCycle.length)
 				{
 					if (!(await this._runStep(this.currentLifeCycle))) {
 						throw new Error(`LifeCycle ${this.currentLifeCycle} function of ${this.name} does not return true`)
 					}
-					
-					this.currentLifeCycle = keyLifeCycle[this.currentLifeCycleIndex+1]
+
+					this.currentLifeCycle = this.keyLifeCycle[this.currentLifeCycleIndex+1]
 				}
 
 				// const keyLifeCycle = this.keyLifeCycle
