@@ -65,11 +65,6 @@ mixins.lifeCycling = function(superclass)
 			return this.keyLifeCycle.indexOf(this.currentLifeCycle)
 		}
 
-		async _checkStepByKey(index)
-		{
-			return index === this.currentLifeCycleIndex()
-		}
-
 		async _runLifeCycle(since = false)
 		{
 			try
@@ -86,30 +81,6 @@ mixins.lifeCycling = function(superclass)
 
 					this.currentLifeCycle = this.keyLifeCycle[this.currentLifeCycleIndex+1]
 				}
-
-				// const keyLifeCycle = this.keyLifeCycle
-				// this.currentLifeCycle ??= since
-				// const componentlifeCycle = _lifeCycle(this)
-				
-				// function* _lifeCycle(component)
-				// {
-				// 	yield //----------------(keyLifeCycle[0])------ down
-				// 	yield component._runStep(keyLifeCycle[1]) //--- init
-				// 	yield component._runStep(keyLifeCycle[2]) //--- render
-				// 	yield component._runStep(keyLifeCycle[3]) //--- behavior
-				// 	// ---------------------(keyLifeCycle[4])------ up
-				// }
-
-				// let lifeCycle = componentlifeCycle.next()
-
-				// while (!lifeCycle.done)
-				// {
-				// 	this.currentLifeCycle = keyLifeCycle[this.currentLifeCycleIndex+1]
-				// 	lifeCycle = componentlifeCycle.next()
-				// 	if (lifeCycle.value && await lifeCycle.value !== true) {
-				// 		throw new Error(`LifeCycle ${this.currentLifeCycle} function of ${this.name} does not return true`)
-				// 	}
-				// }
 			
 			} catch(error) { console.log(error) }
 		}
@@ -176,6 +147,7 @@ mixins.rendering = function(superclass)
 
 		set template(template) {
 			this.setAttribute('template', template)
+			this.rollBackToLifeCycle('render')
 			return true
 		}
 
@@ -184,12 +156,12 @@ mixins.rendering = function(superclass)
 			return Object.keys(Jellycat._cache[this.constructor.name].templates)
 		}
 
-		draw(template = null, target = false)
+		draw(template = null, target = null)
 		{
 			this._checkLifeCycle('render', 'draw')
 			
 			const element = this.drawTemplate(template)
-			target = !target ? this : target
+			target ??= this
 
 			if (target.children.length > 0) {
 				[...target.children].forEach(child => child.remove())
