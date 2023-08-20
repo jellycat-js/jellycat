@@ -114,6 +114,8 @@ mixins.lifeCycling = function(superclass)
 
 		async _runStep(lifeCycle)
 		{
+			if (['down', 'up'].includes(lifeCycle)) return true
+				
 			return new Promise(async (resolve, reject) => {
 				const args = await this[`_${lifeCycle}`]()
 				resolve(this.methods.includes(lifeCycle) ? await this[lifeCycle](...args) : true)
