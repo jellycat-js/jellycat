@@ -147,7 +147,9 @@ mixins.rendering = function(superclass)
 
 		set template(template) {
 			this.setAttribute('template', template)
-			this.rollBackToLifeCycle('render')
+			if (this.currentLifeCycleIndex < this.keyLifeCycle.indexOf('render'))  {
+				this.rollBackToLifeCycle('render')
+			}
 			return true
 		}
 
