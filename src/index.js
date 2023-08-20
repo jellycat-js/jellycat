@@ -74,37 +74,46 @@ mixins.lifeCycling = function(superclass)
 		{
 			try
 			{
-				const keyLifeCycle = this.keyLifeCycle
 				this.currentLifeCycle ??= since
-				const componentlifeCycle = _lifeCycle(this)
-				
-				function* _lifeCycle(component)
-				{
-					yield //----------------(keyLifeCycle[0])------ down
-					yield component._runStep(keyLifeCycle[1]) //--- init
-					yield component._runStep(keyLifeCycle[2]) //--- render
-					yield component._runStep(keyLifeCycle[3]) //--- behavior
-					// ---------------------(keyLifeCycle[4])------ up
-				}
 
-				let lifeCycle = componentlifeCycle.next()
-
-				while (!lifeCycle.done)
+				while(this.currentLifeCycleIndex < keyLifeCycle.length)
 				{
-					this.currentLifeCycle = keyLifeCycle[this.currentLifeCycleIndex+1]
-					lifeCycle = componentlifeCycle.next()
-					if (lifeCycle.value && await lifeCycle.value !== true) {
+					if (!(await this._runStep(this.currentLifeCycle))) {
 						throw new Error(`LifeCycle ${this.currentLifeCycle} function of ${this.name} does not return true`)
 					}
+					
+					this.currentLifeCycle = keyLifeCycle[this.currentLifeCycleIndex+1]
 				}
+
+				// const keyLifeCycle = this.keyLifeCycle
+				// this.currentLifeCycle ??= since
+				// const componentlifeCycle = _lifeCycle(this)
+				
+				// function* _lifeCycle(component)
+				// {
+				// 	yield //----------------(keyLifeCycle[0])------ down
+				// 	yield component._runStep(keyLifeCycle[1]) //--- init
+				// 	yield component._runStep(keyLifeCycle[2]) //--- render
+				// 	yield component._runStep(keyLifeCycle[3]) //--- behavior
+				// 	// ---------------------(keyLifeCycle[4])------ up
+				// }
+
+				// let lifeCycle = componentlifeCycle.next()
+
+				// while (!lifeCycle.done)
+				// {
+				// 	this.currentLifeCycle = keyLifeCycle[this.currentLifeCycleIndex+1]
+				// 	lifeCycle = componentlifeCycle.next()
+				// 	if (lifeCycle.value && await lifeCycle.value !== true) {
+				// 		throw new Error(`LifeCycle ${this.currentLifeCycle} function of ${this.name} does not return true`)
+				// 	}
+				// }
 			
 			} catch(error) { console.log(error) }
 		}
 
 		async _runStep(lifeCycle)
 		{
-			if (!this._checkStepByKey) return true
-				
 			return new Promise(async (resolve, reject) => {
 				const args = await this[`_${lifeCycle}`]()
 				resolve(this.methods.includes(lifeCycle) ? await this[lifeCycle](...args) : true)
