@@ -70,11 +70,13 @@ mixins.lifeCycling = function(superclass)
 			return index === this.currentLifeCycleIndex()
 		}
 
-		async _runLifeCycle(since = 'down')
+		async _runLifeCycle(since = false)
 		{
 			try
 			{
-				this.currentLifeCycle ??= since
+				since 
+					? this.currentLifeCycle = since
+					: this.currentLifeCycle ??= this.keyLifeCycle[0]
 
 				while(this.currentLifeCycleIndex < this.keyLifeCycle.length-1)
 				{
