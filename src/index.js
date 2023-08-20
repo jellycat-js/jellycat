@@ -25,7 +25,7 @@ mixins.abstract = function(superclass)
 		{
 			!Array.isArray(templateUrl)
 				? await Jellycat._cacheSet(this.name, templateUrl, options)
-				: await Promises.all(templateUrl.map(async url => {
+				: await Promise.all(templateUrl.map(async url => {
 					return await Jellycat._cacheSet(this.name, url, options)
 				}))
 
@@ -76,7 +76,7 @@ mixins.lifeCycling = function(superclass)
 				while(this.currentLifeCycleIndex < this.keyLifeCycle.length-1)
 				{
 					if (!(await this._runStep(this.currentLifeCycle))) {
-						throw new Error(`LifeCycle ${this.currentLifeCycle} function of ${this.name} does not return true`)
+						throw new Error(`LifeCycle ${this.currentLifeCycle} function of ${this.constructor.name} does not return true`)
 					}
 
 					this.currentLifeCycle = this.keyLifeCycle[this.currentLifeCycleIndex+1]
