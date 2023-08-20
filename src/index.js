@@ -132,7 +132,7 @@ mixins.lifeCycling = function(superclass)
 
 		async rollBackToLifeCycle(lifeCycle)
 		{
-			if (this.currentLifeCycleIndex > this.keyLifeCycle.indexOf(minLifeCycle)) {
+			if (this.currentLifeCycleIndex > this.keyLifeCycle.indexOf(lifeCycle)) {
 				await this._runLifeCycle(lifeCycle)
 			}
 		}
