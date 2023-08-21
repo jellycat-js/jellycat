@@ -42,6 +42,7 @@ mixins.abstract = function(superclass)
 
 		async connectedCallback()
 		{
+			console.log('test', this.test)
 			this._runLifeCycle()
 		}
 
@@ -291,7 +292,7 @@ window.Jellycat ??= new class Jellycat
 		this._factory = {
 
 			JcComponent: class JcComponent extends _(HTMLElement).with(...Object.values(mixins)) { 
-				constructor() { super() }
+				constructor(test) { super(); this.test = test }
 			},
 			JcDivComponent: class JcDivComponent extends _(HTMLDivElement).with(...Object.values(mixins)) { 
 				constructor() { super() }
