@@ -11,6 +11,8 @@ export default function(superclass)
 
 		async __init(args)
 	    {
+	    	await Jellycat._cacheSet(this.name, './template.html', this.options)
+
 	    	console.log(this.router.resolve(window.location.pathname, window.location.hash))
 			// this.navigate = this.navigate.bind(this)
 			// this._view = this.router.resolve(window.location.pathname)
