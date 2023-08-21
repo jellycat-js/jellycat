@@ -21,7 +21,7 @@ export default function(superclass)
 			// 	history.pushState(view.template, null, view.pathname)
 			// }
 
-	    	console.log(this.viewState, newValue)
+	    	console.log(this.view, newValue)
 			this.draw(newValue, this.viewState.root)
     		// this.rollBackToLifeCycle('render')
     		console.log('JcApp __viewChangedCallback', newValue)
@@ -67,7 +67,9 @@ export default function(superclass)
 		{
 			if (e instanceof PopStateEvent) {
 				e.preventDefault()
-				this.view = this.router.resolve(e.state.pathname)
+				const resolved = this.router.resolve(e.state.pathname)
+				this.viewState = Object.assign({}, this.viewState, resolved)
+				this.view = this.viewState.template
 				return
 			}
 			
@@ -81,7 +83,10 @@ export default function(superclass)
 
 				e.preventDefault()
 				history.pushState({}, '', link)
-				this.view = this.router.resolve(link.includes('#') ? link.split('#')[0] : link)
+
+				const resolved = this.router.resolve(link.includes('#') ? link.split('#')[0] : link)
+				this.viewState = Object.assign({}, this.viewState, resolved)
+				this.view = this.viewState.template
 				// this.hashScroll()
 			}
 		}
