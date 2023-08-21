@@ -85,9 +85,14 @@ mixins.abstract = function(superclass)
 		       	const observeMethod = `${mutation.attributeName}ChangedCallback`
 
 		       	if (mutation.oldValue === newValue) continue
-				if (undefined === mutation.target[observeMethod]) continue
 
-		        mutation.target[observeMethod](mutation.oldValue, newValue)
+				if (undefined !== mutation.target[observeMethod]) {
+					mutation.target[observeMethod](mutation.oldValue, newValue)
+				}
+
+				if (undefined !== mutation.target[`__${observeMethod}`]) {
+					mutation.target[`__${observeMethod}`](mutation.oldValue, newValue)
+				}
 		    }
 	    }
 	}
@@ -319,6 +324,11 @@ presets.app = function(superclass)
 {
 	return class extends superclass
 	{
+		__viewChangedCallback(oldValue, newValue)
+    	{
+    		console.log('JcApp __viewChangedCallback')
+		}
+
 		async __init(args)
 	    {
 	    	console.log('JcApp __init')
@@ -338,6 +348,7 @@ presets.app = function(superclass)
 		}
 	}
 }
+
 
 window.Jellycat ??= new class Jellycat
 {
