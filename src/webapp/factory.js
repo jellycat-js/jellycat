@@ -1,8 +1,8 @@
 'use strict'
 
-import templates from './templates.html'
+// import templates from './templates.html'
 
-console.log(templates)
+// console.log(templates)
 
 export default function(superclass)
 {
@@ -16,7 +16,7 @@ export default function(superclass)
 		async __init(args)
 	    {
 	    	console.log(__dirname)
-	    	// await Jellycat._cacheSet(this.name, './template.html', this.options)
+	    	await Jellycat._cacheSet(this.name, './template.html', this.options)
 
 	    	console.log(this.router.resolve(window.location.pathname, window.location.hash))
 			// this.navigate = this.navigate.bind(this)
