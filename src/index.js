@@ -503,11 +503,13 @@ window.Jellycat ??= new class Jellycat
 		return requestObj
 	}
 
-	async _cacheSet(name, templateUrl = false, options = {})
+	async _cacheSet(name, templatesUrl = false, options = {})
 	{
+		templatesUrl = !Array.isArray(templatesUrl) ||= [templatesUrl]
 		let templates = []
-		if (templateUrl) {
 
+		for (const templateUrl in templatesUrl)
+		{
 			let response = await fetch(templateUrl)
 			if (response.status != 200) {
 				throw new Error(`Template ${response.statusText} (${response.url})`)
@@ -515,15 +517,17 @@ window.Jellycat ??= new class Jellycat
 
 			const text = await response.text()
 			const html = new DOMParser().parseFromString(text, 'text/html')
-			templates = Array.from(html.querySelectorAll('template')).reduce((template, element) => {
-				return { ...template, [element.id]: element }
-			}, {})
+			templates = templates.concat(Array.from(html.querySelectorAll('template')))
 		}
+
+		templates = templates.reduce((template, element) => {
+			return { ...template, [element.id]: element }
+		}, {})
 
 		if (!(name in this._instances)) this._instances[name] = []
 
 		this._cache[name] = { 
-			source: templateUrl,
+			source: templatesUrl,
 			templates: templates,
 			options: options
 		}
