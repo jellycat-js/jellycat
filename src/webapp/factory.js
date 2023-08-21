@@ -23,7 +23,7 @@ export default function(superclass)
 				return { ...template, [element.id]: element }
 			}, {})
 
-	    	console.log(this._router.resolve(window.location.pathname, window.location.hash))
+	    	console.log(this.router.resolve(window.location.pathname, window.location.hash))
 			// this.navigate = this.navigate.bind(this)
 			// this._view = this.router.resolve(window.location.pathname)
 
@@ -62,15 +62,7 @@ export default function(superclass)
 		// 	this.querySelector('cx-navigation').selectActiveItem(this.view.pathname)
 		// }
 
-		_loader = {
-
-			loadTemplates()
-			{
-				
-			}
-		}
-
-		_router = {
+		router = {
 
 			resolve(pathname, hash)
 			{
