@@ -13,7 +13,7 @@ export default function(superclass)
 
 		async __init(args)
 	    {
-	    	console.log('__int', this.name, Jellycat)
+	    	console.log('__int', this.constructor.name, Jellycat)
 			// Jellycat._cache[this.name].source.push('./template.html')
 			const html = new DOMParser().parseFromString(templates, 'text/html')
 			console.log(html)
