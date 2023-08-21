@@ -13,8 +13,19 @@ export default function(superclass)
 
 		async __init(args)
 	    {
-	    	console.log(templates)
-	    	// await Jellycat._cacheSet(this.name, './template.html', this.options)
+			Jellycat._cache[this.name].source.push('./template.html')
+			const html = new DOMParser().parseFromString(templates, 'text/html')
+			console.log(html)
+// 			templates = templates.concat(Array.from(html.querySelectorAll('template')))
+
+// templates = templates.reduce((template, element) => {
+// 	return { ...template, [element.id]: element }
+// }, {})
+// 			Jellycat._cache[this.name].templates.push('./template.html')
+// 				source: templatesUrl,
+// 				templates: templates,
+// 				options: options
+// 			}
 
 	    	console.log(this.router.resolve(window.location.pathname, window.location.hash))
 			// this.navigate = this.navigate.bind(this)

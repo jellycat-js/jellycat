@@ -516,8 +516,8 @@ window.Jellycat ??= new class Jellycat
 				throw new Error(`Template ${response.statusText} (${response.url})`)
 			}
 
-			const text = await response.text()
-			const html = new DOMParser().parseFromString(text, 'text/html')
+			const stringTemplate = await response.text()
+			const html = new DOMParser().parseFromString(stringTemplate, 'text/html')
 			templates = templates.concat(Array.from(html.querySelectorAll('template')))
 		}
 
