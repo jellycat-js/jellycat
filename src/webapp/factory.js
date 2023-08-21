@@ -106,9 +106,9 @@ export default function(superclass)
 				}
 			},
 
-			_setRoutes(routes)
+			_setRoutes(routes = [])
 			{
-				this.routes.filter(route => route.path === '/').length === 0
+				this.routes = routes.filter(route => route.path === '/').length === 0
 					? [{ path: '/', template: 'wellcome' }].concat(routes)
 					: routes
 			},
