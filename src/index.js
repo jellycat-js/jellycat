@@ -330,7 +330,6 @@ const App = function(superclass)
 
 		async __init(args)
 	    {
-	    	this.router.routes = routes
 	    	console.log(this.router.resolve(window.location.pathname))
 			// this.navigate = this.navigate.bind(this)
 			// this._view = this.router.resolve(window.location.pathname)
@@ -488,7 +487,11 @@ window.Jellycat ??= new class Jellycat
 				constructor(...ctrlAttrs) { super(); this._controlledAttributes = ctrlAttrs }
 			},
 			JcAppComponent: class JcAppComponent extends _(HTMLElement).with(...(Object.values(mixins).concat(App))) {
-				constructor(...ctrlAttrs) { super(); this._controlledAttributes = new Set([...ctrlAttrs.concat(['view'])]) }
+				constructor(routes, ...ctrlAttrs) { 
+					super()
+					this.router.routes = routes
+					this._controlledAttributes = new Set([...ctrlAttrs.concat(['view'])])
+				}
 			},
 
 			resolve: HtmlElement => {
