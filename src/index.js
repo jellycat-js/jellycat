@@ -361,7 +361,7 @@ window.Jellycat ??= new class Jellycat
 			},
 			JcAppComponent: class JcAppComponent extends _(HTMLElement).with(...Object.values(mixins))
 			{
-				constructor(...$ctrlAttrs) { super(); this._controlledAttributes = ctrlAttrs }
+				constructor(...ctrlAttrs) { super(); this._controlledAttributes = ctrlAttrs }
 
 			    async __init(args)
 			    {
