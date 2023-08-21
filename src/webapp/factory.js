@@ -39,6 +39,7 @@ export default function(superclass)
 			}, {})
 
 			this.viewState = this.router.resolve(window.location.pathname)
+			this.navigate = this.navigate.bind(this)
 
 	    	console.log('JcApp __init')
 	    	return args
@@ -58,24 +59,22 @@ export default function(superclass)
 			return args
 		}
 
-		// navigate(event)
-		// {
-		// 	if (event instanceof PopStateEvent) {
-		// 		event.preventDefault()
-		// 		this.view = this.router.resolve(event.state.pathname)
+		navigate(e)
+		{
+			if (e instanceof PopStateEvent) {
+				e.preventDefault()
+				this.view = this.router.resolve(e.state.pathname)
 			
-		// 	} else if (event instanceof PointerEvent) {
-		// 		event.preventDefault()
-		// 		this.view = event.currentTarget.tagName === 'A'
-		// 			? this.router.resolve(event.currentTarget.getAttribute('href'))
-		// 			: this.router.resolve(event.currentTarget.getAttribute('data-url'))
+			} else if (e instanceof PointerEvent) {
+				e.preventDefault()
+				this.view = e.currentTarget.tagName === 'A'
+					? this.router.resolve(e.currentTarget.getAttribute('href'))
+					: this.router.resolve(e.currentTarget.getAttribute('data-url'))
 			
-		// 	} else if (typeof event === 'string') {
-		// 		this.view = this.router.resolve(event)
-		// 	}
-			
-		// 	this.querySelector('cx-navigation').selectActiveItem(this.view.pathname)
-		// }
+			} else if (typeof e === 'string') {
+				this.view = this.router.resolve(e)
+			}
+		}
 
 		router = {
 
