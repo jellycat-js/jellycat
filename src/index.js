@@ -43,23 +43,7 @@ mixins.abstract = function(superclass)
 		async connectedCallback()
 		{
 			if (Array.isArray(this._controlledAttributes) && this._controlledAttributes.length > 0) {
-
-				this.mutationObserver = new MutationObserver(this.mutationObserverCallback)
-				this.mutationObserver.observe(this, {
-					attributes: true,
-					attributeOldValue: true
-				})
-
-				this._controlledAttributes.forEach(attr => {
-					Object.defineProperty(this, attr, {
-						get() { 
-							return this.getAttribute('theme')
-						},
-						set(value) {
-							this.setAttribute('theme', value)
-						}
-					})
-				})
+				this._mountMutationObserver()
 			}
 
 			this._runLifeCycle()
@@ -67,13 +51,29 @@ mixins.abstract = function(superclass)
 
 		async disconnectedCallback()
 		{ 
-			if (this.mutationObserver) this.mutationObserver.disconnect()
+			if (this._mutationObserver) this._mutationObserver.disconnect()
 
 			const instances = window.Jellycat._instances[this.constructor.name]
 			window.Jellycat._instances[this.constructor.name] = instances.filter(component => component !== this)
 		}
 
-		mutationObserverCallback(mutationList, observer)
+		_mountMutationObserver()
+		{
+			this._mutationObserver = new MutationObserver(this._mutationObserverCallback)
+			this._mutationObserver.observe(this, {
+				attributes: true,
+				attributeOldValue: true
+			})
+
+			this._controlledAttributes.forEach(attr => {
+				Object.defineProperty(this, attr, {
+					get: _ => return this.getAttribute(attr),
+					set: value => this.setAttribute(attr, value)
+				})
+			})
+		}
+
+		_mutationObserverCallback(mutationList, observer)
 		{
 		    for (const mutation of mutationList)
 		    {
