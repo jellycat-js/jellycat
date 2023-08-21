@@ -26,7 +26,7 @@ mixins.abstract = function(superclass)
 		static async define(templateUrl = false, options = {})
 		{
 			!Array.isArray(templateUrl)
-				? await Jellycat._cacheSet(this.name, templateUrl, options)
+				? await Jellycat._cacheSet(this.name, [templateUrl], options)
 				: await Promise.all(templateUrl.map(async url => {
 					return await Jellycat._cacheSet(this.name, url, options)
 				}))
@@ -505,7 +505,6 @@ window.Jellycat ??= new class Jellycat
 
 	async _cacheSet(name, templatesUrl = false, options = {})
 	{
-		templatesUrl = !Array.isArray(templatesUrl) ||= [templatesUrl]
 		let templates = []
 
 		for (const templateUrl in templatesUrl)
