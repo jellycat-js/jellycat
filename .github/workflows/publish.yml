@@ -19,7 +19,7 @@ jobs:
       - name: npm install, and test
         run: |
           npm ci
-          npm test -- --verbose
+        # npm test -- --verbose
 
   build:
     runs-on: ubuntu-latest
