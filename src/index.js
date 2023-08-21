@@ -42,7 +42,7 @@ mixins.abstract = function(superclass)
 
 		async connectedCallback()
 		{
-			if (Array.isArray(this._controlledAttributes)) {
+			if (Array.isArray(this._controlledAttributes) && this._controlledAttributes.length > 0) {
 				this.mutationObserver = new MutationObserver(this.mutationObserverCallback)
 				this.mutationObserver.observe(this, {
 					attributes: true,
@@ -63,13 +63,18 @@ mixins.abstract = function(superclass)
 
 		mutationObserverCallback(mutationList, observer)
 		{
-		    for (const mutation of mutationList) {
-		        if (mutation.type === 'attributes' &&
-		        	mutation.target._controlledAttributes.includes(mutation.attributeName) &&
-		        	mutation.oldValue !== mutation.target.getAttribute(mutation.attributeName)) {
-		        	console.log(`The dynamic ${mutation.attributeName} attribute was modified.`)
-		        	if (mutation.target.test) mutation.target.test('okkkkkkkkkkkk')
-		        }
+		    for (const mutation of mutationList)
+		    {
+		        if (mutation.type !== 'attributes') continue
+		       	if (!mutation.target._controlledAttributes.includes(mutation.attributeName)) continue
+
+		       	const newValue = mutation.target.getAttribute(mutation.attributeName)
+		       	const observeMethod = `${mutation.attributeName}ChangedCallback`
+
+		       	if (mutation.oldValue === newValue) continue
+				if (undefined === mutation.target[observeMethod]) continue
+
+		        mutation.target.[observeMethod](mutation.oldValue, newValue)
 		    }
 	    }
 	}
@@ -313,31 +318,31 @@ window.Jellycat ??= new class Jellycat
 		this._factory = {
 
 			JcComponent: class JcComponent extends _(HTMLElement).with(...Object.values(mixins)) { 
-				constructor(...controlledAttributes) { super(); this._controlledAttributes = controlledAttributes }
+				constructor(...ctrlAttrs) { super(); this._controlledAttributes = ctrlAttrs }
 			},
 			JcDivComponent: class JcDivComponent extends _(HTMLDivElement).with(...Object.values(mixins)) { 
-				constructor(controlledAttributes) { super(); this._controlledAttributes = controlledAttributes }
+				constructor(...ctrlAttrs) { super(); this._controlledAttributes = ctrlAttrs }
 			},
 			JcSpanComponent: class JcSpanComponent extends _(HTMLSpanElement).with(...Object.values(mixins)) { 
-				constructor(controlledAttributes) { super(); this._controlledAttributes = controlledAttributes }
+				constructor(...ctrlAttrs) { super(); this._controlledAttributes = ctrlAttrs }
 			},
 			JcUlComponent: class JcUlComponent extends _(HTMLUListElement).with(...Object.values(mixins)) { 
-				constructor(controlledAttributes) { super(); this._controlledAttributes = controlledAttributes }
+				constructor(...ctrlAttrs) { super(); this._controlledAttributes = ctrlAttrs }
 			},
 			JcLiComponent: class JcLiComponent extends _(HTMLLIElement).with(...Object.values(mixins)) { 
-				constructor(controlledAttributes) { super(); this._controlledAttributes = controlledAttributes }
+				constructor(...ctrlAttrs) { super(); this._controlledAttributes = ctrlAttrs }
 			},
 			JcPComponent: class JcPComponent extends _(HTMLParagraphElement).with(...Object.values(mixins)) {
-				constructor(controlledAttributes) { super(); this._controlledAttributes = controlledAttributes }
+				constructor(...ctrlAttrs) { super(); this._controlledAttributes = ctrlAttrs }
 			},
 			JcLabelComponent: class JcLabelComponent extends _(HTMLLabelElement).with(...Object.values(mixins)) { 
-				constructor(controlledAttributes) { super(); this._controlledAttributes = controlledAttributes }
+				constructor(...ctrlAttrs) { super(); this._controlledAttributes = ctrlAttrs }
 			},
 			JcInputComponent: class JcInputComponent extends _(HTMLInputElement).with(...Object.values(mixins)) { 
-				constructor(controlledAttributes) { super(); this._controlledAttributes = controlledAttributes }
+				constructor(...ctrlAttrs) { super(); this._controlledAttributes = ctrlAttrs }
 			},
 			JcTextareaComponent: class JcTextareaComponent extends _(HTMLTextAreaElement).with(...Object.values(mixins)) { 
-				constructor(controlledAttributes) { super(); this._controlledAttributes = controlledAttributes }
+				constructor(...ctrlAttrs) { super(); this._controlledAttributes = ctrlAttrs }
 			},
 
 			resolve: HtmlElement => {
