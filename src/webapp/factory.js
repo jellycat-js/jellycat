@@ -67,15 +67,21 @@ export default function(superclass)
 			if (e instanceof PopStateEvent) {
 				e.preventDefault()
 				this.view = this.router.resolve(e.state.pathname)
+				return
+			}
 			
-			} else if (e instanceof PointerEvent) {
+			if (e instanceof PointerEvent) { // || TOUCH
+
+				const target = e.target.tagName !== 'A' && ? e.target.closest('a') : e.target
+				if (!target) return
+
+				const link = target.getAttribute('href')
+				if (link === null || link.startsWith('#') || link.startsWith('http')) return
+
 				e.preventDefault()
-				this.view = e.currentTarget.tagName === 'A'
-					? this.router.resolve(e.currentTarget.getAttribute('href'))
-					: this.router.resolve(e.currentTarget.getAttribute('data-url'))
-			
-			} else if (typeof e === 'string') {
-				this.view = this.router.resolve(e)
+				history.pushState({}, '', link)
+				this.view = this.router.resolve(link.includes('#') ? link.split('#')[0] : link)
+				// this.hashScroll()
 			}
 		}
 
