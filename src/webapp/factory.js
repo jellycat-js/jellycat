@@ -22,8 +22,8 @@ export default function(superclass)
 			Jellycat._cache[this.constructor.name].templates = templates.reduce((template, element) => {
 				return { ...template, [element.id]: element }
 			}, {})
-			// this.navigate = this.navigate.bind(this)
-			this._view = this.router.resolve(window.location.pathname)
+
+			args.navigation = this.router.resolve(window.location.pathname)
 
 	    	console.log('JcApp __init')
 	    	return args
@@ -40,8 +40,7 @@ export default function(superclass)
 	    		default: throw new Error('jc-app DOM tree must contain only one element with attribute "app-view"')
 	    	}
 
-	    	const viewObj = this.router.resolve(window.location.pathname)
-	    	this.view = viewObj.template
+	    	this.view = args.navigation.template
 	    	// this.view.template
 	    	// console.log(this.view)
 	    	// mountView()
