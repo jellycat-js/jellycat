@@ -15,8 +15,8 @@ export default function(superclass)
 	    {
 			Jellycat._cache[this.constructor.name].source.push('./template.html')
 			const html = new DOMParser().parseFromString(templates, 'text/html')
-			templates = Array.from(html.querySelectorAll('template'))
-			console.log({templates: templates})
+			templateElements = Array.from(html.querySelectorAll('template'))
+			console.log({templates: templateElements})
 
 // templates = templates.reduce((template, element) => {
 // 	return { ...template, [element.id]: element }
