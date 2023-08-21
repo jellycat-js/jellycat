@@ -42,6 +42,16 @@ export default function(superclass)
 	    		default: throw new Error('jc-app DOM tree must contain only one element with attribute "app-view"')
 	    	}
 
+	    	console.log(this.view)
+	    	// mountView()
+			// {
+			// 	if (history.state == null || history.state.pathname != this.view.pathname) {
+			// 		history.pushState(this.view, null, this.view.pathname)
+			// 	}
+
+			// 	return this.draw(this._view.template, this.querySelector('main'))
+			// }
+
 	    	// render view in [app-view]
 	    	console.log('JcApp __render')
 	    	return args
