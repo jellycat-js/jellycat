@@ -22,10 +22,8 @@ export default function(superclass)
 			Jellycat._cache[this.constructor.name].templates = templates.reduce((template, element) => {
 				return { ...template, [element.id]: element }
 			}, {})
-
-	    	console.log(this.router.resolve(window.location.pathname, window.location.hash))
 			// this.navigate = this.navigate.bind(this)
-			// this._view = this.router.resolve(window.location.pathname)
+			this.view = this.router.resolve(window.location.pathname)
 
 	    	console.log('JcApp __init')
 	    	return args
@@ -84,7 +82,7 @@ export default function(superclass)
 
 		router = {
 
-			resolve(pathname, hash)
+			resolve(pathname)
 			{
 				let template = 'view_not_found'
 				let parameters = {}
