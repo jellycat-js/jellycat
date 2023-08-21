@@ -21,6 +21,7 @@ export default function(superclass)
 			// 	history.pushState(view.template, null, view.pathname)
 			// }
 
+	    	console.log(this.viewState, newValue)
 			this.draw(newValue, this.viewState.root)
     		// this.rollBackToLifeCycle('render')
     		console.log('JcApp __viewChangedCallback', newValue)

@@ -209,17 +209,12 @@ mixins.rendering = function(superclass)
 			this._checkLifeCycle('render', 'draw')
 			
 			const element = this.drawTemplate(template)
-
-			if (this.viewState && this.viewState.root && target === null) {
-				target = this.viewState.root
-			} else if (target === null) {
-				target = this
-			}
+			target ??= this
 
 			if (target.children.length > 0) {
 				[...target.children].forEach(child => child.remove())
 			}
-
+			
 			target.appendChild(element)
 			return true
 		}
