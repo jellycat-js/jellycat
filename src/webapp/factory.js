@@ -20,9 +20,9 @@ export default function(superclass)
 			let userTemplates = Jellycat._cache[this.constructor.name].templates
 			let templates = Array.from(html.querySelectorAll('template')).concat(Object.values(userTemplates))
 
-			console.log(templates.reduce((template, element) => {
+			Jellycat._cache[this.constructor.name].templates = templates.reduce((template, element) => {
 				return { ...template, [element.id]: element }
-			}, {}))
+			}, {})
 
 	    	console.log(this.router.resolve(window.location.pathname, window.location.hash))
 			// this.navigate = this.navigate.bind(this)
