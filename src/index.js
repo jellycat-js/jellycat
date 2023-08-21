@@ -373,69 +373,65 @@ const App = function(superclass)
 
 			resolve(pathname)
 			{
-				console.log(pathname)
+				// return pathname
 				// let template = 'error-404'
-				// let parameters = {}
+				let parameters = {}
 
-				// for (const route of this.routes)
-				// {
-				// 	if (route.path.split('/').length < pathname.split('/').length) {
-				// 		continue
-					
-				// 	} else if (route.path === pathname) {
-				// 		template = route.template
-				// 		break
-				// 	} 
+				for (const route of this.routes)
+				{
+					if (route.path.split('/').length < pathname.split('/').length) continue
+					if (route.path === pathname) {
+						template = route.template
+						break
+					}
 
-				// 	const params = this._getRouteParams(route.path)
+					const params = this._getRouteParams(route.path)
+					// const hash = this._getHashParam(route.path)
 
-				// 	if (Object.keys(params) > 0 && this._comparePaths(route.path, pathname, params)) {
-				// 		for (const [index, param] of Object.entries(params)) {
-				// 			parameters[param.name] = pathname.split('/')[index]
-				// 		}
+					if (Object.keys(params).length > 0 && this._comparePaths(route.path, pathname, params)) {
+						for (const [index, param] of Object.entries(params)) {
+							parameters[param.name] = pathname.split('/')[index]
+						}
 						
-				// 		template = route.template
-				// 		break
-				// 	}
-				// }
+						template = route.template
+						break
+					}
+				}
 
-				// return { 
-				// 	pathname: pathname, 
-				// 	template: template, 
-				// 	parameters: parameters 
-				// }
-			}// ,
+				return { 
+					pathname: pathname, 
+					template: template, 
+					parameters: parameters 
+				}
+			},
 
-		// 	_getRouteParams(path)
-		// 	{
-		// 		let pathFragments = path.split('/')
-		// 		let routeParameters = {}
+			_getRouteParams(path)
+			{
+				let pathFragments = path.split('/')
+				let routeParameters = {}
 
-		// 		pathFragments.forEach((fragment, index) => {
-		// 			if (fragment.charAt(0) === '{' && fragment.charAt(fragment.length-1) === '}') {
-		// 				let parameter = fragment.slice(1,-1)
-		// 				routeParameters[index] = parameter.charAt(parameter.length-1) === '?'
-		// 					? { nullable: true, name: parameter.slice(0,-1) }
-		// 					: { nullable: false, name: parameter }
-		// 			}
-		// 		})
+				pathFragments.forEach((fragment, index) => {
+					if (fragment.charAt(0) === '{' && fragment.charAt(fragment.length-1) === '}') {
+						let parameter = fragment.slice(1,-1)
+						routeParameters[index] = parameter.charAt(parameter.length-1) === '?'
+							? { nullable: true, name: parameter.slice(0,-1) }
+							: { nullable: false, name: parameter }
+					}
+				})
 
-		// 		return routeParameters
-		// 	},
+				return routeParameters
+			},
 
-		// 	_comparePaths(pathA, pathB, params)
-		// 	{
-		// 		for (let [index, fragment] of Object.entries(pathB.split('/')))
-		// 		{
-		// 			if (fragment === pathA.split('/')[index] || params[index]?.nullable) {
-		// 				continue
-		// 			}
-
-		// 			return false
-		// 		}
+			_comparePaths(pathA, pathB, params)
+			{
+				for (let [index, fragment] of Object.entries(pathB.split('/')))
+				{
+					if (fragment === pathA.split('/')[index] || params[index]?.nullable) continue
+					return false
+				}
 				
-		// 		return true
-		// 	}
+				return true
+			}
 		}
 	}
 }
