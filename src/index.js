@@ -373,8 +373,7 @@ const App = function(superclass)
 
 			resolve(pathname)
 			{
-				// return pathname
-				// let template = 'error-404'
+				let template = 'error-404'
 				let parameters = {}
 
 				for (const route of this.routes)
