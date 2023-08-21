@@ -74,7 +74,7 @@ mixins.abstract = function(superclass)
 		       	if (mutation.oldValue === newValue) continue
 				if (undefined === mutation.target[observeMethod]) continue
 
-		        mutation.target.[observeMethod](mutation.oldValue, newValue)
+		        mutation.target[observeMethod](mutation.oldValue, newValue)
 		    }
 	    }
 	}
