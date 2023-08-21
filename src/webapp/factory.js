@@ -8,6 +8,7 @@ export default function(superclass)
 	{
 		__viewChangedCallback(oldValue, newValue)
     	{
+    		// this.rollBackToLifeCycle('render')
     		console.log('JcApp __viewChangedCallback', newValue)
 		}
 
@@ -40,6 +41,13 @@ export default function(superclass)
 
 	    	const view = this.router.resolve(window.location.pathname)
 	    	this.view = view.template
+
+	    	if (history.state == null || history.state.pathname != view.pathname) {
+				history.pushState(view.template, null, view.pathname)
+			}
+
+			console.log(this.draw(view.template, viewContainer))
+
 	    	// console.log(this.router.resolve(window.location.pathname))
 
 	    	// this.view = args.navigation.template
