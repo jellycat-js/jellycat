@@ -31,7 +31,7 @@ export default {
       commonjs(),
       noderesolve(),
       babel({ babelHelpers: 'bundled' }),
-      terser()
+      terser(),
       html({ include: 'src/webapp//templates.html' })
    ]
 };
