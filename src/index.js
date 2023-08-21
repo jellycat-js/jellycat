@@ -55,7 +55,8 @@ mixins.abstract = function(superclass)
 
 		async disconnectedCallback()
 		{ 
-			this.mutationObserver.disconnect()
+			if (this.mutationObserver) this.mutationObserver.disconnect()
+				
 			const instances = window.Jellycat._instances[this.constructor.name]
 			window.Jellycat._instances[this.constructor.name] = instances.filter(component => component !== this)
 		}
