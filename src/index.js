@@ -42,12 +42,13 @@ mixins.abstract = function(superclass)
 
 		async connectedCallback()
 		{
-
-			this.mutationObserver = new MutationObserver(this.mutationObserverCallback)
-			this.mutationObserver.observe(this, {
-				attributes: true,
-				attributeOldValue: true
-			})
+			if (Array.isArray(this._controlledAttributes)) {
+				this.mutationObserver = new MutationObserver(this.mutationObserverCallback)
+				this.mutationObserver.observe(this, {
+					attributes: true,
+					attributeOldValue: true
+				})
+			}
 
 			this._runLifeCycle()
 		}
@@ -61,10 +62,11 @@ mixins.abstract = function(superclass)
 
 		mutationObserverCallback(mutationList, observer)
 		{
-			console.log(mutationList, observer)
+			// if (Array.isArray(mutation.target._controlledAttributes))
+			console.log(mutation.target)
 		    for (const mutation of mutationList) {
 		        if (mutation.type === 'attributes' &&
-		        	// mutation.target._controlledAttributes.includes(mutation.attributeName) &&
+		        	mutation.target._controlledAttributes.includes(mutation.attributeName) &&
 		        	mutation.oldValue !== mutation.target.getAttribute(mutation.attributeName)) {
 		        	console.log(`The dynamic ${mutation.attributeName} attribute was modified.`)
 		        }
