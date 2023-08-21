@@ -42,14 +42,31 @@ mixins.abstract = function(superclass)
 
 		async connectedCallback()
 		{
+			this.mutationObserver = new MutationObserver(this.mutationObserverCallback)
+			this.mutationObserver.observe(this, {
+				attributes: true,
+				attributeOldValue: true
+			})
+
 			this._runLifeCycle()
 		}
 
 		async disconnectedCallback()
 		{ 
+			this.mutationObserver.disconnect()
 			const instances = window.Jellycat._instances[this.constructor.name]
 			window.Jellycat._instances[this.constructor.name] = instances.filter(component => component !== this)
 		}
+
+		mutationObserverCallback(mutationList, observer) {
+		    for (const mutation of mutationList) {
+		        if (mutation.type === 'attributes' &&
+		        	this._controlledAttributes.includes(mutation.attributeName) &&
+		        	mutation.oldValue !== mutation.target.getAttribute(mutation.attributeName)) {
+		        	console.log(`The dynamic ${mutation.attributeName} attribute was modified.`)
+		        }
+		    }
+	    }
 	}
 }
 
@@ -291,42 +308,31 @@ window.Jellycat ??= new class Jellycat
 		this._factory = {
 
 			JcComponent: class JcComponent extends _(HTMLElement).with(...Object.values(mixins)) { 
-				constructor(...controlledAttributes)
-				{ 
-					super()
-
-					Object.defineProperty(this, 'observedAttributes', {
-					  get() {
-					    return controlledAttributes
-					  }
-					})
-					
-					// this.controlledAttributes = controlledAttributes
-				}
+				constructor(...controlledAttributes) { super(); this._controlledAttributes = controlledAttributes }
 			},
 			JcDivComponent: class JcDivComponent extends _(HTMLDivElement).with(...Object.values(mixins)) { 
-				constructor(controlledAttributes) { super(); this.controlledAttributes = controlledAttributes }
+				constructor(controlledAttributes) { super(); this._controlledAttributes = controlledAttributes }
 			},
 			JcSpanComponent: class JcSpanComponent extends _(HTMLSpanElement).with(...Object.values(mixins)) { 
-				constructor(controlledAttributes) { super(); this.controlledAttributes = controlledAttributes }
+				constructor(controlledAttributes) { super(); this._controlledAttributes = controlledAttributes }
 			},
 			JcUlComponent: class JcUlComponent extends _(HTMLUListElement).with(...Object.values(mixins)) { 
-				constructor(controlledAttributes) { super(); this.controlledAttributes = controlledAttributes }
+				constructor(controlledAttributes) { super(); this._controlledAttributes = controlledAttributes }
 			},
 			JcLiComponent: class JcLiComponent extends _(HTMLLIElement).with(...Object.values(mixins)) { 
-				constructor(controlledAttributes) { super(); this.controlledAttributes = controlledAttributes }
+				constructor(controlledAttributes) { super(); this._controlledAttributes = controlledAttributes }
 			},
 			JcPComponent: class JcPComponent extends _(HTMLParagraphElement).with(...Object.values(mixins)) {
-				constructor(controlledAttributes) { super(); this.controlledAttributes = controlledAttributes }
+				constructor(controlledAttributes) { super(); this._controlledAttributes = controlledAttributes }
 			},
 			JcLabelComponent: class JcLabelComponent extends _(HTMLLabelElement).with(...Object.values(mixins)) { 
-				constructor(controlledAttributes) { super(); this.controlledAttributes = controlledAttributes }
+				constructor(controlledAttributes) { super(); this._controlledAttributes = controlledAttributes }
 			},
 			JcInputComponent: class JcInputComponent extends _(HTMLInputElement).with(...Object.values(mixins)) { 
-				constructor(controlledAttributes) { super(); this.controlledAttributes = controlledAttributes }
+				constructor(controlledAttributes) { super(); this._controlledAttributes = controlledAttributes }
 			},
 			JcTextareaComponent: class JcTextareaComponent extends _(HTMLTextAreaElement).with(...Object.values(mixins)) { 
-				constructor(controlledAttributes) { super(); this.controlledAttributes = controlledAttributes }
+				constructor(controlledAttributes) { super(); this._controlledAttributes = controlledAttributes }
 			},
 
 			resolve: HtmlElement => {
