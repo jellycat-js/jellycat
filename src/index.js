@@ -356,6 +356,34 @@ window.Jellycat ??= new class Jellycat
 			JcTextareaComponent: class JcTextareaComponent extends _(HTMLTextAreaElement).with(...Object.values(mixins)) { 
 				constructor(...ctrlAttrs) { super(); this._controlledAttributes = ctrlAttrs }
 			},
+			JcViewComponent: class JcViewComponent extends _(HTMLElement).with(...Object.values(mixins)) { 
+			{
+				constructor(...$ctrlAttrs)
+			    {
+			        super([...new Set($ctrlAttrs.concat(['template']))])
+			    }
+
+			    __templateChangedCallback(oldValue, newValue)
+			    {
+			        this.rollBackToLifeCycle('render')
+			    }
+
+			    async __init()
+			    {
+			    	console.log('JcView __init')
+			    	this.app = this.getDomParentComponent()
+				}
+			  
+			    async __render()
+			    {
+			    	console.log('JcView __render')
+				}
+			  
+			    async __behavior()
+				{
+					console.log('JcView __behavior')
+				}
+			}
 
 			resolve: HtmlElement => {
 				switch(HtmlElement)
@@ -524,6 +552,7 @@ export const {
 	JcLabelComponent,
 	JcInputComponent,
 	JcTextareaComponent,
+	JcViewComponent,
 	JcMixin
 
 } = Jellycat._factory
