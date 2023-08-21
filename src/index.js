@@ -43,10 +43,22 @@ mixins.abstract = function(superclass)
 		async connectedCallback()
 		{
 			if (Array.isArray(this._controlledAttributes) && this._controlledAttributes.length > 0) {
+
 				this.mutationObserver = new MutationObserver(this.mutationObserverCallback)
 				this.mutationObserver.observe(this, {
 					attributes: true,
 					attributeOldValue: true
+				})
+
+				this._controlledAttributes.forEach(attr => {
+					Object.defineProperty(this, attr, {
+						get() { 
+							return this.getAttribute('theme')
+						},
+						set(value) {
+							this.setAttribute('theme', value)
+						}
+					})
 				})
 			}
 
