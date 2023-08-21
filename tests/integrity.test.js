@@ -15,7 +15,7 @@ describe('Integrity - Jellycat', _ => {
 	describe('Integrity - Jellycat Factory', _ => {
 
 		it('Should have 11 properties', function() {
-			expect(Object.keys(Jellycat._factory).length).toEqual(11)
+			expect(Object.keys(Jellycat._factory).length).toEqual(12)
 		})
 
 		it('Should have only properties of type function', function() {
@@ -27,7 +27,7 @@ describe('Integrity - Jellycat', _ => {
 			const componentFunctions = Object.keys(Jellycat._factory).filter(key => {
 				return key.startsWith('Jc') && key.endsWith('Component')
 			})
-			expect(componentFunctions.length).toEqual(9)
+			expect(componentFunctions.length).toEqual(10)
 		})
 
 		it('Should have JcMixin function', function() {
