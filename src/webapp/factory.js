@@ -23,8 +23,6 @@ export default function(superclass)
 				return { ...template, [element.id]: element }
 			}, {})
 
-			args.navigation = this.router.resolve(window.location.pathname)
-
 	    	console.log('JcApp __init')
 	    	return args
 		}
@@ -40,7 +38,9 @@ export default function(superclass)
 	    		default: throw new Error('jc-app DOM tree must contain only one element with attribute "app-view"')
 	    	}
 
-	    	this.view = args.navigation.template
+	    	console.log(this.router.resolve(window.location.pathname))
+	    	
+	    	// this.view = args.navigation.template
 	    	// this.view.template
 	    	// console.log(this.view)
 	    	// mountView()
