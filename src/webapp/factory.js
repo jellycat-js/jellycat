@@ -13,18 +13,17 @@ export default function(superclass)
 
 		async __init(args)
 	    {
-			Jellycat._cache[this.constructor.name].source.push('./jellycat-app.html')
-
 			const html = new DOMParser().parseFromString(appTemplates, 'text/html')
 			
 			let userTemplates = Jellycat._cache[this.constructor.name].templates
 			let templates = Array.from(html.querySelectorAll('template')).concat(Object.values(userTemplates))
 
+			Jellycat._cache[this.constructor.name].source.push('./jellycat-app.html')
 			Jellycat._cache[this.constructor.name].templates = templates.reduce((template, element) => {
 				return { ...template, [element.id]: element }
 			}, {})
 
-	    	console.log(this.router.resolve(window.location.pathname, window.location.hash))
+	    	console.log(this._router.resolve(window.location.pathname, window.location.hash))
 			// this.navigate = this.navigate.bind(this)
 			// this._view = this.router.resolve(window.location.pathname)
 
@@ -63,7 +62,15 @@ export default function(superclass)
 		// 	this.querySelector('cx-navigation').selectActiveItem(this.view.pathname)
 		// }
 
-		router = {
+		_loader = {
+
+			loadTemplates()
+			{
+				
+			}
+		}
+
+		_router = {
 
 			resolve(pathname, hash)
 			{
