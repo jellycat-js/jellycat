@@ -1,6 +1,7 @@
 'use strict'
 
 const mixins = {}
+const presets = {}
 
 const _ = superclass => {
 	return { with(...mixins) {
@@ -314,6 +315,30 @@ mixins.providing = function(superclass)
 	}
 }
 
+presets.app = function(superclass)
+{
+	return class extends superclass
+	{
+		async __init(args)
+	    {
+	    	console.log('JcApp __init')
+	    	return args
+		}
+	  
+	    async __render(args)
+	    {
+	    	console.log('JcApp __render')
+	    	return args
+		}
+	  
+	    async __behavior(args)
+		{
+			console.log('JcApp __behavior')
+			return args
+		}
+	}
+}
+
 window.Jellycat ??= new class Jellycat
 {
 	constructor()
@@ -359,27 +384,8 @@ window.Jellycat ??= new class Jellycat
 			JcTextareaComponent: class JcTextareaComponent extends _(HTMLTextAreaElement).with(...Object.values(mixins)) { 
 				constructor(...ctrlAttrs) { super(); this._controlledAttributes = ctrlAttrs }
 			},
-			JcAppComponent: class JcAppComponent extends _(HTMLElement).with(...Object.values(mixins))
-			{
+			JcAppComponent: class JcAppComponent extends _(HTMLElement).with(...(Object.values(mixins).concat(presets.app))) {
 				constructor(...ctrlAttrs) { super(); this._controlledAttributes = ctrlAttrs }
-
-			    async __init(args)
-			    {
-			    	console.log('JcApp __init')
-			    	return args
-				}
-			  
-			    async __render(args)
-			    {
-			    	console.log('JcApp __render')
-			    	return args
-				}
-			  
-			    async __behavior(args)
-				{
-					console.log('JcApp __behavior')
-					return args
-				}
 			},
 
 			resolve: HtmlElement => {
