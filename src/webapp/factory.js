@@ -111,7 +111,7 @@ export default function(superclass)
 				this.routes.filter(route => route.path === '/').length === 0
 					? [{ path: '/', template: 'wellcome' }].concat(routes)
 					: routes
-			}
+			},
 
 			_getRouteParams(path)
 			{
