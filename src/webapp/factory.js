@@ -13,7 +13,7 @@ export default function(superclass)
 	    	switch(viewContainer.length)
 	    	{
 	    		case 0  : throw new Error('jc-app DOM tree must contain an element with attribute "app-view"')
-	    		case 1  : viewContainer =  viewContainer.item(0); break
+	    		case 1  : this.viewState.root =  viewContainer.item(0); break
 	    		default : throw new Error('jc-app DOM tree must contain only one element with attribute "app-view"')
 	    	}
 
@@ -21,7 +21,7 @@ export default function(superclass)
 			// 	history.pushState(view.template, null, view.pathname)
 			// }
 
-			this.draw(newValue, this.viewElement)
+			this.draw(newValue, this.viewState.root)
     		// this.rollBackToLifeCycle('render')
     		console.log('JcApp __viewChangedCallback', newValue)
 		}
