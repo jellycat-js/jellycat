@@ -13,7 +13,8 @@ export default function(superclass)
 
 		async __init(args)
 	    {
-			Jellycat._cache[this.name].source.push('./template.html')
+	    	console.log('__int', this.name, Jellycat)
+			// Jellycat._cache[this.name].source.push('./template.html')
 			const html = new DOMParser().parseFromString(templates, 'text/html')
 			console.log(html)
 // 			templates = templates.concat(Array.from(html.querySelectorAll('template')))
