@@ -1,7 +1,6 @@
 'use strict'
 
 const mixins = {}
-const presets = {}
 
 const _ = superclass => {
 	return { with(...mixins) {
@@ -320,7 +319,7 @@ mixins.providing = function(superclass)
 	}
 }
 
-presets.app = function(superclass)
+const App = function(superclass)
 {
 	return class extends superclass
 	{
@@ -395,7 +394,7 @@ window.Jellycat ??= new class Jellycat
 			JcTextareaComponent: class JcTextareaComponent extends _(HTMLTextAreaElement).with(...Object.values(mixins)) { 
 				constructor(...ctrlAttrs) { super(); this._controlledAttributes = ctrlAttrs }
 			},
-			JcAppComponent: class JcAppComponent extends _(HTMLElement).with(...(Object.values(mixins).concat(presets.app))) {
+			JcAppComponent: class JcAppComponent extends _(HTMLElement).with(...(Object.values(mixins).concat(App))) {
 				constructor(...ctrlAttrs) { super(); this._controlledAttributes = new Set([...ctrlAttrs.concat(['view'])]) }
 			},
 
