@@ -291,31 +291,31 @@ window.Jellycat ??= new class Jellycat
 		this._factory = {
 
 			JcComponent: class JcComponent extends _(HTMLElement).with(...Object.values(mixins)) { 
-				constructor(observedAttributes) { super(); this.observedAttributes = observedAttributes }
+				constructor(controlledAttributes) { super(); this.controlledAttributes = controlledAttributes }
 			},
 			JcDivComponent: class JcDivComponent extends _(HTMLDivElement).with(...Object.values(mixins)) { 
-				constructor(observedAttributes) { super(); this.observedAttributes = observedAttributes }
+				constructor(controlledAttributes) { super(); this.controlledAttributes = controlledAttributes }
 			},
 			JcSpanComponent: class JcSpanComponent extends _(HTMLSpanElement).with(...Object.values(mixins)) { 
-				constructor(observedAttributes) { super(); this.observedAttributes = observedAttributes }
+				constructor(controlledAttributes) { super(); this.controlledAttributes = controlledAttributes }
 			},
 			JcUlComponent: class JcUlComponent extends _(HTMLUListElement).with(...Object.values(mixins)) { 
-				constructor(observedAttributes) { super(); this.observedAttributes = observedAttributes }
+				constructor(controlledAttributes) { super(); this.controlledAttributes = controlledAttributes }
 			},
 			JcLiComponent: class JcLiComponent extends _(HTMLLIElement).with(...Object.values(mixins)) { 
-				constructor(observedAttributes) { super(); this.observedAttributes = observedAttributes }
+				constructor(controlledAttributes) { super(); this.controlledAttributes = controlledAttributes }
 			},
 			JcPComponent: class JcPComponent extends _(HTMLParagraphElement).with(...Object.values(mixins)) {
-				constructor(observedAttributes) { super(); this.observedAttributes = observedAttributes }
+				constructor(controlledAttributes) { super(); this.controlledAttributes = controlledAttributes }
 			},
 			JcLabelComponent: class JcLabelComponent extends _(HTMLLabelElement).with(...Object.values(mixins)) { 
-				constructor(observedAttributes) { super(); this.observedAttributes = observedAttributes }
+				constructor(controlledAttributes) { super(); this.controlledAttributes = controlledAttributes }
 			},
 			JcInputComponent: class JcInputComponent extends _(HTMLInputElement).with(...Object.values(mixins)) { 
-				constructor(observedAttributes) { super(); this.observedAttributes = observedAttributes }
+				constructor(controlledAttributes) { super(); this.controlledAttributes = controlledAttributes }
 			},
 			JcTextareaComponent: class JcTextareaComponent extends _(HTMLTextAreaElement).with(...Object.values(mixins)) { 
-				constructor(observedAttributes) { super(); this.observedAttributes = observedAttributes }
+				constructor(controlledAttributes) { super(); this.controlledAttributes = controlledAttributes }
 			},
 
 			resolve: HtmlElement => {
