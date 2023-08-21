@@ -23,7 +23,7 @@ export default function(superclass)
 				return { ...template, [element.id]: element }
 			}, {})
 			// this.navigate = this.navigate.bind(this)
-			this.view = this.router.resolve(window.location.pathname)
+			this._view = this.router.resolve(window.location.pathname)
 
 	    	console.log('JcApp __init')
 	    	return args
@@ -40,7 +40,10 @@ export default function(superclass)
 	    		default: throw new Error('jc-app DOM tree must contain only one element with attribute "app-view"')
 	    	}
 
-	    	console.log(this.view)
+	    	const viewObj = this.router.resolve(window.location.pathname)
+	    	this.view = viewObj.template
+	    	// this.view.template
+	    	// console.log(this.view)
 	    	// mountView()
 			// {
 			// 	if (history.state == null || history.state.pathname != this.view.pathname) {
