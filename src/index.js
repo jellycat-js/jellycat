@@ -291,7 +291,18 @@ window.Jellycat ??= new class Jellycat
 		this._factory = {
 
 			JcComponent: class JcComponent extends _(HTMLElement).with(...Object.values(mixins)) { 
-				constructor(controlledAttributes) { super(); this.controlledAttributes = controlledAttributes }
+				constructor(...controlledAttributes)
+				{ 
+					super()
+
+					Object.defineProperty(this, 'observedAttributes', {
+					  get() {
+					    return controlledAttributes
+					  }
+					})
+					
+					// this.controlledAttributes = controlledAttributes
+				}
 			},
 			JcDivComponent: class JcDivComponent extends _(HTMLDivElement).with(...Object.values(mixins)) { 
 				constructor(controlledAttributes) { super(); this.controlledAttributes = controlledAttributes }
