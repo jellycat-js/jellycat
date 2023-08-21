@@ -17,22 +17,12 @@ export default function(superclass)
 
 			const html = new DOMParser().parseFromString(appTemplates, 'text/html')
 			
-			let userTemplate = Jellycat._cache[this.constructor.name].templates
-			let templates = Array.from(html.querySelectorAll('template')).concat(Object.values())
+			let userTemplates = Jellycat._cache[this.constructor.name].templates
+			let templates = Array.from(html.querySelectorAll('template')).concat(Object.values(userTemplates))
 
 			console.log(templates.reduce((template, element) => {
 				return { ...template, [element.id]: element }
 			}, {}))
-
-
-// templates = templates.reduce((template, element) => {
-// 	return { ...template, [element.id]: element }
-// }, {})
-// 			Jellycat._cache[this.name].templates.push('./template.html')
-// 				source: templatesUrl,
-// 				templates: templates,
-// 				options: options
-// 			}
 
 	    	console.log(this.router.resolve(window.location.pathname, window.location.hash))
 			// this.navigate = this.navigate.bind(this)
