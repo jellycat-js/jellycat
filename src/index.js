@@ -396,7 +396,7 @@ window.Jellycat ??= new class Jellycat
 				constructor(...ctrlAttrs) { super(); this._controlledAttributes = ctrlAttrs }
 			},
 			JcAppComponent: class JcAppComponent extends _(HTMLElement).with(...(Object.values(mixins).concat(presets.app))) {
-				constructor(...ctrlAttrs) { super(); this._controlledAttributes = ctrlAttrs }
+				constructor(...ctrlAttrs) { super(); this._controlledAttributes = new Set([...ctrlAttrs.concat(['view'])]) }
 			},
 
 			resolve: HtmlElement => {
