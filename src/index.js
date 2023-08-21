@@ -67,7 +67,7 @@ mixins.abstract = function(superclass)
 
 			this._controlledAttributes.forEach(attr => {
 				Object.defineProperty(this, attr, {
-					get: _ => return this.getAttribute(attr),
+					get: _ => this.getAttribute(attr),
 					set: value => this.setAttribute(attr, value)
 				})
 			})
