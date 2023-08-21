@@ -244,16 +244,16 @@ mixins.rendering = function(superclass)
 			return element
 		}
 
-		drawFaIcon(name, rootClass = 'fa-solid')
-		{
-			if (!window.FontAwesome) {
-				console.error('FontAwesome is not available on this page, you cannot use drawFaIcon()')
-			}
+		// drawFaIcon(name, rootClass = 'fa-solid')
+		// {
+		// 	if (!window.FontAwesome) {
+		// 		console.error('FontAwesome is not available on this page, you cannot use drawFaIcon()')
+		// 	}
 
-			const icon = document.createElement('i')
-			icon.classList.add(rootClass, name)
-			return icon
-		}
+		// 	const icon = document.createElement('i')
+		// 	icon.classList.add(rootClass, name)
+		// 	return icon
+		// }
 	}
 }
 
@@ -365,9 +365,14 @@ window.Jellycat ??= new class Jellycat
 				constructor(...ctrlAttrs) { super(); this._controlledAttributes = ctrlAttrs }
 			},
 			JcAppComponent: class JcAppComponent extends _(HTMLElement).with(...(Object.values(mixins).concat(App))) {
-				constructor(routes, ...ctrlAttrs) { 
+				constructor(routes = [], ...ctrlAttrs)
+				{ 
 					super()
-					this.router.routes = routes
+
+					this.router.routes = routes.filter(route => route.path === '/').length === 0
+						? [{ path: '/', template: 'wellcome' }].concat(routes)
+						: routes
+
 					this._controlledAttributes = new Set([...ctrlAttrs.concat(['view'])])
 				}
 			},

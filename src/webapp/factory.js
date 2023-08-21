@@ -33,6 +33,16 @@ export default function(superclass)
 	  
 	    async __render(args)
 	    {
+	    	const viewContainer = this.querySelectorAll('[app-view]')
+	    	
+	    	switch(viewContainer.length)
+	    	{
+	    		case 0: throw new Error('jc-app DOM tree must contain an element with attribute "app-view"')
+	    		case 1: break
+	    		default: throw new Error('jc-app DOM tree must contain only one element with attribute "app-view"')
+	    	}
+
+	    	// render view in [app-view]
 	    	console.log('JcApp __render')
 	    	return args
 		}
