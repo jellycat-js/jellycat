@@ -518,7 +518,7 @@ window.Jellycat ??= new class Jellycat
 			}
 
 			const text = await response.text()
-			console.log({text: test})
+			console.log({text: text})
 			const html = new DOMParser().parseFromString(text, 'text/html')
 			templates = templates.concat(Array.from(html.querySelectorAll('template')))
 			console.log({templates: templates})
