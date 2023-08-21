@@ -356,7 +356,7 @@ window.Jellycat ??= new class Jellycat
 			JcTextareaComponent: class JcTextareaComponent extends _(HTMLTextAreaElement).with(...Object.values(mixins)) { 
 				constructor(...ctrlAttrs) { super(); this._controlledAttributes = ctrlAttrs }
 			},
-			JcViewComponent: class JcViewComponent extends _(HTMLElement).with(...Object.values(mixins)) { 
+			JcViewComponent: class JcViewComponent extends _(HTMLElement).with(...Object.values(mixins))
 			{
 				constructor(...$ctrlAttrs)
 			    {
@@ -383,7 +383,7 @@ window.Jellycat ??= new class Jellycat
 				{
 					console.log('JcView __behavior')
 				}
-			}
+			},
 
 			resolve: HtmlElement => {
 				switch(HtmlElement)
