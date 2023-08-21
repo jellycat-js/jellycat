@@ -72,7 +72,7 @@ export default function(superclass)
 			
 			if (e instanceof PointerEvent) { // || TOUCH
 
-				const target = e.target.tagName !== 'A' && ? e.target.closest('a') : e.target
+				const target = e.target.tagName !== 'A' ? e.target.closest('a') : e.target
 				if (!target) return
 
 				const link = target.getAttribute('href')
