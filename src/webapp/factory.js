@@ -1,6 +1,6 @@
 'use strict'
 
-import templates from './jellycat-app.html'
+import appTemplates from './jellycat-app.html'
 
 export default function(superclass)
 {
@@ -13,10 +13,17 @@ export default function(superclass)
 
 		async __init(args)
 	    {
-			Jellycat._cache[this.constructor.name].source.push('./template.html')
-			const html = new DOMParser().parseFromString(templates, 'text/html')
-			const templateElements = Array.from(html.querySelectorAll('template'))
-			console.log({templates: templateElements})
+			Jellycat._cache[this.constructor.name].source.push('./jellycat-app.html')
+
+			const html = new DOMParser().parseFromString(appTemplates, 'text/html')
+			
+			let userTemplate = Jellycat._cache[this.constructor.name].templates
+			let templates = Array.from(html.querySelectorAll('template')).concat(Object.values())
+
+			console.log(templates.reduce((template, element) => {
+				return { ...template, [element.id]: element }
+			}, {}))
+
 
 // templates = templates.reduce((template, element) => {
 // 	return { ...template, [element.id]: element }
