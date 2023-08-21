@@ -509,7 +509,6 @@ window.Jellycat ??= new class Jellycat
 
 		for (const templateUrl of templatesUrl)
 		{
-			console.log({templateUrl : templateUrl})
 			if (!templateUrl) continue
 
 			let response = await fetch(templateUrl)
@@ -518,13 +517,9 @@ window.Jellycat ??= new class Jellycat
 			}
 
 			const text = await response.text()
-			console.log({text: text})
 			const html = new DOMParser().parseFromString(text, 'text/html')
 			templates = templates.concat(Array.from(html.querySelectorAll('template')))
-			console.log({templates: templates})
 		}
-
-		console.log({templates: templates})
 
 		if (templates.length > 0) {
 			templates = templates.reduce((template, element) => {

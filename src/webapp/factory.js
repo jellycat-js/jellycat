@@ -1,6 +1,6 @@
 'use strict'
 
-// import templates from './jellycat-app.html'
+import templates from './jellycat-app.html'
 
 export default function(superclass)
 {
@@ -13,7 +13,7 @@ export default function(superclass)
 
 		async __init(args)
 	    {
-	    	// console.log(templates)
+	    	console.log(templates)
 	    	// await Jellycat._cacheSet(this.name, './template.html', this.options)
 
 	    	console.log(this.router.resolve(window.location.pathname, window.location.hash))
