@@ -3,9 +3,10 @@ import commonjs from '@rollup/plugin-commonjs';
 import noderesolve from '@rollup/plugin-node-resolve';
 import babel from '@rollup/plugin-babel';
 import terser from '@rollup/plugin-terser';
+import html from "rollup-plugin-html";
 
 export default {
-	input: `src/index.js`,
+	input: 'src/index.js',
 	output: [
 		{
 			file: 'dist/bundle.cjs.js',
@@ -30,6 +31,7 @@ export default {
       commonjs(),
       noderesolve(),
       babel({ babelHelpers: 'bundled' }),
-      terser()
+      terser(),
+      html({ include: 'src/webapp/templates.html' })
    ]
 };
