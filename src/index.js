@@ -369,7 +369,7 @@ window.Jellycat ??= new class Jellycat
 				{ 
 					super()
 					this.router._setRoutes(routes)
-					this._controlledAttributes = new Set(ctrlAttrs.concat(['view']))
+					this._controlledAttributes = Array.from(new Set(ctrlAttrs.concat(['view'])))
 				}
 			},
 
