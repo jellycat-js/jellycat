@@ -8,6 +8,20 @@ export default function(superclass)
 	{
 		__viewChangedCallback(oldValue, newValue)
     	{
+    		let viewContainer = this.querySelectorAll('[app-view]')
+	    	
+	    	switch(viewContainer.length)
+	    	{
+	    		case 0  : throw new Error('jc-app DOM tree must contain an element with attribute "app-view"')
+	    		case 1  : viewContainer =  viewContainer.item(0); break
+	    		default : throw new Error('jc-app DOM tree must contain only one element with attribute "app-view"')
+	    	}
+
+    		// if (history.state == null || history.state.pathname != view.pathname) {
+			// 	history.pushState(view.template, null, view.pathname)
+			// }
+
+			this.draw(newValue, this.viewElement)
     		// this.rollBackToLifeCycle('render')
     		console.log('JcApp __viewChangedCallback', newValue)
 		}
@@ -24,46 +38,16 @@ export default function(superclass)
 				return { ...template, [element.id]: element }
 			}, {})
 
+			this.viewState = this.router.resolve(window.location.pathname)
+
 	    	console.log('JcApp __init')
 	    	return args
 		}
 	  
 	    async __render(args)
 	    {
-	    	const viewContainer = this.querySelectorAll('[app-view]')
-	    	
-	    	switch(viewContainer.length)
-	    	{
-	    		case 0: throw new Error('jc-app DOM tree must contain an element with attribute "app-view"')
-	    		case 1: break
-	    		default: throw new Error('jc-app DOM tree must contain only one element with attribute "app-view"')
-	    	}
+	    	this.view = this.viewState.template
 
-	    	const view = this.router.resolve(window.location.pathname)
-	    	this.view = view.template
-
-	    	if (history.state == null || history.state.pathname != view.pathname) {
-				history.pushState(view.template, null, view.pathname)
-			}
-
-			console.log(viewContainer.item(0))
-			console.log(this.draw(view.template, viewContainer.item(0)))
-
-	    	// console.log(this.router.resolve(window.location.pathname))
-
-	    	// this.view = args.navigation.template
-	    	// this.view.template
-	    	// console.log(this.view)
-	    	// mountView()
-			// {
-			// 	if (history.state == null || history.state.pathname != this.view.pathname) {
-			// 		history.pushState(this.view, null, this.view.pathname)
-			// 	}
-
-			// 	return this.draw(this._view.template, this.querySelector('main'))
-			// }
-
-	    	// render view in [app-view]
 	    	console.log('JcApp __render')
 	    	return args
 		}
