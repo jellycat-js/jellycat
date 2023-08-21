@@ -13,7 +13,7 @@ export default function(superclass)
 
 		async __init(args)
 	    {
-	    	console.log(template)
+	    	console.log(templates)
 	    	// await Jellycat._cacheSet(this.name, './template.html', this.options)
 
 	    	console.log(this.router.resolve(window.location.pathname, window.location.hash))

@@ -30,8 +30,8 @@ export default {
    plugins: [
       commonjs(),
       noderesolve(),
-      babel({ babelHelpers: 'bundled' }),
+      babel({ babelHelpers: 'bundled'/*, extensions: ['.js', '.html'] */}),
       terser(),
-      html({ include: 'src/webapp//templates.html' })
+      html({ include: 'src/webapp/templates.html' })
    ]
 };
