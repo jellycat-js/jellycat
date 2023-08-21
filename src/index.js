@@ -56,20 +56,19 @@ mixins.abstract = function(superclass)
 		async disconnectedCallback()
 		{ 
 			if (this.mutationObserver) this.mutationObserver.disconnect()
-				
+
 			const instances = window.Jellycat._instances[this.constructor.name]
 			window.Jellycat._instances[this.constructor.name] = instances.filter(component => component !== this)
 		}
 
 		mutationObserverCallback(mutationList, observer)
 		{
-			// if (Array.isArray(mutation.target._controlledAttributes))
 		    for (const mutation of mutationList) {
-		    	console.log(mutation.target)
 		        if (mutation.type === 'attributes' &&
 		        	mutation.target._controlledAttributes.includes(mutation.attributeName) &&
 		        	mutation.oldValue !== mutation.target.getAttribute(mutation.attributeName)) {
 		        	console.log(`The dynamic ${mutation.attributeName} attribute was modified.`)
+		        	if (mutation.target.test) mutation.target.test('okkkkkkkkkkkk')
 		        }
 		    }
 	    }
