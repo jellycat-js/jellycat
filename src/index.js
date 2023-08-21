@@ -507,7 +507,7 @@ window.Jellycat ??= new class Jellycat
 	{
 		let templates = []
 
-		for (const templateUrl in templatesUrl)
+		for (const templateUrl of templatesUrl)
 		{
 			console.log({templateUrl : templateUrl})
 			if (!templateUrl) continue
