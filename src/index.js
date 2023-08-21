@@ -549,7 +549,7 @@ export const {
 	JcLabelComponent,
 	JcInputComponent,
 	JcTextareaComponent,
-	JcViewComponent,
+	JcAppComponent,
 	JcMixin
 
 } = Jellycat._factory
