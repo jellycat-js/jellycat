@@ -42,7 +42,6 @@ mixins.abstract = function(superclass)
 
 		async connectedCallback()
 		{
-			console.log('test', this.test)
 			this._runLifeCycle()
 		}
 
@@ -292,31 +291,31 @@ window.Jellycat ??= new class Jellycat
 		this._factory = {
 
 			JcComponent: class JcComponent extends _(HTMLElement).with(...Object.values(mixins)) { 
-				constructor(test) { super(); this.test = test }
+				constructor(observedAttributes) { super(); this.observedAttributes = observedAttributes }
 			},
 			JcDivComponent: class JcDivComponent extends _(HTMLDivElement).with(...Object.values(mixins)) { 
-				constructor() { super() }
+				constructor(observedAttributes) { super(); this.observedAttributes = observedAttributes }
 			},
 			JcSpanComponent: class JcSpanComponent extends _(HTMLSpanElement).with(...Object.values(mixins)) { 
-				constructor() { super() }
+				constructor(observedAttributes) { super(); this.observedAttributes = observedAttributes }
 			},
 			JcUlComponent: class JcUlComponent extends _(HTMLUListElement).with(...Object.values(mixins)) { 
-				constructor() { super() }
+				constructor(observedAttributes) { super(); this.observedAttributes = observedAttributes }
 			},
 			JcLiComponent: class JcLiComponent extends _(HTMLLIElement).with(...Object.values(mixins)) { 
-				constructor() { super() }
+				constructor(observedAttributes) { super(); this.observedAttributes = observedAttributes }
 			},
 			JcPComponent: class JcPComponent extends _(HTMLParagraphElement).with(...Object.values(mixins)) {
-				constructor() { super() }
+				constructor(observedAttributes) { super(); this.observedAttributes = observedAttributes }
 			},
 			JcLabelComponent: class JcLabelComponent extends _(HTMLLabelElement).with(...Object.values(mixins)) { 
-				constructor() { super() }
+				constructor(observedAttributes) { super(); this.observedAttributes = observedAttributes }
 			},
 			JcInputComponent: class JcInputComponent extends _(HTMLInputElement).with(...Object.values(mixins)) { 
-				constructor() { super() }
+				constructor(observedAttributes) { super(); this.observedAttributes = observedAttributes }
 			},
 			JcTextareaComponent: class JcTextareaComponent extends _(HTMLTextAreaElement).with(...Object.values(mixins)) { 
-				constructor() { super() }
+				constructor(observedAttributes) { super(); this.observedAttributes = observedAttributes }
 			},
 
 			resolve: HtmlElement => {
