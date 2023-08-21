@@ -55,6 +55,9 @@ export default function(superclass)
 	  
 	    async __behavior(args)
 		{
+			window.addEventListener('popstate', this.navigate)
+        	this.addEventListener('click', this.navigate) 
+
 			console.log('JcApp __behavior')
 			return args
 		}
