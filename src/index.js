@@ -130,7 +130,7 @@ mixins.lifeCycling = function(superclass)
 			if (['down', 'up'].includes(lifeCycle)) return true
 
 			return new Promise(async (resolve, reject) => {
-				let args = this.methods.includes(`__${lifeCycle}`)
+				const args = undefined !== this[`__${lifeCycle}`]
 					? await this[`__${lifeCycle}`](await this[`_${lifeCycle}`]())
 					: await this[`_${lifeCycle}`]()
 
