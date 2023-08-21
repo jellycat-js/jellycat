@@ -18,7 +18,7 @@ export default function(superclass)
 			let userTemplates = Jellycat._cache[this.constructor.name].templates
 			let templates = Array.from(html.querySelectorAll('template')).concat(Object.values(userTemplates))
 
-			Jellycat._cache[this.constructor.name].source.push('./jellycat-app.html')
+			Jellycat._cache[this.constructor.name].sources.push('./jellycat-app.html')
 			Jellycat._cache[this.constructor.name].templates = templates.reduce((template, element) => {
 				return { ...template, [element.id]: element }
 			}, {})

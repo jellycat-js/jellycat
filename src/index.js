@@ -528,7 +528,7 @@ window.Jellycat ??= new class Jellycat
 		if (!(name in this._instances)) this._instances[name] = []
 
 		this._cache[name] = { 
-			source: templatesUrl,
+			sources: templatesUrl,
 			templates: templates,
 			options: options
 		}
