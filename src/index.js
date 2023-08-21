@@ -63,8 +63,8 @@ mixins.abstract = function(superclass)
 		mutationObserverCallback(mutationList, observer)
 		{
 			// if (Array.isArray(mutation.target._controlledAttributes))
-			console.log(mutation.target)
 		    for (const mutation of mutationList) {
+		    	console.log(mutation.target)
 		        if (mutation.type === 'attributes' &&
 		        	mutation.target._controlledAttributes.includes(mutation.attributeName) &&
 		        	mutation.oldValue !== mutation.target.getAttribute(mutation.attributeName)) {
