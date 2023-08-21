@@ -517,9 +517,13 @@ window.Jellycat ??= new class Jellycat
 			}
 
 			const text = await response.text()
+			console.log(text)
 			const html = new DOMParser().parseFromString(text, 'text/html')
 			templates = templates.concat(Array.from(html.querySelectorAll('template')))
+			console.log(templates)
 		}
+
+		console.log(templates)
 
 		if (templates.length > 0) {
 			templates = templates.reduce((template, element) => {
