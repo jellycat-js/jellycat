@@ -211,7 +211,7 @@ mixins.rendering = function(superclass)
 			const element = this.drawTemplate(template)
 			target ??= this
 
-			if (target.children && target.children.length > 0) {
+			if (target.children.length > 0) {
 				[...target.children].forEach(child => child.remove())
 			}
 

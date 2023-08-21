@@ -46,8 +46,8 @@ export default function(superclass)
 				history.pushState(view.template, null, view.pathname)
 			}
 
-			console.log(viewContainer)
-			console.log(this.draw(view.template, viewContainer))
+			console.log(viewContainer.item(0))
+			console.log(this.draw(view.template, viewContainer.item(0)))
 
 	    	// console.log(this.router.resolve(window.location.pathname))
 
