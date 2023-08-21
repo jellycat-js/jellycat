@@ -129,7 +129,10 @@ mixins.lifeCycling = function(superclass)
 			if (['down', 'up'].includes(lifeCycle)) return true
 
 			return new Promise(async (resolve, reject) => {
-				const args = await this[`_${lifeCycle}`]()
+				let args = this.methods.includes(`__${lifeCycle}`)
+					? await this[`__${lifeCycle}`](await this[`_${lifeCycle}`]())
+					: await this[`_${lifeCycle}`]()
+
 				resolve(this.methods.includes(lifeCycle) ? await this[lifeCycle](...args) : true)
 			})
 		}
@@ -356,32 +359,26 @@ window.Jellycat ??= new class Jellycat
 			JcTextareaComponent: class JcTextareaComponent extends _(HTMLTextAreaElement).with(...Object.values(mixins)) { 
 				constructor(...ctrlAttrs) { super(); this._controlledAttributes = ctrlAttrs }
 			},
-			JcViewComponent: class JcViewComponent extends _(HTMLElement).with(...Object.values(mixins))
+			JcAppComponent: class JcAppComponent extends _(HTMLElement).with(...Object.values(mixins))
 			{
-				constructor(...$ctrlAttrs)
-			    {
-			        super([...new Set($ctrlAttrs.concat(['template']))])
-			    }
+				constructor(...$ctrlAttrs) { super(); this._controlledAttributes = ctrlAttrs }
 
-			    __templateChangedCallback(oldValue, newValue)
+			    async __init(args)
 			    {
-			        this.rollBackToLifeCycle('render')
-			    }
-
-			    async __init()
-			    {
-			    	console.log('JcView __init')
-			    	this.app = this.getDomParentComponent()
+			    	console.log('JcApp __init')
+			    	return args
 				}
 			  
-			    async __render()
+			    async __render(args)
 			    {
-			    	console.log('JcView __render')
+			    	console.log('JcApp __render')
+			    	return args
 				}
 			  
-			    async __behavior()
+			    async __behavior(args)
 				{
-					console.log('JcView __behavior')
+					console.log('JcApp __behavior')
+					return args
 				}
 			},
 
