@@ -503,12 +503,14 @@ window.Jellycat ??= new class Jellycat
 		return requestObj
 	}
 
-	async _cacheSet(name, templatesUrl = false, options = {})
+	async _cacheSet(name, templatesUrl = [], options = {})
 	{
 		let templates = []
 
 		for (const templateUrl in templatesUrl)
 		{
+			if (!templateUrl) continue
+
 			let response = await fetch(templateUrl)
 			if (response.status != 200) {
 				throw new Error(`Template ${response.statusText} (${response.url})`)
@@ -519,10 +521,12 @@ window.Jellycat ??= new class Jellycat
 			templates = templates.concat(Array.from(html.querySelectorAll('template')))
 		}
 
-		templates = templates.reduce((template, element) => {
-			return { ...template, [element.id]: element }
-		}, {})
-
+		if (templates.length > 0) {
+			templates = templates.reduce((template, element) => {
+				return { ...template, [element.id]: element }
+			}, {})
+		}
+		
 		if (!(name in this._instances)) this._instances[name] = []
 
 		this._cache[name] = { 
