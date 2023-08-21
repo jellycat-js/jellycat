@@ -38,8 +38,10 @@ export default function(superclass)
 	    		default: throw new Error('jc-app DOM tree must contain only one element with attribute "app-view"')
 	    	}
 
-	    	console.log(this.router.resolve(window.location.pathname))
-	    	
+	    	const view = this.router.resolve(window.location.pathname)
+	    	this.view = view.template
+	    	// console.log(this.router.resolve(window.location.pathname))
+
 	    	// this.view = args.navigation.template
 	    	// this.view.template
 	    	// console.log(this.view)
