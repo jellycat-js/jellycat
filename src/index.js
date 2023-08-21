@@ -368,11 +368,7 @@ window.Jellycat ??= new class Jellycat
 				constructor(routes = [], ...ctrlAttrs)
 				{ 
 					super()
-
-					this.router.routes = routes.filter(route => route.path === '/').length === 0
-						? [{ path: '/', template: 'wellcome' }].concat(routes)
-						: routes
-
+					this.router._setRoutes(routes)
 					this._controlledAttributes = new Set([...ctrlAttrs.concat(['view'])])
 				}
 			},
