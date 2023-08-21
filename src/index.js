@@ -23,13 +23,11 @@ mixins.abstract = function(superclass)
 
 		// TODO : Feature components depends from an other.
 
-		static async define(templateUrl = false, options = {})
+		static async define(templateUrls = false, options = {})
 		{
-			!Array.isArray(templateUrl)
-				? await Jellycat._cacheSet(this.name, [templateUrl], options)
-				: await Promise.all(templateUrl.map(async url => {
-					return await Jellycat._cacheSet(this.name, url, options)
-				}))
+			!Array.isArray(templateUrls)
+				? await Jellycat._cacheSet(this.name, [templateUrls], options)
+				: await Jellycat._cacheSet(this.name, templateUrls, options)
 
 			const prefix = Jellycat._cache[this.name].options.prefix !== undefined 
 				? Jellycat._cache[this.name].options.prefix 
