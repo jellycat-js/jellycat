@@ -113,32 +113,30 @@ mixins.lifeCycling = function(superclass)
 					? this.currentLifeCycle = since
 					: this.currentLifeCycle ??= this.keyLifeCycle[0]
 
+				let prevStepArgs = []
+
 				while(this.currentLifeCycleIndex < this.keyLifeCycle.length-1)
 				{
-					if (!(await this._runStep(this.currentLifeCycle))) {
-						throw new Error(`LifeCycle ${this.currentLifeCycle} function of ${this.constructor.name} does not return true`)
-					}
-
+					prevStepArgs = await this._runStep(this.currentLifeCycle, prevStepArgs)
 					this.currentLifeCycle = this.keyLifeCycle[this.currentLifeCycleIndex+1]
 				}
 			
 			} catch(error) { console.log(error) }
 		}
 
-		async _runStep(lifeCycle)
+		async _runStep(lifeCycle, prevStepArgs = [])
 		{
 			if (['down', 'up'].includes(lifeCycle)) return true
 
 			return new Promise(async (resolve, reject) => {
 				const args = undefined !== this[`__${lifeCycle}`]
-					? await this[`__${lifeCycle}`](await this[`_${lifeCycle}`]())
-					: await this[`_${lifeCycle}`]()
-
-				resolve(this.methods.includes(lifeCycle) ? await this[lifeCycle](...args) : true)
+					? await this[`__${lifeCycle}`](await this[`_${lifeCycle}`](prevStepArgs))
+					: await this[`_${lifeCycle}`](prevStepArgs)
+				resolve(this.methods.includes(lifeCycle) ? await this[lifeCycle](...args) : [])
 			})
 		}
 
-		async _init()
+		async _init(prevStepArgs)
 		{
 			if (this.constructor.name in Jellycat._instances) {
 				Jellycat._instances[this.constructor.name].push(this)
@@ -147,10 +145,10 @@ mixins.lifeCycling = function(superclass)
 			const options = this.getAttribute('options') ? JSON.parse(this.getAttribute('options')) : {}
 			this.options = Object.assign(Jellycat._options, Jellycat._cache[this.constructor.name].options, options)
 
-			return []
+			return prevStepArgs
 		}
 
-		async _render()
+		async _render(prevStepArgs)
 		{
 			if (this.constructor.name in Jellycat._cache && this.options.autoRender === 'root') {
 				let template = this.drawTemplate()
@@ -158,12 +156,12 @@ mixins.lifeCycling = function(superclass)
 				if (template) this.appendChild(template)
 			}
 
-			return []
+			return prevStepArgs
 		}
 
-		async _behavior()
+		async _behavior(prevStepArgs)
 		{
-			return [ Jellycat._scope ]
+			return prevStepArgs /*Jellycat._scope*/
 		}
 
 		_checkLifeCycle(minLifeCycle, methodName)
