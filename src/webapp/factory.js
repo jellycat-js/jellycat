@@ -24,8 +24,9 @@ export default function(superclass)
 		        return
 		    }
 
-		    this.querySelector(window.location.hash)?.scrollIntoView({ 
-		    	top: element.getBoundingClientRect().top + window.pageYOffset, 
+		    const targetedHash = this.querySelector(window.location.hash)
+		    if (targetedHash) targetedHash.scrollIntoView({ 
+		    	top: TargetedHash.getBoundingClientRect().top + window.pageYOffset, 
 		    	behavior: 'smooth'
 		    })
 		}
