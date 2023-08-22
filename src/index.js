@@ -21,8 +21,6 @@ mixins.abstract = function(superclass)
 			return Reflect.ownKeys(reflect).filter(m => m !== 'constructor')
 		}
 
-		// TODO : Feature components depends from an other.
-
 		static async define(templateUrls = false, options = {})
 		{
 			!Array.isArray(templateUrls)
@@ -214,7 +212,7 @@ mixins.rendering = function(superclass)
 			if (target.children.length > 0) {
 				[...target.children].forEach(child => child.remove())
 			}
-			
+
 			target.appendChild(element)
 			return true
 		}
@@ -243,17 +241,6 @@ mixins.rendering = function(superclass)
 
 			return element
 		}
-
-		// drawFaIcon(name, rootClass = 'fa-solid')
-		// {
-		// 	if (!window.FontAwesome) {
-		// 		console.error('FontAwesome is not available on this page, you cannot use drawFaIcon()')
-		// 	}
-
-		// 	const icon = document.createElement('i')
-		// 	icon.classList.add(rootClass, name)
-		// 	return icon
-		// }
 	}
 }
 

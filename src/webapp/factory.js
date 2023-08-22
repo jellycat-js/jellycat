@@ -61,6 +61,7 @@ export default function(superclass)
 	  
 	    async __behavior(args)
 		{
+			window.addEventListener('hashchange', e => { console.log(e) })
 			window.addEventListener('popstate', this.navigate)
         	this.addEventListener('click', this.navigate) 
 			return args
@@ -165,3 +166,55 @@ export default function(superclass)
 		}
 	}
 }
+
+// hashObserve()
+// {
+//     const observer = new IntersectionObserver((entries) => {
+//         for(const entry of entries) 
+//         {
+//             if (entry.isIntersecting) {
+//                 console.log(entry.target.id)
+//                 // get current navigation
+//             }
+//         }
+//     })
+
+//     this.querySelectorAll('article').forEach(article => {
+//         observer.observe(article)
+//     })
+// }
+
+// stepScroll()
+// {
+//     const wrapper = this.app.querySelector('jc-app[view="home"] .wrapper')
+//     if (wrapper) {
+
+//         // const hero = wrapper.querySelector('.hero')
+//         // let scrollPos = wrapper.scrollTop
+
+//         // wrapper.addEventListener('scroll', e => {
+
+//             // wrapper.querySelector('.content').scrollIntoView({behavior: 'smooth'})
+
+//             // if (wrapper.scrollTop > scrollPos && wrapper.scrollTop < hero.offsetHeight) {
+//             //     e.preventDefault()
+//             //     window.scroll({top: hero.offsetHeight, behavior: 'smooth'})
+//             //     this.app.classList.remove('wrap')
+//             // }
+
+//             // scrollPos = wrapper.scrollTop
+
+//             // const main = wrapper.querySelector('main')
+//             // const hero = main.querySelector('.hero')
+//             // // console.log(wrapper.scrollTop, hero.offsetHeight)
+//             // if (main.classList.contains('snap') && wrapper.scrollTop >= hero.offsetHeight) {
+//             //     main.classList.remove('snap')
+//             //     this.querySelector('#why-jellycat').scrollIntoView()
+//             //     this.app.classList.remove('wrap')
+//             // } else if (!main.classList.contains('snap') && wrapper.scrollTop < hero.offsetHeight) {
+//             //     main.classList.add('snap')
+//             //     this.app.classList.add('wrap')
+//             // }
+//         // })
+//     }
+// }
