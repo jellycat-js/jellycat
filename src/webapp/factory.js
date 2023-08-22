@@ -61,7 +61,7 @@ export default function(superclass)
 	  
 	    async __behavior(args)
 		{
-			window.addEventListener('hashchange', e => { console.log(e) })
+			window.addEventListener('hashchange', e => { console.log(e, window.location.hash); })
 			window.addEventListener('popstate', this.navigate)
         	this.addEventListener('click', this.navigate) 
 			return args
@@ -86,6 +86,8 @@ export default function(superclass)
 				if (link === null || link.startsWith('#') || link.startsWith('http')) return
 
 				e.preventDefault()
+
+				if (link.includes('#')) console.log(link)
 
 				const resolved = this.router.resolve(link.includes('#') ? link.split('#')[0] : link)
 				this.viewState = Object.assign({}, this.viewState, resolved)
