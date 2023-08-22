@@ -167,23 +167,6 @@ export default function(superclass)
 	}
 }
 
-// hashObserve()
-// {
-//     const observer = new IntersectionObserver((entries) => {
-//         for(const entry of entries) 
-//         {
-//             if (entry.isIntersecting) {
-//                 console.log(entry.target.id)
-//                 // get current navigation
-//             }
-//         }
-//     })
-
-//     this.querySelectorAll('article').forEach(article => {
-//         observer.observe(article)
-//     })
-// }
-
 // stepScroll()
 // {
 //     const wrapper = this.app.querySelector('jc-app[view="home"] .wrapper')

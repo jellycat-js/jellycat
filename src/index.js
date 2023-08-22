@@ -83,12 +83,12 @@ mixins.abstract = function(superclass)
 
 		       	// if (mutation.oldValue === newValue) continue
 
-				if (undefined !== mutation.target[observeMethod]) {
-					mutation.target[observeMethod](mutation.oldValue, newValue)
+		       	if (undefined !== mutation.target[`__${observeMethod}`]) {
+					mutation.target[`__${observeMethod}`](mutation.oldValue, newValue)
 				}
 
-				if (undefined !== mutation.target[`__${observeMethod}`]) {
-					mutation.target[`__${observeMethod}`](mutation.oldValue, newValue)
+				if (undefined !== mutation.target[observeMethod]) {
+					mutation.target[observeMethod](mutation.oldValue, newValue)
 				}
 		    }
 	    }
