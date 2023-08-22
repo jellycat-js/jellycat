@@ -20,15 +20,20 @@ export default function(superclass)
 			this.draw(newValue, this.viewState.root)
 
 			if (!window.location.hash) {
-		        window.scrollTo({ top: 0, behavior: 'instant' })
-		        return
-		    }
 
-		    const targetedHash = this.querySelector(window.location.hash)
-		    if (targetedHash) targetedHash.scrollIntoView({ 
-		    	top: targetedHash.getBoundingClientRect().top + window.pageYOffset, 
-		    	behavior: 'smooth'
-		    })
+		        this.viewState.root.scrollTo({ 
+		        	top: targetedHash.getBoundingClientRect().top + window.pageYOffset, 
+		        	behavior: 'instant' 
+		        })
+
+		    } else {
+
+			    const targetedHash = this.querySelector(window.location.hash)
+			    if (targetedHash) targetedHash.scrollIntoView({ 
+			    	top: targetedHash.getBoundingClientRect().top + window.pageYOffset, 
+			    	behavior: 'smooth'
+			    })
+			}
 		}
 
 		async __init(args)
