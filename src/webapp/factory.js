@@ -166,38 +166,3 @@ export default function(superclass)
 		}
 	}
 }
-
-// stepScroll()
-// {
-//     const wrapper = this.app.querySelector('jc-app[view="home"] .wrapper')
-//     if (wrapper) {
-
-//         // const hero = wrapper.querySelector('.hero')
-//         // let scrollPos = wrapper.scrollTop
-
-//         // wrapper.addEventListener('scroll', e => {
-
-//             // wrapper.querySelector('.content').scrollIntoView({behavior: 'smooth'})
-
-//             // if (wrapper.scrollTop > scrollPos && wrapper.scrollTop < hero.offsetHeight) {
-//             //     e.preventDefault()
-//             //     window.scroll({top: hero.offsetHeight, behavior: 'smooth'})
-//             //     this.app.classList.remove('wrap')
-//             // }
-
-//             // scrollPos = wrapper.scrollTop
-
-//             // const main = wrapper.querySelector('main')
-//             // const hero = main.querySelector('.hero')
-//             // // console.log(wrapper.scrollTop, hero.offsetHeight)
-//             // if (main.classList.contains('snap') && wrapper.scrollTop >= hero.offsetHeight) {
-//             //     main.classList.remove('snap')
-//             //     this.querySelector('#why-jellycat').scrollIntoView()
-//             //     this.app.classList.remove('wrap')
-//             // } else if (!main.classList.contains('snap') && wrapper.scrollTop < hero.offsetHeight) {
-//             //     main.classList.add('snap')
-//             //     this.app.classList.add('wrap')
-//             // }
-//         // })
-//     }
-// }

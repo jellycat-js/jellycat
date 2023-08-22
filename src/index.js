@@ -81,8 +81,6 @@ mixins.abstract = function(superclass)
 		       	const newValue = mutation.target.getAttribute(mutation.attributeName)
 		       	const observeMethod = `${mutation.attributeName}ChangedCallback`
 
-		       	// if (mutation.oldValue === newValue) continue
-
 		       	if (undefined !== mutation.target[`__${observeMethod}`]) {
 					mutation.target[`__${observeMethod}`](mutation.oldValue, newValue)
 				}
