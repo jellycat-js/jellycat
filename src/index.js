@@ -113,30 +113,31 @@ mixins.lifeCycling = function(superclass)
 					? this.currentLifeCycle = since
 					: this.currentLifeCycle ??= this.keyLifeCycle[0]
 
-				let prevStepArgs = []
-
 				while(this.currentLifeCycleIndex < this.keyLifeCycle.length-1)
 				{
-					prevStepArgs = await this._runStep(this.currentLifeCycle, prevStepArgs)
+					if (!(await this._runStep(this.currentLifeCycle))) {
+						throw new Error(`LifeCycle ${this.currentLifeCycle} function of ${this.constructor.name} does not return true`)
+					}
+
 					this.currentLifeCycle = this.keyLifeCycle[this.currentLifeCycleIndex+1]
 				}
 			
 			} catch(error) { console.log(error) }
 		}
 
-		async _runStep(lifeCycle, prevStepArgs = [])
+		async _runStep(lifeCycle)
 		{
 			if (['down', 'up'].includes(lifeCycle)) return true
 
 			return new Promise(async (resolve, reject) => {
 				const args = undefined !== this[`__${lifeCycle}`]
-					? await this[`__${lifeCycle}`](await this[`_${lifeCycle}`](prevStepArgs))
-					: await this[`_${lifeCycle}`](prevStepArgs)
+					? await this[`__${lifeCycle}`](await this[`_${lifeCycle}`]())
+					: await this[`_${lifeCycle}`]()
 				resolve(this.methods.includes(lifeCycle) ? await this[lifeCycle](...args) : [])
 			})
 		}
 
-		async _init(prevStepArgs)
+		async _init()
 		{
 			if (this.constructor.name in Jellycat._instances) {
 				Jellycat._instances[this.constructor.name].push(this)
@@ -145,10 +146,10 @@ mixins.lifeCycling = function(superclass)
 			const options = this.getAttribute('options') ? JSON.parse(this.getAttribute('options')) : {}
 			this.options = Object.assign(Jellycat._options, Jellycat._cache[this.constructor.name].options, options)
 
-			return prevStepArgs
+			return []
 		}
 
-		async _render(prevStepArgs)
+		async _render()
 		{
 			if (this.constructor.name in Jellycat._cache && this.options.autoRender === 'root') {
 				let template = this.drawTemplate()
@@ -156,12 +157,12 @@ mixins.lifeCycling = function(superclass)
 				if (template) this.appendChild(template)
 			}
 
-			return prevStepArgs
+			return []
 		}
 
-		async _behavior(prevStepArgs)
+		async _behavior()
 		{
-			return prevStepArgs /*Jellycat._scope*/
+			return [ Jellycat._scope ]
 		}
 
 		_checkLifeCycle(minLifeCycle, methodName)
