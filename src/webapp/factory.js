@@ -21,7 +21,7 @@ export default function(superclass)
 
 			if (!window.location.hash) {
 
-		        this.viewState.root.scrollTo({ 
+		        this.viewState.root.scrollIntoView({ 
 		        	top: this.viewState.root.getBoundingClientRect().top + window.pageYOffset, 
 		        	behavior: 'instant' 
 		        })
