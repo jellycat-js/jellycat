@@ -50,6 +50,8 @@ export default function(superclass)
 
 			this.viewState = this.router.resolve(window.location.pathname)
 			this.navigate = this.navigate.bind(this)
+
+			Jellycat.app = this
 	    	return args
 		}
 	  
