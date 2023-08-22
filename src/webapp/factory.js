@@ -67,6 +67,7 @@ export default function(superclass)
 		{
 			if (e instanceof PopStateEvent) {
 				e.preventDefault()
+				console.log(e.state.pathname)
 				const resolved = this.router.resolve(e.state.pathname)
 				this.viewState = Object.assign({}, this.viewState, resolved)
 				this.view = this.viewState.template
@@ -86,7 +87,7 @@ export default function(superclass)
 				const resolved = this.router.resolve(link.includes('#') ? link.split('#')[0] : link)
 				this.viewState = Object.assign({}, this.viewState, resolved)
 				history.pushState(resolved, null, link)
-				
+
 				this.view = this.viewState.template
 				// this.hashScroll()
 			}
