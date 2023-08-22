@@ -22,7 +22,7 @@ export default function(superclass)
 			if (!window.location.hash) {
 
 		        this.viewState.root.scrollTo({ 
-		        	top: targetedHash.getBoundingClientRect().top + window.pageYOffset, 
+		        	top: this.viewState.root.getBoundingClientRect().top + window.pageYOffset, 
 		        	behavior: 'instant' 
 		        })
 
