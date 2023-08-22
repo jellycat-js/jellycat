@@ -320,6 +320,8 @@ window.Jellycat ??= new class Jellycat
 		this._instances = {}
 		this._cache = {}
 
+		this.app = null
+
 		this._factory = {
 
 			JcComponent: class JcComponent extends _(HTMLElement).with(...Object.values(mixins)) { 
