@@ -82,14 +82,29 @@ export default function(superclass)
 				if (link === null || link.startsWith('#') || link.startsWith('http')) return
 
 				e.preventDefault()
-				history.pushState({}, '', link)
 
 				const resolved = this.router.resolve(link.includes('#') ? link.split('#')[0] : link)
 				this.viewState = Object.assign({}, this.viewState, resolved)
+				history.pushState(this.viewState, null, link)
+				
 				this.view = this.viewState.template
 				// this.hashScroll()
 			}
 		}
+
+		// hashScroll()
+		// {
+		//     if (!window.location.hash) {
+		//         document.querySelector('.wrapper').scrollTo({ top: 0, behavior: 'instant' })
+		//         return
+		//     }
+
+		//     const element = this.querySelector(window.location.hash)
+		//     if (element) {
+		//         const topPos = element.getBoundingClientRect().top + window.pageYOffset
+		//         element.scrollIntoView({ top: topPos, behavior: 'smooth' })
+		//     }
+		// }
 
 		router = {
 
