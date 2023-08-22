@@ -65,16 +65,15 @@ export default function(superclass)
 
 		navigate(e)
 		{
-			if (e instanceof PopStateEvent) {
+			if (e instanceof PopStateEvent && undefined != e.state.pathname) {
+
 				e.preventDefault()
-				console.log(e.state.pathname)
 				const resolved = this.router.resolve(e.state.pathname)
 				this.viewState = Object.assign({}, this.viewState, resolved)
 				this.view = this.viewState.template
 				return
-			}
 			
-			if (e instanceof PointerEvent) { // || TOUCH
+			} else if (e instanceof PointerEvent) { // || TOUCH
 
 				const target = e.target.tagName !== 'A' ? e.target.closest('a') : e.target
 				if (!target) return
