@@ -85,7 +85,7 @@ export default function(superclass)
 
 				const resolved = this.router.resolve(link.includes('#') ? link.split('#')[0] : link)
 				this.viewState = Object.assign({}, this.viewState, resolved)
-				history.pushState(this.viewState, null, link)
+				history.pushState(resolved, null, link)
 				
 				this.view = this.viewState.template
 				// this.hashScroll()
