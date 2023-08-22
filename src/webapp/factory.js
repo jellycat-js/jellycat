@@ -20,7 +20,7 @@ export default function(superclass)
 			this.draw(newValue, this.viewState.root)
 
 			if (!window.location.hash) {
-		        document.scrollTo({ top: 0, behavior: 'instant' })
+		        window.scrollTo({ top: 0, behavior: 'instant' })
 		        return
 		    }
 
