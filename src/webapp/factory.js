@@ -17,14 +17,17 @@ export default function(superclass)
 	    		default : throw new Error('jc-app DOM tree must contain only one element with attribute "app-view"')
 	    	}
 
-    		// if (history.state == null || history.state.pathname != view.pathname) {
-			// 	history.pushState(view.template, null, view.pathname)
-			// }
-
-	    	console.log(this.view, newValue)
 			this.draw(newValue, this.viewState.root)
-    		// this.rollBackToLifeCycle('render')
-    		console.log('JcApp __viewChangedCallback', newValue)
+
+			if (!window.location.hash) {
+		        document.scrollTo({ top: 0, behavior: 'instant' })
+		        return
+		    }
+
+		    this.querySelector(window.location.hash)?.scrollIntoView({ 
+		    	top: element.getBoundingClientRect().top + window.pageYOffset, 
+		    	behavior: 'smooth'
+		    })
 		}
 
 		async __init(args)
@@ -41,16 +44,12 @@ export default function(superclass)
 
 			this.viewState = this.router.resolve(window.location.pathname)
 			this.navigate = this.navigate.bind(this)
-
-	    	console.log('JcApp __init')
 	    	return args
 		}
 	  
 	    async __render(args)
 	    {
 	    	this.view = this.viewState.template
-
-	    	console.log('JcApp __render')
 	    	return args
 		}
 	  
@@ -58,8 +57,6 @@ export default function(superclass)
 		{
 			window.addEventListener('popstate', this.navigate)
         	this.addEventListener('click', this.navigate) 
-
-			console.log('JcApp __behavior')
 			return args
 		}
 
@@ -73,7 +70,7 @@ export default function(superclass)
 				this.view = this.viewState.template
 				return
 			
-			} else if (e instanceof PointerEvent) { // || TOUCH
+			} else if (e instanceof PointerEvent) {
 
 				const target = e.target.tagName !== 'A' ? e.target.closest('a') : e.target
 				if (!target) return
@@ -88,23 +85,8 @@ export default function(superclass)
 				history.pushState(resolved, null, link)
 
 				this.view = this.viewState.template
-				// this.hashScroll()
 			}
 		}
-
-		// hashScroll()
-		// {
-		//     if (!window.location.hash) {
-		//         document.querySelector('.wrapper').scrollTo({ top: 0, behavior: 'instant' })
-		//         return
-		//     }
-
-		//     const element = this.querySelector(window.location.hash)
-		//     if (element) {
-		//         const topPos = element.getBoundingClientRect().top + window.pageYOffset
-		//         element.scrollIntoView({ top: topPos, behavior: 'smooth' })
-		//     }
-		// }
 
 		router = {
 
