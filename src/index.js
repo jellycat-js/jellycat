@@ -185,6 +185,11 @@ mixins.rendering = function(superclass)
 {
 	return class extends superclass
 	{
+		__templateChangedCallback(oldValue, newValue)
+    	{
+			this.draw(newValue)
+		}
+
 		get template() {
 			return this.getAttribute('template')
 		}
@@ -322,38 +327,38 @@ window.Jellycat ??= new class Jellycat
 		this._factory = {
 
 			JcComponent: class JcComponent extends _(HTMLElement).with(...Object.values(mixins)) { 
-				constructor(...ctrlAttrs) { super(); this._controlledAttributes = ctrlAttrs }
+				constructor(...ctrlAttrs) { super(); this._controlledAttributes = Array.from(new Set(ctrlAttrs.concat(['template']))) }
 			},
 			JcDivComponent: class JcDivComponent extends _(HTMLDivElement).with(...Object.values(mixins)) { 
-				constructor(...ctrlAttrs) { super(); this._controlledAttributes = ctrlAttrs }
+				constructor(...ctrlAttrs) { super(); this._controlledAttributes = Array.from(new Set(ctrlAttrs.concat(['template']))) }
 			},
 			JcSpanComponent: class JcSpanComponent extends _(HTMLSpanElement).with(...Object.values(mixins)) { 
-				constructor(...ctrlAttrs) { super(); this._controlledAttributes = ctrlAttrs }
+				constructor(...ctrlAttrs) { super(); this._controlledAttributes = Array.from(new Set(ctrlAttrs.concat(['template']))) }
 			},
 			JcUlComponent: class JcUlComponent extends _(HTMLUListElement).with(...Object.values(mixins)) { 
-				constructor(...ctrlAttrs) { super(); this._controlledAttributes = ctrlAttrs }
+				constructor(...ctrlAttrs) { super(); this._controlledAttributes = Array.from(new Set(ctrlAttrs.concat(['template']))) }
 			},
 			JcLiComponent: class JcLiComponent extends _(HTMLLIElement).with(...Object.values(mixins)) { 
-				constructor(...ctrlAttrs) { super(); this._controlledAttributes = ctrlAttrs }
+				constructor(...ctrlAttrs) { super(); this._controlledAttributes = Array.from(new Set(ctrlAttrs.concat(['template']))) }
 			},
 			JcPComponent: class JcPComponent extends _(HTMLParagraphElement).with(...Object.values(mixins)) {
-				constructor(...ctrlAttrs) { super(); this._controlledAttributes = ctrlAttrs }
+				constructor(...ctrlAttrs) { super(); this._controlledAttributes = Array.from(new Set(ctrlAttrs.concat(['template']))) }
 			},
 			JcLabelComponent: class JcLabelComponent extends _(HTMLLabelElement).with(...Object.values(mixins)) { 
-				constructor(...ctrlAttrs) { super(); this._controlledAttributes = ctrlAttrs }
+				constructor(...ctrlAttrs) { super(); this._controlledAttributes = Array.from(new Set(ctrlAttrs.concat(['template']))) }
 			},
 			JcInputComponent: class JcInputComponent extends _(HTMLInputElement).with(...Object.values(mixins)) { 
-				constructor(...ctrlAttrs) { super(); this._controlledAttributes = ctrlAttrs }
+				constructor(...ctrlAttrs) { super(); this._controlledAttributes = Array.from(new Set(ctrlAttrs.concat(['template']))) }
 			},
 			JcTextareaComponent: class JcTextareaComponent extends _(HTMLTextAreaElement).with(...Object.values(mixins)) { 
-				constructor(...ctrlAttrs) { super(); this._controlledAttributes = ctrlAttrs }
+				constructor(...ctrlAttrs) { super(); this._controlledAttributes = Array.from(new Set(ctrlAttrs.concat(['template']))) }
 			},
 			JcAppComponent: class JcAppComponent extends _(HTMLElement).with(...(Object.values(mixins).concat(App))) {
 				constructor(routes = [], ...ctrlAttrs)
 				{ 
 					super()
 					this.router._setRoutes(routes)
-					this._controlledAttributes = Array.from(new Set(ctrlAttrs.concat(['view'])))
+					this._controlledAttributes = Array.from(new Set(ctrlAttrs.concat(['template', 'view'])))
 				}
 			},
 
