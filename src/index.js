@@ -187,7 +187,9 @@ mixins.rendering = function(superclass)
 	{
 		__templateChangedCallback(oldValue, newValue)
     	{
-			this.draw(newValue)
+    		if (this.currentLifeCycleIndex >= this.keyLifeCycle.indexOf(minLifeCycle))  {
+				this.draw(newValue)
+			}
 		}
 
 		get template() {
