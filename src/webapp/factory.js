@@ -2,6 +2,9 @@
 
 import appTemplates from './jellycat-app.html'
 
+// '<template id="root">\n\t<main></main>\n</template>\n\n<template id="not_found">\n\t<main class="content container center">\n\t\t<h1>404</h1>\n\t\t<p>Page not found</p>\n\t\t<a href="/" class="btn">Back</a>\n\t</main>\n</template>\n\n<template id="jellycat">\n\t<h1>Hello world !</h1>\n</template>'
+
+
 export default function(superclass)
 {
 	return class extends superclass
@@ -38,6 +41,7 @@ export default function(superclass)
 
 		async __init(args)
 	    {
+	    	console.log(appTemplates)
 			const html = new DOMParser().parseFromString(appTemplates, 'text/html')
 			
 			let userTemplates = Jellycat._cache[this.constructor.name].templates
