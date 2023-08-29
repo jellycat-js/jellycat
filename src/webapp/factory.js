@@ -20,6 +20,7 @@ export default function(superclass)
 	    		default : throw new Error('jc-app DOM tree must contain only one element with attribute "app-view"')
 	    	}
 
+	    	console.log('draw', newValue, this.viewState.root)
 			this.draw(newValue, this.viewState.root)
 
 			if (!window.location.hash) {
