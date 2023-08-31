@@ -21,7 +21,16 @@ export default function(superclass)
 	    	}
 
 	    	console.log('draw', newValue, this.viewState.root)
-			this.draw(newValue, this.viewState.root)
+
+	    	try
+	    	{
+				this.draw(newValue, this.viewState.root)
+			}
+
+			catch(e)
+			{
+				console.log(e, oldValue, newValue, this.constructor.name)
+			}
 
 			if (!window.location.hash) {
 
