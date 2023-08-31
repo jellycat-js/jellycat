@@ -11,7 +11,7 @@ export default function(superclass)
 	{
 		__viewChangedCallback(oldValue, newValue)
     	{
-    		let viewContainer = this.querySelectorAll('[app-view]')
+    		const viewContainer = this.querySelectorAll('[app-view]')
 	    	
 	    	switch(viewContainer.length)
 	    	{
@@ -24,28 +24,28 @@ export default function(superclass)
 
 	    	try
 	    	{
-				this.draw(newValue, this.viewState.root)
+				this.draw(newValue, this.viewState)
+
+				if (!window.location.hash) {
+
+			        // this.viewState.root.scrollIntoView({ 
+			        // 	top: this.viewState.root.getBoundingClientRect().top - window.pageYOffset, 
+			        // 	behavior: 'instant' 
+			        // })
+
+			    } else {
+
+				    const targetedHash = this.querySelector(window.location.hash)
+				    if (targetedHash) targetedHash.scrollIntoView({ 
+				    	top: targetedHash.getBoundingClientRect().top + window.pageYOffset, 
+				    	behavior: 'smooth'
+				    })
+				}
 			}
 
 			catch(e)
 			{
 				console.log(e, oldValue, newValue, this.constructor.name)
-			}
-
-			if (!window.location.hash) {
-
-		        // this.viewState.root.scrollIntoView({ 
-		        // 	top: this.viewState.root.getBoundingClientRect().top - window.pageYOffset, 
-		        // 	behavior: 'instant' 
-		        // })
-
-		    } else {
-
-			    const targetedHash = this.querySelector(window.location.hash)
-			    if (targetedHash) targetedHash.scrollIntoView({ 
-			    	top: targetedHash.getBoundingClientRect().top + window.pageYOffset, 
-			    	behavior: 'smooth'
-			    })
 			}
 		}
 
