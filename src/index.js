@@ -353,6 +353,9 @@ window.Jellycat ??= new class Jellycat
 			JcTextareaComponent: class JcTextareaComponent extends _(HTMLTextAreaElement).with(...Object.values(mixins)) { 
 				constructor(...ctrlAttrs) { super(); this._controlledAttributes = Array.from(new Set(ctrlAttrs.concat(['template']))) }
 			},
+			JcTbodyComponent: class JcTbodyComponent extends _(HTMLTableSectionElement).with(...Object.values(mixins)) { 
+				constructor(...ctrlAttrs) { super(); this._controlledAttributes = Array.from(new Set(ctrlAttrs.concat(['template']))) }
+			},
 			JcAppComponent: class JcAppComponent extends _(HTMLElement).with(...(Object.values(mixins).concat(App))) {
 				constructor(routes = [], ...ctrlAttrs)
 				{ 
@@ -365,15 +368,16 @@ window.Jellycat ??= new class Jellycat
 			resolve: HtmlElement => {
 				switch(HtmlElement)
 				{
-					case 'HTMLElement'          : return {}
-					case 'HTMLDivElement'       : return { extends: 'div' }
-					case 'HTMLSpanElement'      : return { extends: 'span' }
-					case 'HTMLUListElement'     : return { extends: 'ul' }
-					case 'HTMLLIElement'        : return { extends: 'li' }
-					case 'HTMLParagraphElement' : return { extends: 'p' }
-					case 'HTMLLabelElement'     : return { extends: 'label' }
-					case 'HTMLInputElement'     : return { extends: 'input' }
-					case 'HTMLTextAreaElement'  : return { extends: 'textarea' }
+					case 'HTMLElement'             : return {}
+					case 'HTMLDivElement'          : return { extends: 'div' }
+					case 'HTMLSpanElement'         : return { extends: 'span' }
+					case 'HTMLUListElement'        : return { extends: 'ul' }
+					case 'HTMLLIElement'           : return { extends: 'li' }
+					case 'HTMLParagraphElement'    : return { extends: 'p' }
+					case 'HTMLLabelElement'        : return { extends: 'label' }
+					case 'HTMLInputElement'        : return { extends: 'input' }
+					case 'HTMLTextAreaElement'     : return { extends: 'textarea' }
+					case 'HTMLTableSectionElement' : return { extends: 'tbdody' }
 				}
 			},
 
@@ -536,6 +540,7 @@ export const {
 	JcLabelComponent,
 	JcInputComponent,
 	JcTextareaComponent,
+	JcTbodyComponent,
 	JcAppComponent,
 	JcMixin
 
