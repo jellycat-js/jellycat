@@ -17,11 +17,8 @@ mixins.abstract = function(superclass)
 		options = {}
 
 		get methods() {
-			return Object.getOwnPropertyNames(this).filter(property => {
-				return typeof this[property] === 'function'
-			})
-			// const reflect = Reflect.getPrototypeOf(this)
-			// return Reflect.ownKeys(reflect).filter(m => m !== 'constructor')
+			const reflect = Reflect.getPrototypeOf(this)
+			return Reflect.ownKeys(reflect).filter(m => m !== 'constructor')
 		}
 
 		static async define(templateUrls = false, options = {})
@@ -106,9 +103,15 @@ mixins.abstract = function(superclass)
 				{
 					if (!clickable.getAttribute(`on${event}`).startsWith('this.')) continue
 
+					const methods = Object.getOwnPropertyNames(this).filter(property => {
+						return typeof this[property] === 'function'
+					})
+
+					console.log(Object.getOwnPropertyNames(this), methods)
+
 					const fn = clickable.getAttribute(`on${event}`).substr(String('this.').length)
-					if (!this.methods.includes(fn) || typeof this[fn] !== 'function') {
-						throw new Error(`Attribute on${event} "${fn}" is not a valid methods of this component.\nAvailables : ${this.methods.join(', ')}`)
+					if (methods.includes(fn) || typeof this[fn] !== 'function') {
+						throw new Error(`Attribute on${event} "${fn}" is not a valid methods of this component.\nAvailables : ${methods.join(', ')}`)
 					}
 
 					this[fn] = this[fn].bind(this)
