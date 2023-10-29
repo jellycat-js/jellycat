@@ -95,19 +95,23 @@ mixins.abstract = function(superclass)
 	    {
 	    	element = element === null ? this : element
 
-	    	for (const clickable of [...element.querySelectorAll('[onclick]')])
-			{
-				console.log('mount "onclick" on '+this.constructor.name)
-				if (!clickable.getAttribute('onclick').startsWith('this.')) continue
+	    	const eventsTriggerred = ['click','change','input','resize','scroll','submit','blur','focus']
 
-				const fn = clickable.getAttribute('onclick').substr(String('this.').length)
-				if (!this.methods.includes(fn) || typeof this[fn] !== 'function') {
-					throw new Error(`Attribute onclick "${fn}" is not a valid methods of this component.\nAvailables : ${this.methods.join(', ')}`)
+	    	for (const event of eventsTriggerred)
+	    	{
+	    		for (const clickable of [...element.querySelectorAll(`[on${event}]`)])
+				{
+					if (!clickable.getAttribute(`on${event}`).startsWith('this.')) continue
+
+					const fn = clickable.getAttribute(`on${event}`).substr(String('this.').length)
+					if (!this.methods.includes(fn) || typeof this[fn] !== 'function') {
+						throw new Error(`Attribute on${event} "${fn}" is not a valid methods of this component.\nAvailables : ${this.methods.join(', ')}`)
+					}
+
+					this[fn] = this[fn].bind(this)
+					clickable.addEventListener(event, this[fn])
 				}
-
-				this[fn] = this[fn].bind(this)
-				clickable.addEventListener('click', this[fn])
-			}
+	    	}
 	    }
 	}
 }
