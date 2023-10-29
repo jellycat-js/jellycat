@@ -17,8 +17,11 @@ mixins.abstract = function(superclass)
 		options = {}
 
 		get methods() {
-			const reflect = Reflect.getPrototypeOf(this)
-			return Reflect.ownKeys(reflect).filter(m => m !== 'constructor')
+			return Object.getOwnPropertyNames(this).filter(property => {
+				return typeof this[property] === 'function'
+			})
+			// const reflect = Reflect.getPrototypeOf(this)
+			// return Reflect.ownKeys(reflect).filter(m => m !== 'constructor')
 		}
 
 		static async define(templateUrls = false, options = {})
