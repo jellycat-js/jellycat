@@ -107,10 +107,8 @@ mixins.abstract = function(superclass)
 						return typeof this[property] === 'function'
 					})
 
-					console.log(Object.getOwnPropertyNames(this), methods)
-
 					const fn = clickable.getAttribute(`on${event}`).substr(String('this.').length)
-					if (methods.includes(fn) || typeof this[fn] !== 'function') {
+					if (!methods.includes(event) || typeof this[fn] !== 'function') {
 						throw new Error(`Attribute on${event} "${fn}" is not a valid methods of this component.\nAvailables : ${methods.join(', ')}`)
 					}
 
