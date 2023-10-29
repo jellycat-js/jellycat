@@ -162,6 +162,20 @@ mixins.lifeCycling = function(superclass)
 
 		async _behavior()
 		{
+			for (const clickable of [...this.querySelectorAll('[onclick]')])
+			{
+				if (!clickable.getAttribute('onclick').startsWith('this.')) continue
+
+				const fn = clickable.getAttribute('onclick').substr(String('this.').length)
+				if (!this.methods.includes(fn) || typeof this[fn] !== 'function') {
+					throw new Error(`Attribute onclick "${fn}" is not a valid methods of this component.\nAvailables : ${this.methods.join(', ')}`)
+				}
+
+				this[fn] = this[fn].bind(this)
+				clickable.addEventListener('click', this[fn])
+				// clickable.setAttribute('jc-trigger', '')
+			}
+
 			return [ Jellycat._scope ]
 		}
 
