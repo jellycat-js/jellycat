@@ -300,26 +300,21 @@ mixins.eventTrigger = function(superclass)
 	    	{
 	    		for (const clickable of [...element.querySelectorAll(`[on${event}]`)])
 				{
-					this.mountEventTrigger(event, element)
+					if (!clickable.getAttribute(`on${event}`).startsWith('this.')) continue
+
+					const methods = Object.getOwnPropertyNames(this).filter(property => {
+						return typeof this[property] === 'function'
+					})
+
+					const fn = clickable.getAttribute(`on${event}`).substr(String('this.').length)
+					if (typeof this[fn] !== 'function') {
+						throw new Error(`Attribute on${event} "${fn}" is not a valid methods of this component.\nAvailables : ${this.methods.concat(methods).join(', ')}\n`)
+					}
+
+					this[fn] = this[fn].bind(this)
+					clickable.addEventListener(event, this[fn])
 				}
 	    	}
-	    }
-
-	    mountEventTrigger(event, element)
-	    {
-	    	if (!clickable.getAttribute(`on${event}`).startsWith('this.')) continue
-
-			const methods = Object.getOwnPropertyNames(this).filter(property => {
-				return typeof this[property] === 'function'
-			})
-
-			const fn = clickable.getAttribute(`on${event}`).substr(String('this.').length)
-			if (typeof this[fn] !== 'function') {
-				throw new Error(`Attribute on${event} "${fn}" is not a valid methods of this component.\nAvailables : ${this.methods.concat(methods).join(', ')}\n`)
-			}
-
-			this[fn] = this[fn].bind(this)
-			clickable.addEventListener(event, this[fn])
 	    }
 	}
 }
