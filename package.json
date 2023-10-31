@@ -1,6 +1,6 @@
 {
   "name": "@jellycat-js/jellycat",
-  "version": "0.1.16",
+  "version": "0.1.17",
   "description": "Jellycat is a lightweight js framework for creating web components",
   "repository": "git://github.com/jellycat-js/jellycat.git",
   "bugs": "https://github.com/jellycat-js/jellycat/issues",

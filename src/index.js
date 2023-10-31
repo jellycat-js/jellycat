@@ -256,7 +256,7 @@ mixins.eventTrigger = function(superclass)
 	{
 		trigger()
 		{
-			console.log(this, this.getOwnPropertyNames())
+			console.log(this, Object.getOwnPropertyNames(this), Event)
 		}
 
 		mountEventsTrigger(element = null)
