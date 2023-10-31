@@ -399,7 +399,7 @@ window.Jellycat ??= new class Jellycat
 
 		this._availableTriggers = ['click','change','input','resize','scroll','submit','blur','focus']
 
-		const baseCtrlAttrs = this._availableTriggers.map(trigger => `on${trigger}`).concat(baseCtrlAttrs)
+		const baseCtrlAttrs = this._availableTriggers.map(trigger => `on${trigger}`).concat(['template'])
 
 		this._factory = {
 
