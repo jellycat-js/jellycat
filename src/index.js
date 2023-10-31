@@ -296,7 +296,7 @@ mixins.eventTrigger = function(superclass)
 	    {
 	    	element = element === null ? this : element
 
-	    	for (const event of this._availableTriggers)
+	    	for (const event of Jellycat._availableTriggers)
 	    	{
 	    		for (const clickable of [...element.querySelectorAll(`[on${event}]`)])
 				{
@@ -430,9 +430,6 @@ window.Jellycat ??= new class Jellycat
 			JcTextareaComponent: class JcTextareaComponent extends _(HTMLTextAreaElement).with(...Object.values(mixins)) { 
 				constructor(...ctrlAttrs) { super(); this._controlledAttributes = Array.from(new Set(ctrlAttrs.concat(baseCtrlAttrs))) }
 			},
-			JcTbodyComponent: class JcTbodyComponent extends _(HTMLTableSectionElement).with(...Object.values(mixins)) { 
-				constructor(...ctrlAttrs) { super(); this._controlledAttributes = Array.from(new Set(ctrlAttrs.concat(baseCtrlAttrs))) }
-			},
 			JcAppComponent: class JcAppComponent extends _(HTMLElement).with(...(Object.values(mixins).concat(App))) {
 				constructor(routes = [], ...ctrlAttrs)
 				{ 
@@ -454,7 +451,6 @@ window.Jellycat ??= new class Jellycat
 					case 'HTMLLabelElement'        : return { extends: 'label' }
 					case 'HTMLInputElement'        : return { extends: 'input' }
 					case 'HTMLTextAreaElement'     : return { extends: 'textarea' }
-					case 'HTMLTableSectionElement' : return { extends: 'tbdody' }
 				}
 			},
 
@@ -617,7 +613,6 @@ export const {
 	JcLabelComponent,
 	JcInputComponent,
 	JcTextareaComponent,
-	JcTbodyComponent,
 	JcAppComponent,
 	JcMixin
 
