@@ -82,10 +82,12 @@ mixins.abstract = function(superclass)
 		       	const observeMethod = `${mutation.attributeName}ChangedCallback`
 
 		       	if (undefined !== mutation.target[`__${observeMethod}`]) {
+		       		console.log('call', `__${observeMethod}`, mutation.oldValue, newValue)
 					mutation.target[`__${observeMethod}`](mutation.oldValue, newValue)
 				}
 
 				if (undefined !== mutation.target[observeMethod]) {
+					console.log('call', observeMethod, mutation.oldValue, newValue)
 					mutation.target[observeMethod](mutation.oldValue, newValue)
 				}
 		    }
@@ -252,44 +254,44 @@ mixins.eventTrigger = function(superclass)
 {
 	return class extends superclass
 	{
-		__onclickChangedCallback(oldValue, newValue)
+		_onclickChangedCallback(oldValue, newValue)
     	{
-			console.log(this.constructor.name, 'click', oldValue, newValue)
+			console.log('click', oldValue, newValue)
 		}
 
-		__onchangeChangedCallback(oldValue, newValue)
+		_onchangeChangedCallback(oldValue, newValue)
     	{
-			console.log(this.constructor.name, 'change', oldValue, newValue)
+			console.log('change', oldValue, newValue)
 		}
 
-		__oninputChangedCallback(oldValue, newValue)
+		_oninputChangedCallback(oldValue, newValue)
     	{
-			console.log(this.constructor.name, 'input', oldValue, newValue)
+			console.log('input', oldValue, newValue)
 		}
 
-		__onresizeChangedCallback(oldValue, newValue)
+		_onresizeChangedCallback(oldValue, newValue)
     	{
-			console.log(this.constructor.name, 'resize', oldValue, newValue)
+			console.log('resize', oldValue, newValue)
 		}
 
-		__onscrollChangedCallback(oldValue, newValue)
+		_onscrollChangedCallback(oldValue, newValue)
     	{
-			console.log(this.constructor.name, 'scroll', oldValue, newValue)
+			console.log('scroll', oldValue, newValue)
 		}
 
-		__onsubmitChangedCallback(oldValue, newValue)
+		_onsubmitChangedCallback(oldValue, newValue)
     	{
-			console.log(this.constructor.name, 'submit', oldValue, newValue)
+			console.log('submit', oldValue, newValue)
 		}
 
-		__onblurChangedCallback(oldValue, newValue)
+		_onblurChangedCallback(oldValue, newValue)
     	{
-			console.log(this.constructor.name, 'blur', oldValue, newValue)
+			console.log('blur', oldValue, newValue)
 		}
 
-		__onfocusChangedCallback(oldValue, newValue)
+		_onfocusChangedCallback(oldValue, newValue)
     	{
-			console.log(this.constructor.name, 'focus', oldValue, newValue)
+			console.log('focus', oldValue, newValue)
 		}
 
 		mountEventsTrigger(element = null)
