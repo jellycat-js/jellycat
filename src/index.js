@@ -75,14 +75,17 @@ mixins.abstract = function(superclass)
 
 		_mutationObserverCallback(mutationList, observer)
 		{
+			const slugToCamel = str => str.toLowerCase().replace(/([-][a-z])/g, group => {
+				return group.toUpperCase().replace('-', '')
+			})
+
 		    for (const mutation of mutationList)
 		    {
-		    	console.log(mutation.attributeName)
 		        if (mutation.type !== 'attributes') continue
-		       	if (!mutation.target._controlledAttributes.includes(mutation.attributeName)) continue
+		       	if (!mutation.target._controlledAttributes.includes(slugToCamel(mutation.attributeName))) continue
 
 		       	const newValue = mutation.target.getAttribute(mutation.attributeName)
-		       	const observeMethod = `${mutation.attributeName}ChangedCallback`
+		       	const observeMethod = `${slugToCamel(mutation.attributeName)}ChangedCallback`
 
 		       	if (undefined !== mutation.target[`__${observeMethod}`]) {
 					mutation.target[`__${observeMethod}`](mutation.oldValue, newValue)
