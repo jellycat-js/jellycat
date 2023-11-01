@@ -57,6 +57,8 @@ mixins.abstract = function(superclass)
 
 		_mountMutationObserver()
 		{
+			const camelToSnakeCase = str => str.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`)
+
 			this._mutationObserver = new MutationObserver(this._mutationObserverCallback)
 			this._mutationObserver.observe(this, {
 				attributes: true,
@@ -65,8 +67,8 @@ mixins.abstract = function(superclass)
 
 			this._controlledAttributes.forEach(attr => {
 				Object.defineProperty(this, attr, {
-					get: _ => this.getAttribute(attr),
-					set: value => this.setAttribute(attr, value)
+					get: _ => this.getAttribute(camelToSnakeCase(attr)),
+					set: value => this.setAttribute(camelToSnakeCase(attr), value)
 				})
 			})
 		}
