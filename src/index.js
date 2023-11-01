@@ -67,8 +67,8 @@ mixins.abstract = function(superclass)
 
 			this._controlledAttributes.forEach(attr => {
 				Object.defineProperty(this, attr, {
-					get: _ => this.getAttribute(camelToSnakeCase(attr)),
-					set: value => this.setAttribute(camelToSnakeCase(attr), value)
+					get: _ => this.getAttribute(camelToSlug(attr)),
+					set: value => this.setAttribute(camelToSlug(attr), value)
 				})
 			})
 		}
