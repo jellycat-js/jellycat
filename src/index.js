@@ -260,6 +260,12 @@ mixins.eventTrigger = function(superclass)
 				throw new Error(`Event "${event}" not found. availables Events : ${Jellycat._eventsTrigger.join(', ')}`)
 			}
 
+	    	element.setAttribute(`on${event}`, fn)
+	    	this._trigger(event, element)
+	    }
+
+	    _trigger(event, element)
+	    {
 	    	if (!element.getAttribute(`on${event}`).startsWith('this.')) return
 
 			const methods = Object.getOwnPropertyNames(this).filter(property => {
@@ -283,7 +289,7 @@ mixins.eventTrigger = function(superclass)
 	    	{
 	    		for (const clickable of [...element.querySelectorAll(`[on${event}]`)])
 				{
-					this.trigger(event, element, fn)
+					this._trigger(event, element)
 				}
 	    	}
 	    }
