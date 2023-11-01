@@ -57,7 +57,7 @@ mixins.abstract = function(superclass)
 
 		_mountMutationObserver()
 		{
-			const camelToSnakeCase = str => str.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`)
+			const camelToSlug = str => str.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`)
 
 			this._mutationObserver = new MutationObserver(this._mutationObserverCallback)
 			this._mutationObserver.observe(this, {
@@ -77,6 +77,7 @@ mixins.abstract = function(superclass)
 		{
 		    for (const mutation of mutationList)
 		    {
+		    	console.log(mutation.attributeName)
 		        if (mutation.type !== 'attributes') continue
 		       	if (!mutation.target._controlledAttributes.includes(mutation.attributeName)) continue
 
