@@ -82,12 +82,10 @@ mixins.abstract = function(superclass)
 		       	const observeMethod = `${mutation.attributeName}ChangedCallback`
 
 		       	if (undefined !== mutation.target[`__${observeMethod}`]) {
-		       		console.log('call', `__${observeMethod}`, mutation.oldValue, newValue)
 					mutation.target[`__${observeMethod}`](mutation.oldValue, newValue)
 				}
 
 				if (undefined !== mutation.target[observeMethod]) {
-					console.log('call', observeMethod, mutation.oldValue, newValue)
 					mutation.target[observeMethod](mutation.oldValue, newValue)
 				}
 		    }
@@ -281,13 +279,13 @@ mixins.eventTrigger = function(superclass)
 			element.addEventListener(event, this[fn])
 	    }
 
-		mountEventsTrigger(element = null)
+		mountEventsTrigger(parent = null)
 	    {
-	    	element = element === null ? this : element
+	    	parent = parent === null ? this : parent
 
 	    	for (const event of Jellycat._eventsTrigger)
 	    	{
-	    		for (const clickable of [...element.querySelectorAll(`[on${event}]`)])
+	    		for (const element of [...parent.querySelectorAll(`[on${event}]`)])
 				{
 					this._trigger(event, element)
 				}
