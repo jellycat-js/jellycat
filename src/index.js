@@ -1,7 +1,5 @@
 'use strict'
 
-import App from './webapp/factory.js'
-
 const mixins = {}
 
 const _ = superclass => {
@@ -318,24 +316,6 @@ mixins.scoping = function(superclass)
 
 			return null
 		}
-
-		//  scope(ref = false)
-		//  {
-		//  	return !ref ? Jellycat._scope : (Jellycat._scope[ref] || undefined)
-		//  }
-
-		//  expose(ref, prop)
-		//  {
-		//  	if (prop.constructor === String && prop in this) {		
-		//  		Jellycat._scope[ref] = new Proxy(this[prop], {
-		//  			set: (obj, key, value) => {
-		//  				if (key in obj) return false
-		//  				obj[key] = _ => this[key]
-		//  			    return true;
-		//  			}
-		//  		})		
-		//  	} else { Jellycat._scope[ref] = prop }
-		//   }
 	}
 }
 
@@ -378,8 +358,6 @@ window.Jellycat ??= new class Jellycat
 		this._instances = {}
 		this._cache = {}
 
-		this._eventsTrigger = ['click', 'change', 'input', 'resize', 'scroll', 'submit', 'blur', 'focus']
-
 		this._factory = {
 
 			JcComponent: class JcComponent extends _(HTMLElement).with(...Object.values(mixins)) { 
@@ -408,14 +386,6 @@ window.Jellycat ??= new class Jellycat
 			},
 			JcTextareaComponent: class JcTextareaComponent extends _(HTMLTextAreaElement).with(...Object.values(mixins)) { 
 				constructor(...ctrlAttrs) { super(); this._controlledAttributes = Array.from(new Set(ctrlAttrs.concat(['template']))) }
-			},
-			JcAppComponent: class JcAppComponent extends _(HTMLElement).with(...(Object.values(mixins).concat(App))) {
-				constructor(routes = [], ...ctrlAttrs)
-				{ 
-					super()
-					this.router._setRoutes(routes)
-					this._controlledAttributes = Array.from(new Set(ctrlAttrs.concat(['template', 'view'])))
-				}
 			},
 
 			resolve: HtmlElement => {
@@ -592,7 +562,6 @@ export const {
 	JcLabelComponent,
 	JcInputComponent,
 	JcTextareaComponent,
-	JcAppComponent,
 	JcMixin
 
 } = Jellycat._factory
