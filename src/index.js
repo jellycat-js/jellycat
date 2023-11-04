@@ -395,7 +395,7 @@ window.Jellycat ??= new class Jellycat
 			},
 			JcTrComponent: class JcTrComponent extends _(HTMLTableRowElement).with(...Object.values(mixins)) {
 				constructor(...ctrlAttrs) { super(); this._controlledAttributes = Array.from(new Set(ctrlAttrs.concat(['template']))) }
-			}
+			},
 
 			resolve: HtmlElement => {
 				switch(HtmlElement)
