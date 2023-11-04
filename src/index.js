@@ -387,19 +387,39 @@ window.Jellycat ??= new class Jellycat
 			JcTextareaComponent: class JcTextareaComponent extends _(HTMLTextAreaElement).with(...Object.values(mixins)) { 
 				constructor(...ctrlAttrs) { super(); this._controlledAttributes = Array.from(new Set(ctrlAttrs.concat(['template']))) }
 			},
+			JcTableComponent: class JcTableComponent extends _(HTMLTableElement).with(...Object.values(mixins)) {
+				constructor(...ctrlAttrs) { super(); this._controlledAttributes = Array.from(new Set(ctrlAttrs.concat(['template']))) }
+			},
+			JcTbodyComponent: class JcTbodyComponent extends _(HTMLTableSectionElement).with(...Object.values(mixins)) {
+				constructor(...ctrlAttrs) { super(); this._controlledAttributes = Array.from(new Set(ctrlAttrs.concat(['template']))) }
+			},
+			JcTrComponent: class JcTrComponent extends _(HTMLTableRowElement).with(...Object.values(mixins)) {
+				constructor(...ctrlAttrs) { super(); this._controlledAttributes = Array.from(new Set(ctrlAttrs.concat(['template']))) }
+			},
+			JcThComponent: class JcThComponent extends _(HTMLTableHeaderCellElement).with(...Object.values(mixins)) {
+				constructor(...ctrlAttrs) { super(); this._controlledAttributes = Array.from(new Set(ctrlAttrs.concat(['template']))) }
+			},
+			JcTdComponent: class JcTdComponent extends _(HTMLTableDataCellElement).with(...Object.values(mixins)) {
+				constructor(...ctrlAttrs) { super(); this._controlledAttributes = Array.from(new Set(ctrlAttrs.concat(['template']))) }
+			},
 
 			resolve: HtmlElement => {
 				switch(HtmlElement)
 				{
-					case 'HTMLElement'             : return {}
-					case 'HTMLDivElement'          : return { extends: 'div' }
-					case 'HTMLSpanElement'         : return { extends: 'span' }
-					case 'HTMLUListElement'        : return { extends: 'ul' }
-					case 'HTMLLIElement'           : return { extends: 'li' }
-					case 'HTMLParagraphElement'    : return { extends: 'p' }
-					case 'HTMLLabelElement'        : return { extends: 'label' }
-					case 'HTMLInputElement'        : return { extends: 'input' }
-					case 'HTMLTextAreaElement'     : return { extends: 'textarea' }
+					case 'HTMLElement'                : return {}
+					case 'HTMLDivElement'             : return { extends: 'div' }
+					case 'HTMLSpanElement'            : return { extends: 'span' }
+					case 'HTMLUListElement'           : return { extends: 'ul' }
+					case 'HTMLLIElement'              : return { extends: 'li' }
+					case 'HTMLParagraphElement'       : return { extends: 'p' }
+					case 'HTMLLabelElement'           : return { extends: 'label' }
+					case 'HTMLInputElement'           : return { extends: 'input' }
+					case 'HTMLTextAreaElement'        : return { extends: 'textarea' }
+					case 'HTMLTableElement'           : return { extends: 'table' }
+					case 'HTMLTableSectionElement'    : return { extends: 'tbody' }
+					case 'HTMLTableRowElement'        : return { extends: 'tr' }
+					case 'HTMLTableHeaderCellElement' : return { extends: 'th' }
+					case 'HTMLTableDataCellElement'   : return { extends: 'td' }
 				}
 			},
 
@@ -562,6 +582,11 @@ export const {
 	JcLabelComponent,
 	JcInputComponent,
 	JcTextareaComponent,
+	JcTableComponent,
+	JcTbodyComponent,
+	JcTrComponent,
+	JcThComponent,
+	JcTdComponent,
 	JcMixin
 
 } = Jellycat._factory
