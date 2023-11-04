@@ -363,8 +363,9 @@ mixins.scoping = function(superclass)
 			while(currentElement.tagName !== 'BODY' || currentElement === this)
 			{
 				currentElement = currentElement.parentElement
-				if (!currentElement.tagName.startsWith(`${prefix.toUpperCase()}-`) || !currentElement.getAttribute('is')?.startsWith(`${prefix}-`)) continue
-				return currentElement
+				if (currentElement.tagName.startsWith(`${prefix.toUpperCase()}-`) || currentElement.getAttribute('is')?.startsWith(`${prefix}-`)) {
+					return currentElement
+				}
 			}
 
 			return null
