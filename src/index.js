@@ -278,27 +278,20 @@ mixins.triggering = function(superclass)
 
 	    	const byString = (object, propertyPath) => {
 
-	    		console.log(object, propertyPath)
 			    propertyPath = propertyPath.replace(/\[(\w+)\]/g, '.$1')
-			    console.log(propertyPath)
 			    propertyPath = propertyPath.replace(/^\./, '')
-			    console.log(propertyPath)
-
 			    let properties = propertyPath.split('.')
-			    console.log(properties)
 
 			    for (let i = 0; i < properties.length; ++i)
 			    {
 			        let property = properties[i]
-			        console.log(property)
-
 			        if (property in object) {
 			            object = object[property]
-			            console.log(object)
-			        } else {
-			        	console.log(`${property} not in ${object.constructor.name}`)
-			            return
+			            continue
 			        }
+			        
+			        console.error(`${property} not in ${object.constructor.name}`)
+			        return
 			    }
 
 				return object
@@ -306,19 +299,19 @@ mixins.triggering = function(superclass)
 
 			console.log(byString(this, 'gameClient.version'))
 
-			const properties = Object.getOwnPropertyNames(this).filter(property => {
-				return ['boolean', 'number', 'bigint', 'string'].includes(typeof this[property])
-			})
+			// const properties = Object.getOwnPropertyNames(this).filter(property => {
+			// 	return ['boolean', 'number', 'bigint', 'string'].includes(typeof this[property])
+			// })
 
 			const property = element.getAttribute(attr).substr(String('this.').length)
-			if (!['boolean', 'number', 'bigint', 'string'].includes(typeof this[property])) {
-				throw new Error(`Attribute ${attr} "${property}" is not a valid property of this component.\nAvailables : ${properties.join(', ')}\n`)
-			}
+			// if (!['boolean', 'number', 'bigint', 'string'].includes(typeof this[property])) {
+			// 	throw new Error(`Attribute ${attr} "${property}" is not a valid property of this component.\nAvailables : ${properties.join(', ')}\n`)
+			// }
 
 			switch(attr)
 			{
-				case 'data'     : element.textContent = this[property] ; break
-				case 'datahtml' : element.innerHTML = this[property]   ; break
+				case 'data'     : element.textContent = byString(this, property)/*this[property]*/ ; break
+				case 'datahtml' : element.innerHTML = byString(this, property)/*this[property]*/   ; break
 			}
 	    }
 
