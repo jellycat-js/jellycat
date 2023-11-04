@@ -356,14 +356,15 @@ mixins.scoping = function(superclass)
 
 		getAncestorOf(element = null)
 		{
+			const prefix = Jellycat._options.prefix.toUpperCase()
+
 			let currentElement = element ?? this
 
 			while(currentElement.tagName !== 'BODY' || currentElement === this)
 			{
 				currentElement = currentElement.parentElement
-				if (currentElement.tagName.startsWith(`${Jellycat._options.prefix.toUpperCase()}-`)) {
-					return currentElement
-				}
+				if (!currentElement.tagName.startsWith(`${prefix}-`) || currentElement.getAttribute('is').startsWith(`${prefix}-`)) continue
+				return currentElement
 			}
 
 			return null
