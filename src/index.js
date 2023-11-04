@@ -304,7 +304,7 @@ mixins.triggering = function(superclass)
 
 			const property = element.getAttribute('bind').substr(String('this.').length)
 
-			if (!property.includes('.') && !`_${property}` in this) {
+			if (!property.includes('.') && !`_${property}` in this && property in this) {
 				this[`_${property}`] = this[property]
 				delete this[property]
 				Object.defineProperty(this, property, {
