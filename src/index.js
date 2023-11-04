@@ -395,13 +395,7 @@ window.Jellycat ??= new class Jellycat
 			},
 			JcTrComponent: class JcTrComponent extends _(HTMLTableRowElement).with(...Object.values(mixins)) {
 				constructor(...ctrlAttrs) { super(); this._controlledAttributes = Array.from(new Set(ctrlAttrs.concat(['template']))) }
-			},
-			JcThComponent: class JcThComponent extends _(HTMLTableHeaderCellElement).with(...Object.values(mixins)) {
-				constructor(...ctrlAttrs) { super(); this._controlledAttributes = Array.from(new Set(ctrlAttrs.concat(['template']))) }
-			},
-			JcTdComponent: class JcTdComponent extends _(HTMLTableDataCellElement).with(...Object.values(mixins)) {
-				constructor(...ctrlAttrs) { super(); this._controlledAttributes = Array.from(new Set(ctrlAttrs.concat(['template']))) }
-			},
+			}
 
 			resolve: HtmlElement => {
 				switch(HtmlElement)
@@ -418,8 +412,6 @@ window.Jellycat ??= new class Jellycat
 					case 'HTMLTableElement'           : return { extends: 'table' }
 					case 'HTMLTableSectionElement'    : return { extends: 'tbody' }
 					case 'HTMLTableRowElement'        : return { extends: 'tr' }
-					case 'HTMLTableHeaderCellElement' : return { extends: 'th' }
-					case 'HTMLTableDataCellElement'   : return { extends: 'td' }
 				}
 			},
 
@@ -585,8 +577,6 @@ export const {
 	JcTableComponent,
 	JcTbodyComponent,
 	JcTrComponent,
-	JcThComponent,
-	JcTdComponent,
 	JcMixin
 
 } = Jellycat._factory
