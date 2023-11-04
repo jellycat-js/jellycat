@@ -263,7 +263,7 @@ mixins.triggering = function(superclass)
 				this._triggerData(attr, element)
 				return
 
-			} else if (Jellycat._eventTriggers.includes(attr)) {
+			} else if (Jellycat._eventTriggers.includes(`on${attr}`)) {
 				element.setAttribute(`on${attr}`, value)
 				this._triggerEvent(`on${attr}`, element)
 				return
