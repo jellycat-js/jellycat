@@ -166,7 +166,7 @@ mixins.lifeCycling = function(superclass)
 
 		async _behavior()
 		{
-			this.mountEventsTrigger()
+			this.mountTriggers()
 
 			return [ Jellycat._scope ]
 		}
@@ -252,46 +252,80 @@ mixins.rendering = function(superclass)
 	}
 }
 
-mixins.eventTrigger = function(superclass)
+mixins.triggering = function(superclass)
 {
 	return class extends superclass
 	{
-		trigger(event, element, fn)
+		trigger(attr, element, value)
 	    {
-	    	if (!Jellycat._eventsTrigger.includes(event)) {
-				throw new Error(`Event "${event}" not found. availables Events : ${Jellycat._eventsTrigger.join(', ')}`)
+			if (Jellycat._dataTriggers.includes(attr)) {
+				element.setAttribute(attr, value)
+				this._triggerData(attr, element)
+				return
+
+			} else if (Jellycat._eventTriggers.includes(attr)) {
+				element.setAttribute(attr, value)
+				this._triggerEvent(attr, element)
+				return
 			}
 
-	    	element.setAttribute(`on${event}`, fn)
-	    	this._trigger(event, element)
+			throw new Error(`Attribute ${attr} is not a valid property of this component`)
 	    }
 
-	    _trigger(event, element)
+	    _triggerData(attr, element)
 	    {
-	    	if (!element.getAttribute(`on${event}`).startsWith('this.')) return
+	    	if (!element.getAttribute(attr).startsWith('this.')) return
 
 			const methods = Object.getOwnPropertyNames(this).filter(property => {
-				return typeof this[property] === 'function'
+				return ['boolean', 'number', 'bigint', 'string'].includes(typeof this[property])
 			})
 
-			const fn = element.getAttribute(`on${event}`).substr(String('this.').length)
+			const properties = element.getAttribute(attr).substr(String('this.').length)
+			if (!['boolean', 'number', 'bigint', 'string'].includes(typeof this[property])) {
+				throw new Error(`Attribute ${attr} "${property}" is not a valid property of this component.\nAvailables : ${properties.join(', ')}\n`)
+			}
+
+			switch(attr)
+			{
+				case 'data'     : element.textContent = this[property] ; break
+				case 'datahtml' : element.innerHTML = this[property]   ; break
+			}
+	    }
+
+	    _triggerEvent(attr, element)
+	    {
+	    	if (!element.getAttribute(attr).startsWith('this.')) return
+
+			const methods = Object.getOwnPropertyNames(this).filter(fn => {
+				return typeof this[fn] === 'function'
+			})
+
+			const fn = element.getAttribute(attr).substr(String('this.').length)
 			if (typeof this[fn] !== 'function') {
-				throw new Error(`Attribute on${event} "${fn}" is not a valid methods of this component.\nAvailables : ${this.methods.concat(methods).join(', ')}\n`)
+				throw new Error(`Attribute ${attr} "${fn}" is not a valid methods of this component.\nAvailables : ${this.methods.concat(methods).join(', ')}\n`)
 			}
 
 			this[fn] = this[fn].bind(this)
-			element.addEventListener(event, this[fn])
+			element.addEventListener(attr.substr(2), this[fn])
 	    }
 
-		mountEventsTrigger(parent = null)
+	    mountTriggers(parent = null)
 	    {
 	    	parent = parent === null ? this : parent
 
-	    	for (const event of Jellycat._eventsTrigger)
+	    	for (const attr of Jellycat._dataTriggers)
 	    	{
-	    		for (const element of [...parent.querySelectorAll(`[on${event}]`)])
+	    		for (const element of [...parent.querySelectorAll(`[${attr}]`)])
 				{
-					this._trigger(event, element)
+					this._triggerData(attr, element)
+				}
+	    	}
+
+	    	for (const attr of Jellycat._eventTriggers)
+	    	{
+	    		for (const element of [...parent.querySelectorAll(`[${attr}]`)])
+				{
+					this._triggerEvent(attr, element)
 				}
 	    	}
 	    }
@@ -358,7 +392,8 @@ window.Jellycat ??= new class Jellycat
 		this._instances = {}
 		this._cache = {}
 
-		this._eventsTrigger = ['click', 'change', 'input', 'resize', 'scroll', 'submit', 'blur', 'focus']
+		this._eventTriggers = ['onclick', 'onchange', 'oninput', 'onresize', 'onscroll', 'onsubmit', 'onblur', 'onfocus']
+		this._dataTriggers = ['data', 'datahtml']
 
 		this._factory = {
 
