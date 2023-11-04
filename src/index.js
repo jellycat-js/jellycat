@@ -304,9 +304,26 @@ mixins.triggering = function(superclass)
 
 			const property = element.getAttribute('bind').substr(String('this.').length)
 
-			// const rootProp = property.split('.')[0]
-			// Object.defineProperty(this, rootProp, {
-			// 	set: value => element.innerHTML = value
+			if (!property.includes('.')) {
+				this[`_${property}`] = this[property]
+				delete this[property]
+				Object.defineProperty(this, property, {
+					set: value => {
+						this[`_${property}`] = value
+						element.innerHTML = value
+					},
+					get: _ => this[`_${property}`]
+				})
+			}
+
+			// this._countVirtualized = this.countVirtualized
+			// delete this.countVirtualized
+			// Object.defineProperty(this, 'countVirtualized', {
+			// 	set: value => {
+			// 		this._countVirtualized = value
+			// 		this.querySelector('[bind="this.countVirtualized"]').innerHTML = value
+			// 	},
+			// 	get: _ => this._countVirtualized
 			// })
 
 			element.innerHTML = byString(this, property)
