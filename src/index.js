@@ -258,7 +258,7 @@ mixins.triggering = function(superclass)
 	{
 		__bindChangedCallback(oldValue, newValue)
     	{
-			this.rollBackToLifeCycle('render')
+			console.log({ fn: '__bindChangedCallback', old: oldValue, new: newValue})
 		}
 
 		trigger(attr, element, value)
@@ -303,6 +303,12 @@ mixins.triggering = function(superclass)
 			}
 
 			const property = element.getAttribute('bind').substr(String('this.').length)
+
+			console.log(property, byString(this, property))
+			// Object.defineProperty(this, attr, {
+			// 	set: value => element.innerHTML = value
+			// })
+
 			element.innerHTML = byString(this, property)
 	    }
 
