@@ -358,6 +358,8 @@ window.Jellycat ??= new class Jellycat
 		this._instances = {}
 		this._cache = {}
 
+		this._eventsTrigger = ['click', 'change', 'input', 'resize', 'scroll', 'submit', 'blur', 'focus']
+
 		this._factory = {
 
 			JcComponent: class JcComponent extends _(HTMLElement).with(...Object.values(mixins)) { 
