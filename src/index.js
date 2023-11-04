@@ -264,8 +264,8 @@ mixins.triggering = function(superclass)
 				return
 
 			} else if (Jellycat._eventTriggers.includes(attr)) {
-				element.setAttribute(attr, value)
-				this._triggerEvent(attr, element)
+				element.setAttribute(`on${attr}`, value)
+				this._triggerEvent(`on${attr}`, element)
 				return
 			}
 
@@ -276,11 +276,11 @@ mixins.triggering = function(superclass)
 	    {
 	    	if (!element.getAttribute(attr).startsWith('this.')) return
 
-			const methods = Object.getOwnPropertyNames(this).filter(property => {
+			const properties = Object.getOwnPropertyNames(this).filter(property => {
 				return ['boolean', 'number', 'bigint', 'string'].includes(typeof this[property])
 			})
 
-			const properties = element.getAttribute(attr).substr(String('this.').length)
+			const property = element.getAttribute(attr).substr(String('this.').length)
 			if (!['boolean', 'number', 'bigint', 'string'].includes(typeof this[property])) {
 				throw new Error(`Attribute ${attr} "${property}" is not a valid property of this component.\nAvailables : ${properties.join(', ')}\n`)
 			}
