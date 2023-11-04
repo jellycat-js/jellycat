@@ -297,19 +297,12 @@ mixins.triggering = function(superclass)
 				return object
 			}
 
-			// const properties = Object.getOwnPropertyNames(this).filter(property => {
-			// 	return ['boolean', 'number', 'bigint', 'string'].includes(typeof this[property])
-			// })
-
 			const property = element.getAttribute(attr).substr(String('this.').length)
-			// if (!['boolean', 'number', 'bigint', 'string'].includes(typeof this[property])) {
-			// 	throw new Error(`Attribute ${attr} "${property}" is not a valid property of this component.\nAvailables : ${properties.join(', ')}\n`)
-			// }
 
 			switch(attr)
 			{
-				case 'data'     : element.textContent = byString(this, property)/*this[property]*/ ; break
-				case 'datahtml' : element.innerHTML = byString(this, property)/*this[property]*/   ; break
+				case 'data'     : element.textContent = byString(this, property) ; break
+				case 'datahtml' : element.innerHTML = byString(this, property)   ; break
 			}
 	    }
 
@@ -357,7 +350,11 @@ mixins.scoping = function(superclass)
 {
 	return class extends superclass
 	{
-	    getDomParentComponent(element = null)
+		get ancetor() {
+			return this.getAncestorOf()
+		}
+
+		getAncestorOf(element = null)
 		{
 			let currentElement = element ?? this
 
