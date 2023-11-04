@@ -256,11 +256,16 @@ mixins.triggering = function(superclass)
 {
 	return class extends superclass
 	{
+		__bindChangedCallback(oldValue, newValue)
+    	{
+			this.rollBackToLifeCycle('render')
+		}
+
 		trigger(attr, element, value)
 	    {
-			if (Jellycat._dataTriggers.includes(attr)) {
+			if (attr === 'bind') {
 				element.setAttribute(attr, value)
-				this._triggerData(attr, element)
+				this._triggerBind(element)
 				return
 
 			} else if (Jellycat._eventTriggers.includes(`on${attr}`)) {
@@ -272,9 +277,9 @@ mixins.triggering = function(superclass)
 			throw new Error(`Attribute ${attr} is not a valid property of this component`)
 	    }
 
-	    _triggerData(attr, element)
+	    _triggerBind(element)
 	    {
-	    	if (!element.getAttribute(attr).startsWith('this.')) return
+	    	if (!element.getAttribute('bind').startsWith('this.')) return
 
 	    	const byString = (object, propertyPath) => {
 
@@ -290,20 +295,15 @@ mixins.triggering = function(superclass)
 			            continue
 			        }
 			        
-			        console.error(`Fill "${attr}" of ${object.constructor.name} failed, property ${property} not set.`)
+			        console.error(`Fill "bind" of ${object.constructor.name} failed, property ${property} not set.`)
 			        return
 			    }
 
 				return object
 			}
 
-			const property = element.getAttribute(attr).substr(String('this.').length)
-
-			switch(attr)
-			{
-				case 'data'     : element.textContent = byString(this, property) ; break
-				case 'datahtml' : element.innerHTML = byString(this, property)   ; break
-			}
+			const property = element.getAttribute('bind').substr(String('this.').length)
+			element.innerHTML = byString(this, property)
 	    }
 
 	    _triggerEvent(attr, element)
@@ -327,13 +327,10 @@ mixins.triggering = function(superclass)
 	    {
 	    	parent = parent === null ? this : parent
 
-	    	for (const attr of Jellycat._dataTriggers)
-	    	{
-	    		for (const element of [...parent.querySelectorAll(`[${attr}]`)])
-				{
-					this._triggerData(attr, element)
-				}
-	    	}
+    		for (const element of [...parent.querySelectorAll('[bind]')])
+			{
+				this._triggerBind(element)
+			}
 
 	    	for (const attr of Jellycat._eventTriggers)
 	    	{
@@ -413,45 +410,44 @@ window.Jellycat ??= new class Jellycat
 		this._cache = {}
 
 		this._eventTriggers = ['onclick', 'onchange', 'oninput', 'onresize', 'onscroll', 'onsubmit', 'onblur', 'onfocus']
-		this._dataTriggers = ['data', 'datahtml']
 
 		this._factory = {
 
 			JcComponent: class JcComponent extends _(HTMLElement).with(...Object.values(mixins)) { 
-				constructor(...ctrlAttrs) { super(); this._controlledAttributes = Array.from(new Set(ctrlAttrs.concat(['template']))) }
+				constructor(...ctrlAttrs) { super(); this._controlledAttributes = Array.from(new Set(ctrlAttrs.concat(['template', 'bind']))) }
 			},
 			JcDivComponent: class JcDivComponent extends _(HTMLDivElement).with(...Object.values(mixins)) { 
-				constructor(...ctrlAttrs) { super(); this._controlledAttributes = Array.from(new Set(ctrlAttrs.concat(['template']))) }
+				constructor(...ctrlAttrs) { super(); this._controlledAttributes = Array.from(new Set(ctrlAttrs.concat(['template', 'bind']))) }
 			},
 			JcSpanComponent: class JcSpanComponent extends _(HTMLSpanElement).with(...Object.values(mixins)) { 
-				constructor(...ctrlAttrs) { super(); this._controlledAttributes = Array.from(new Set(ctrlAttrs.concat(['template']))) }
+				constructor(...ctrlAttrs) { super(); this._controlledAttributes = Array.from(new Set(ctrlAttrs.concat(['template', 'bind']))) }
 			},
 			JcUlComponent: class JcUlComponent extends _(HTMLUListElement).with(...Object.values(mixins)) { 
-				constructor(...ctrlAttrs) { super(); this._controlledAttributes = Array.from(new Set(ctrlAttrs.concat(['template']))) }
+				constructor(...ctrlAttrs) { super(); this._controlledAttributes = Array.from(new Set(ctrlAttrs.concat(['template', 'bind']))) }
 			},
 			JcLiComponent: class JcLiComponent extends _(HTMLLIElement).with(...Object.values(mixins)) { 
-				constructor(...ctrlAttrs) { super(); this._controlledAttributes = Array.from(new Set(ctrlAttrs.concat(['template']))) }
+				constructor(...ctrlAttrs) { super(); this._controlledAttributes = Array.from(new Set(ctrlAttrs.concat(['template', 'bind']))) }
 			},
 			JcPComponent: class JcPComponent extends _(HTMLParagraphElement).with(...Object.values(mixins)) {
-				constructor(...ctrlAttrs) { super(); this._controlledAttributes = Array.from(new Set(ctrlAttrs.concat(['template']))) }
+				constructor(...ctrlAttrs) { super(); this._controlledAttributes = Array.from(new Set(ctrlAttrs.concat(['template', 'bind']))) }
 			},
 			JcLabelComponent: class JcLabelComponent extends _(HTMLLabelElement).with(...Object.values(mixins)) { 
-				constructor(...ctrlAttrs) { super(); this._controlledAttributes = Array.from(new Set(ctrlAttrs.concat(['template']))) }
+				constructor(...ctrlAttrs) { super(); this._controlledAttributes = Array.from(new Set(ctrlAttrs.concat(['template', 'bind']))) }
 			},
 			JcInputComponent: class JcInputComponent extends _(HTMLInputElement).with(...Object.values(mixins)) { 
-				constructor(...ctrlAttrs) { super(); this._controlledAttributes = Array.from(new Set(ctrlAttrs.concat(['template']))) }
+				constructor(...ctrlAttrs) { super(); this._controlledAttributes = Array.from(new Set(ctrlAttrs.concat(['template', 'bind']))) }
 			},
 			JcTextareaComponent: class JcTextareaComponent extends _(HTMLTextAreaElement).with(...Object.values(mixins)) { 
-				constructor(...ctrlAttrs) { super(); this._controlledAttributes = Array.from(new Set(ctrlAttrs.concat(['template']))) }
+				constructor(...ctrlAttrs) { super(); this._controlledAttributes = Array.from(new Set(ctrlAttrs.concat(['template', 'bind']))) }
 			},
 			JcTableComponent: class JcTableComponent extends _(HTMLTableElement).with(...Object.values(mixins)) {
-				constructor(...ctrlAttrs) { super(); this._controlledAttributes = Array.from(new Set(ctrlAttrs.concat(['template']))) }
+				constructor(...ctrlAttrs) { super(); this._controlledAttributes = Array.from(new Set(ctrlAttrs.concat(['template', 'bind']))) }
 			},
 			JcTbodyComponent: class JcTbodyComponent extends _(HTMLTableSectionElement).with(...Object.values(mixins)) {
-				constructor(...ctrlAttrs) { super(); this._controlledAttributes = Array.from(new Set(ctrlAttrs.concat(['template']))) }
+				constructor(...ctrlAttrs) { super(); this._controlledAttributes = Array.from(new Set(ctrlAttrs.concat(['template', 'bind']))) }
 			},
 			JcTrComponent: class JcTrComponent extends _(HTMLTableRowElement).with(...Object.values(mixins)) {
-				constructor(...ctrlAttrs) { super(); this._controlledAttributes = Array.from(new Set(ctrlAttrs.concat(['template']))) }
+				constructor(...ctrlAttrs) { super(); this._controlledAttributes = Array.from(new Set(ctrlAttrs.concat(['template', 'bind']))) }
 			},
 
 			resolve: HtmlElement => {
