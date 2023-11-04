@@ -278,21 +278,30 @@ mixins.triggering = function(superclass)
 
 	    	const byString = (object, propertyPath) => {
 
+	    		console.log(object, propertyPath)
 			    propertyPath = propertyPath.replace(/\[(\w+)\]/g, '.$1')
+			    console.log(propertyPath)
 			    propertyPath = propertyPath.replace(/^\./, '')
+			    console.log(propertyPath)
 
-			    let a = propertyPath.split('.')
-			    for (let i = 0, n = a.length; i < n; ++i) {
-			        let k = a[i]
-			        console.log(k)
-			        if (k in object) {
-			            object = object[k]
+			    let properties = propertyPath.split('.')
+			    console.log(properties)
+
+			    for (let i = 0; i < properties.length; ++i)
+			    {
+			        let property = properties[i]
+			        console.log(property)
+
+			        if (property in object) {
+			            object = object[property]
+			            console.log(object)
 			        } else {
+			        	console.log(`${property} not in ${object.constructor.name}`)
 			            return
 			        }
 			    }
 
-			    return object
+				return object
 			}
 
 			console.log(byString(this, 'gameClient.version'))
