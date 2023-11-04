@@ -295,7 +295,7 @@ mixins.triggering = function(superclass)
 			    return object
 			}
 
-			byString(this, 'this.gameCLient.version')
+			console.log(byString(this, 'this.gameCLient.version'))
 
 			const properties = Object.getOwnPropertyNames(this).filter(property => {
 				return ['boolean', 'number', 'bigint', 'string'].includes(typeof this[property])
