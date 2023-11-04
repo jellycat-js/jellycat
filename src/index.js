@@ -276,6 +276,27 @@ mixins.triggering = function(superclass)
 	    {
 	    	if (!element.getAttribute(attr).startsWith('this.')) return
 
+	    	const byString = (object, propertyPath) => {
+
+			    propertyPath = propertyPath.replace(/\[(\w+)\]/g, '.$1')
+			    propertyPath = propertyPath.replace(/^\./, '')
+
+			    let a = propertyPath.split('.')
+			    for (let i = 0, n = a.length; i < n; ++i) {
+			        let k = a[i]
+			        if (k in object) {
+			            object = object[k]
+			        } else {
+			        	console.log(k)
+			            return
+			        }
+			    }
+
+			    return object
+			}
+
+			byString(this, 'this.gameCLient.version')
+
 			const properties = Object.getOwnPropertyNames(this).filter(property => {
 				return ['boolean', 'number', 'bigint', 'string'].includes(typeof this[property])
 			})
