@@ -304,10 +304,10 @@ mixins.triggering = function(superclass)
 
 			const property = element.getAttribute('bind').substr(String('this.').length)
 
-			const rootProp = property.split('.')[0]
-			Object.defineProperty(this, rootProp, {
-				set: value => element.innerHTML = value
-			})
+			// const rootProp = property.split('.')[0]
+			// Object.defineProperty(this, rootProp, {
+			// 	set: value => element.innerHTML = value
+			// })
 
 			element.innerHTML = byString(this, property)
 	    }
