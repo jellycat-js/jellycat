@@ -290,14 +290,12 @@ mixins.triggering = function(superclass)
 			            continue
 			        }
 			        
-			        console.error(`${property} not in ${object.constructor.name}`)
+			        console.error(`Fill "${attr}" of ${object.constructor.name} failed, property ${property} not set.`)
 			        return
 			    }
 
 				return object
 			}
-
-			console.log(byString(this, 'gameClient.version'))
 
 			// const properties = Object.getOwnPropertyNames(this).filter(property => {
 			// 	return ['boolean', 'number', 'bigint', 'string'].includes(typeof this[property])
