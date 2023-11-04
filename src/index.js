@@ -350,7 +350,7 @@ mixins.scoping = function(superclass)
 {
 	return class extends superclass
 	{
-		get ancetor() {
+		get ancestor() {
 			return this.getAncestorOf()
 		}
 
@@ -363,7 +363,7 @@ mixins.scoping = function(superclass)
 			while(currentElement.tagName !== 'BODY' || currentElement === this)
 			{
 				currentElement = currentElement.parentElement
-				if (!currentElement.tagName.startsWith(`${prefix}-`) || !currentElement.getAttribute('is').startsWith(`${prefix}-`)) continue
+				if (!currentElement.tagName.startsWith(`${prefix}-`) || !currentElement.getAttribute('is')?.startsWith(`${prefix}-`)) continue
 				return currentElement
 			}
 
